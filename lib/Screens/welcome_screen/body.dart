@@ -30,7 +30,7 @@ class _BodyState extends State<Body> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 38.0,
+              height: 39.0,
             ),
             Center(
               child: Column(
