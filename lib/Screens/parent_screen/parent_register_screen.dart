@@ -12,7 +12,7 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor(parentPrimaryColour),
+      backgroundColor: HexColor(appPrimaryColour),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -64,22 +64,15 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
               ),
               RoundedButton(
                 text: 'Register',
-                color: Colors.white,
-                textColor: HexColor(parentPrimaryColour),
+                color: HexColor(appSecondaryColour),
+                textColor: Colors.white,
                 press: () {},
               ),
               SizedBox(
                 height: 15.0,
               ),
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ParentLoginScreen(),
-                    ),
-                  );
-                },
+                onTap: () {},
                 child: HeadingText(
                   text: 'Already registered?',
                   color: Colors.white,

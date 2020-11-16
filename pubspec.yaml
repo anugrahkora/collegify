@@ -59,6 +59,7 @@ flutter:
     - assets/icons/iconParent.png
     - assets/icons/iconStudent.png
     - assets/icons/iconTeacher.png
+    - assets/icons/iconLogin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

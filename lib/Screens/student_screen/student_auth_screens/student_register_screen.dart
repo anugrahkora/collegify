@@ -18,8 +18,6 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   final AuthService _authService = AuthService();
 
   final _formkey = GlobalKey<FormState>();
-  //SharedPreferences usertype;
-  //user cred
   String collegeName = '';
   String name = '';
   String registrationNumber = '';
@@ -33,13 +31,12 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    //String _message = '';
     Size size = MediaQuery.of(context).size;
 
     return loading
         ? Loader(color: HexColor(studentPrimaryColour))
         : Scaffold(
-            backgroundColor: HexColor(studentPrimaryColour),
+            backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Form(
@@ -48,7 +45,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        height: 10.0,
+                        height: 30.0,
                       ),
                       AlertWidget(
                         color: HexColor(studentPrimaryColour),
@@ -62,6 +59,14 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       HeadingText(
                         text: 'Register',
                         size: 60.0,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      HeadingText(
+                        text: 'as student',
+                        size: 25.0,
                         color: Colors.white,
                       ),
                       SizedBox(
@@ -163,7 +168,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                           child: FlatButton(
                             padding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 40),
-                            color: Colors.white,
+                            color: HexColor(appSecondaryColour),
                             onPressed: () async {
                               if (_formkey.currentState.validate()) {
                                 setState(() {
@@ -200,9 +205,9 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               }
                             },
                             child: HeadingText(
-                              color: HexColor(studentPrimaryColour),
+                              color: Colors.white,
                               text: 'Register',
-                              size: 12.0,
+                              size: 16.0,
                             ),
                           ),
                         ),
