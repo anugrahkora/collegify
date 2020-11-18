@@ -29,6 +29,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   int year = 1;
   String _message;
   bool loading = false;
+  String role = '';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,7 +49,6 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                         height: 30.0,
                       ),
                       AlertWidget(
-                        color: HexColor(studentPrimaryColour),
                         message: _message,
                         onpressed: () {
                           setState(() {
@@ -183,12 +183,11 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                         name,
                                         course,
                                         year.toString(),
-                                        registrationNumber);
+                                        registrationNumber,
+                                        'student');
                                 if (result != null) {
                                   print("Registered");
                                   setState(() {
-                                    _message = 'registered';
-                                    print(_message);
                                     loading = false;
                                   });
                                   SharedPreferences usertype =

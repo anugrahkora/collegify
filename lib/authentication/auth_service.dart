@@ -5,16 +5,21 @@ import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//this class is used for all auth services
 class AuthService {
-  //final String message;
-  //AuthService({this.message});
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //this class is used to
   UserModel _userFromFirebaseUser(User user) {
     return user != null ? UserModel(uid: user.uid) : null;
   }
 
   Stream<UserModel> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
+  }
+
+  Future checkUserRole(DocumentSnapshot snapshot) async {
+    try {} catch (e) {}
   }
 
   Future signOut() async {
@@ -24,22 +29,6 @@ class AuthService {
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
-      return null;
-    }
-  }
-
-  Future studentregisterWithEmailpasswd(String email, String password,
-      String name, String course, String year, String regNumber) async {
-    try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User user = userCredential.user;
-      await DatabaseService(uid: user.uid, name: name)
-          .updateStudentData(name, regNumber, course, year);
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-
       return null;
     }
   }
@@ -54,21 +43,41 @@ class AuthService {
     }
   }
 
-  Future checkUserRole(DocumentSnapshot snapshot) async {
-    try {} catch (e) {}
+  Future studentregisterWithEmailpasswd(
+      String email,
+      String password,
+      String name,
+      String course,
+      String year,
+      String regNumber,
+      String role) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user;
+      await DatabaseService(uid: user.uid, name: name)
+          .updateStudentData(name, regNumber, course, year, role);
+      return _userFromFirebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+
+      return null;
+    }
   }
 
-  // Future teacherregisterWithEmailpasswd(String email, String password) async {
-  //   try {
-  //     UserCredential userCredential = await _auth
-  //         .createUserWithEmailAndPassword(email: email, password: password);
-  //     User user = userCredential.user;
-  //     await DatabaseService(uid: user.uid)
-  //         .updateTeacherData('firstName', 'lastName', 'teacherID');
-  //     return _userFromFirebaseUser(user);
-  //   } on FirebaseAuthException catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  Future teacherregisterWithEmailpasswd(String email, String password,
+      String firstname, String lastname, String department, String role) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user;
+      await DatabaseService(uid: user.uid)
+          .updateTeacherData(firstname, lastname, department, role);
+      return _userFromFirebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      //return null;
+      rethrow;
+    }
+  }
 }

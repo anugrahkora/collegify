@@ -1,6 +1,8 @@
 //import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_login_screen.dart';
+import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +16,15 @@ class TeacherRegisterScreen extends StatefulWidget {
 }
 
 class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
+  final AuthService _authService = AuthService();
   final _formkey = GlobalKey<FormState>();
-  String name = '';
+  String firstname = '';
+  String lastname = '';
   String department = '';
   String email = '';
   String password = '';
   String confirmPassword = '';
+  String _message;
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,15 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        height: 38.0,
+                        height: 30.0,
+                      ),
+                      AlertWidget(
+                        message: _message,
+                        onpressed: () {
+                          setState(() {
+                            _message = null;
+                          });
+                        },
                       ),
                       HeadingText(
                         text: 'Register',
@@ -49,11 +62,22 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                         height: 30.0,
                       ),
                       RoundedInputField(
-                        hintText: 'Name',
+                        hintText: 'First Name',
                         validator: (val) =>
                             val.isEmpty ? 'Field mandatory' : null,
                         onChanged: (val) {
-                          name = val;
+                          firstname = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      RoundedInputField(
+                        hintText: 'Last Name',
+                        validator: (val) =>
+                            val.isEmpty ? 'Field mandatory' : null,
+                        onChanged: (val) {
+                          lastname = val;
                         },
                       ),
                       SizedBox(
@@ -113,9 +137,33 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                 color: HexColor(appSecondaryColour),
                                 onPressed: () async {
                                   if (_formkey.currentState.validate()) {
-                                    SharedPreferences usertype =
-                                        await SharedPreferences.getInstance();
-                                    usertype.setInt('usertype', 2);
+                                    _formkey.currentState.save();
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    try {
+                                      // SharedPreferences usertype =
+                                      //     await SharedPreferences.getInstance();
+                                      // usertype.setInt('usertype', 2);
+                                      dynamic result = await _authService
+                                          .teacherregisterWithEmailpasswd(
+                                              email,
+                                              password,
+                                              firstname,
+                                              lastname,
+                                              department,
+                                              'teacher');
+                                      if (result != null) {
+                                        print('teacher registered');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      }
+                                    } on FirebaseAuthException catch (e) {
+                                      setState(() {
+                                        _message = e.toString();
+                                      });
+                                    }
                                   }
                                 },
                                 child: HeadingText(

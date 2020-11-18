@@ -11,7 +11,6 @@
     "README.md": true,
     "pubspec.lock": true,
     "android": true,
-    "lib\\Screens\\teacher_screen": true,
     "lib\\Screens\\parent_screen": true
   }
 }

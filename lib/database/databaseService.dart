@@ -14,26 +14,28 @@ class DatabaseService {
   final CollectionReference studentCollection = FirebaseFirestore.instance
       .collection('kannur_university')
       .doc('stems')
-      .collection('studentusers');
+      .collection('users');
   //final CollectionReference teacherCollection = FirebaseFirestore.instance.collection('Kannur University').doc('Stems').collection('collectionPath').
-  Future updateStudentData(
-      String name, String regNumber, String course, String currentYear) async {
-    return await studentCollection.doc(name).set({
+  Future updateStudentData(String name, String regNumber, String course,
+      String currentYear, String role) async {
+    return await studentCollection.doc(uid).set({
       'Name': name,
       'Registration Number': regNumber,
       'course': course,
-      'Current Year': currentYear
+      'Current Year': currentYear,
+      'role': role
     });
   }
 
-  // Future updateTeacherData(
-  //     String firstName, String lastName, String teacherID) async {
-  //   return await studentCollection.doc(uid).set({
-  //     'first_name': firstName,
-  //     'last_name': lastName,
-  //     'teacher_id': teacherID,
-  //   });
-  // }
+  Future updateTeacherData(
+      String firstName, String lastName, String department, String role) async {
+    return await studentCollection.doc(uid).set({
+      'first_name': firstName,
+      'last_name': lastName,
+      'department': department,
+      'role': role,
+    });
+  }
 
   Stream<QuerySnapshot> get studentUsers {
     return studentCollection.snapshots();

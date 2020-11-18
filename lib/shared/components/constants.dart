@@ -148,9 +148,9 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 
 class AlertWidget extends StatelessWidget {
   final String message;
-  final Color color;
+
   final Function onpressed;
-  AlertWidget({this.color, this.message, this.onpressed});
+  AlertWidget({this.message, this.onpressed});
   @override
   Widget build(BuildContext context) {
     if (message != null) {
