@@ -12,7 +12,6 @@
     "pubspec.lock": true,
     "android": true,
     "lib\\Screens\\teacher_screen": true,
-    "lib\\Screens\\parent_screen": true,
-    "lib\\Screens\\teacher_screen\\teacher_auth_screens": true
+    "lib\\Screens\\parent_screen": true
   }
 }

@@ -1,4 +1,4 @@
-import 'package:collegify/Screens/student_screen/student_auth_screens/student_login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_auth_screens/student_register_screen.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
@@ -52,6 +52,10 @@ class AuthService {
       print(e.toString());
       return null;
     }
+  }
+
+  Future checkUserRole(DocumentSnapshot snapshot) async {
+    try {} catch (e) {}
   }
 
   // Future teacherregisterWithEmailpasswd(String email, String password) async {

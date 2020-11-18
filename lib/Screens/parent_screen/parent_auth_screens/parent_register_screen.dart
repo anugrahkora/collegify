@@ -1,4 +1,4 @@
-import 'package:collegify/Screens/parent_screen/parent_login_screen.dart';
+//import 'package:collegify/Screens/parent_screen/parent_login_screen.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';

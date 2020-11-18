@@ -1,11 +1,11 @@
 import 'package:collegify/Screens/login_screen/login_screen.dart';
-import 'package:collegify/Screens/parent_screen/parent_register_screen.dart';
-import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
+import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
+//import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
 import 'package:collegify/Screens/student_screen/student_auth_screens/student_register_screen.dart';
-import 'package:collegify/Screens/student_screen/student_auth_screens/student_screen_authenticate.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_login_screen.dart';
+//import 'package:collegify/Screens/student_screen/student_auth_screens/student_screen_authenticate.dart';
+//import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_login_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_register_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_screen_authenticate.dart';
+//import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_screen_authenticate.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -112,79 +112,3 @@ class _BodyState extends State<Body> {
     ];
   }
 }
-//  if (_userRole == 1) {
-//       return StudentScreen();
-//     } else if (_userRole == 2) {
-//       return TeacherScreen();
-//     } else if (_userRole == 3) {
-//       return ParentScreen();
-//     }
-
-// Scaffold(
-//   backgroundColor: HexColor(welcomePrimaryColour),
-//   body: SafeArea(
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: <Widget>[
-//         SizedBox(
-//           height: 39.0,
-//         ),
-//         Center(
-//           child: Column(
-//             children: <Widget>[
-//               HeadingText(
-//                 text: 'Welcome.',
-//                 size: 65.0,
-//                 color: HexColor(teacherPrimaryColour),
-//               ),
-//               SizedBox(
-//                 height: 4.0,
-//               ),
-//               HeadingText(
-//                 text: 'Select the user',
-//                 size: 25.0,
-//                 color: HexColor(parentPrimaryColour),
-//               ),
-//             ],
-//           ),
-//         ),
-//         SizedBox(
-//           height: 140.0,
-//         ),
-//         RoundedButton(
-//           text: 'Student',
-//           color: HexColor(studentPrimaryColour),
-//           textColor: Colors.white,
-//           route: '/studentScreen',
-//           press: () {
-//             setState(() {
-//               _userRole = 1;
-//             });
-//           },
-//         ),
-//         RoundedButton(
-//           text: 'Teacher',
-//           color: HexColor(teacherPrimaryColour),
-//           textColor: Colors.white,
-//           route: '/teacherScreen',
-//           press: () {
-//             setState(() {
-//               _userRole = 2;
-//             });
-//           },
-//         ),
-//         RoundedButton(
-//           text: 'Parent',
-//           route: '/parentScreen',
-//           color: HexColor(parentPrimaryColour),
-//           textColor: Colors.white,
-//           press: () {
-//             setState(() {
-//               _userRole = 2;
-//             });
-//           },
-//         ),
-//       ],
-//     ),
-//   ),
-// );

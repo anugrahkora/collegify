@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/Screens/parent_screen/parent_home/announcements_from_teacher.dart';
+import 'package:collegify/Screens/parent_screen/parent_home/fee_payment_screen.dart';
+import 'package:collegify/Screens/parent_screen/parent_home/parent_home.dart';
+import 'package:collegify/Screens/parent_screen/parent_home/student_attendance_status.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_home.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
@@ -14,10 +18,10 @@ import 'package:provider/provider.dart';
 
 List<Widget> _buildScreens() {
   return [
-    StudentHome(),
-    StudentUserDetails(),
-    StudentAnalytics(),
-    StudentMarks()
+    ParentHome(),
+    StudentAttendanceStatus(),
+    FeePaymentScreen(),
+    AnnouncementFromTeacher()
   ];
 }
 
@@ -52,12 +56,12 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
-class StudentNavigationScreen extends StatefulWidget {
+class ParentNavigationScreen extends StatefulWidget {
   @override
-  _StudNavigationScreenState createState() => _StudNavigationScreenState();
+  _ParentNavigationScreenState createState() => _ParentNavigationScreenState();
 }
 
-class _StudNavigationScreenState extends State<StudentNavigationScreen> {
+class _ParentNavigationScreenState extends State<ParentNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(

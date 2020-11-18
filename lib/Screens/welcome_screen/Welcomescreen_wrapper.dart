@@ -1,12 +1,10 @@
-import 'package:collegify/Screens/parent_screen/parent_home/parent_home.dart';
-import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
+import 'package:collegify/Screens/parent_screen/parent_home/parent_navigation_screen.dart';
+
 import 'package:collegify/Screens/student_screen/student_home/navigation.dart';
-import 'package:collegify/Screens/student_screen/student_auth_screens/student_screen_authenticate.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_screen_authenticate.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_home.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
+
 import 'package:collegify/Screens/welcome_screen/body.dart';
 import 'package:collegify/models/user_model.dart';
-import 'package:collegify/shared/components/user_type.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,11 +35,11 @@ class _WelcomescreenState extends State<Welcomescreen> {
     final user = Provider.of<UserModel>(context, listen: false);
     if (user != null && usertype == 1) {
       // Navigator.pushReplacementNamed(context, '/StudentHome');
-      return NavigationScreen();
+      return StudentNavigationScreen();
     } else if (user != null && usertype == 2) {
-      return TeacherScreen();
+      return TeacherNavigationScreen();
     } else if (user != null && usertype == 3) {
-      return ParentScreen();
+      return ParentNavigationScreen();
     } else if (usertype == 0) return Body();
     return Body();
   }

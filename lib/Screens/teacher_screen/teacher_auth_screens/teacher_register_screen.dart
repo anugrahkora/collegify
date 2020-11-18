@@ -1,4 +1,4 @@
-import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_login_screen.dart';
+//import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_login_screen.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
