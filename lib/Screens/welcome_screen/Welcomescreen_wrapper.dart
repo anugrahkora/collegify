@@ -1,6 +1,6 @@
 import 'package:collegify/Screens/parent_screen/parent_home/parent_navigation_screen.dart';
 
-import 'package:collegify/Screens/student_screen/student_home/navigation.dart';
+import 'package:collegify/Screens/student_screen/student_home/student_navigation.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
@@ -24,7 +24,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
       usertype = userDetails.getInt('usertype') ?? 0;
     });
 
-    print(usertype);
+    //print(usertype);
   }
 
   @override
@@ -33,14 +33,14 @@ class _WelcomescreenState extends State<Welcomescreen> {
         .addPostFrameCallback((_) async => await checkUserType());
 
     final user = Provider.of<UserModel>(context, listen: false);
-    if (user != null && usertype == 1) {
+    if (user != null)
       // Navigator.pushReplacementNamed(context, '/StudentHome');
       return StudentNavigationScreen();
-    } else if (user != null && usertype == 2) {
-      return TeacherNavigationScreen();
-    } else if (user != null && usertype == 3) {
-      return ParentNavigationScreen();
-    } else if (usertype == 0) return Body();
+    // } else if (user != null && usertype == 2) {
+    //   return TeacherNavigationScreen();
+    // } else if (user != null && usertype == 3) {
+    //   return ParentNavigationScreen();
+    // } else if (usertype == 0) return Body();
     return Body();
   }
 }

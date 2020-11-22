@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/Screens/admin_screen/admin_home.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_home.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_userDetails.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_home.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:flutter/material.dart';
 
+import 'package:collegify/Screens/student_screen/student_auth_screens/student_register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -16,35 +15,29 @@ import 'package:provider/provider.dart';
 
 List<Widget> _buildScreens() {
   return [
-    TeacherHome(),
-    CreateNoteScreen(),
-    StudentAttendance(),
+    AdminHome(),
+    StudentUserDetails(),
+    StudentAnalytics(),
   ];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.home),
-      title: ("Home"),
+      icon: Icon(CupertinoIcons.building_2_fill),
+      title: ("Add Institutions"),
       activeColor: CupertinoColors.activeBlue,
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.book_solid),
-      title: ("Add Notes"),
+      icon: Icon(CupertinoIcons.person_2_fill),
+      title: ("Add Staff "),
       activeColor: CupertinoColors.activeBlue,
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person),
-      title: ("Marks"),
-      activeColor: CupertinoColors.activeBlue,
-      inactiveColor: CupertinoColors.systemGrey,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person),
-      title: ("User"),
+      icon: Icon(CupertinoIcons.person_alt_circle_fill),
+      title: ("Profile"),
       activeColor: CupertinoColors.activeBlue,
       inactiveColor: CupertinoColors.systemGrey,
     ),
@@ -53,13 +46,12 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
-class TeacherNavigationScreen extends StatefulWidget {
+class StudentNavigationScreen extends StatefulWidget {
   @override
-  _TeacherNavigationScreenState createState() =>
-      _TeacherNavigationScreenState();
+  _StudNavigationScreenState createState() => _StudNavigationScreenState();
 }
 
-class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
+class _StudNavigationScreenState extends State<StudentNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(

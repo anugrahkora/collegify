@@ -8,7 +8,7 @@ import 'Screens/student_screen/student_home/student_userDetails.dart';
 import 'Screens/welcome_screen/Welcomescreen_wrapper.dart';
 import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
 //import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
-import 'package:collegify/Screens/student_screen/student_home/navigation.dart';
+import 'package:collegify/Screens/student_screen/student_home/student_navigation.dart';
 import 'package:collegify/Screens/student_screen/student_auth_screens/student_register_screen.dart';
 //import 'package:collegify/Screens/student_screen/student_auth_screens/student_screen_authenticate.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_register_screen.dart';
@@ -21,10 +21,10 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  runApp(Myapp());
+  runApp(InitializeMyapp());
 }
 
-class Myapp extends StatelessWidget {
+class InitializeMyapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserModel>.value(

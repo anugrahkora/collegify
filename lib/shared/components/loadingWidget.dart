@@ -3,7 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loader extends StatelessWidget {
   final Color color;
-  Loader({this.color});
+  final double size;
+  Loader({this.color, this.size});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +12,7 @@ class Loader extends StatelessWidget {
       child: Center(
         child: SpinKitFadingCircle(
           color: Colors.white,
-          size: 30,
+          size: size,
         ),
       ),
     );

@@ -28,6 +28,7 @@ class _BodyState extends State<Body> {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
+
       confineInSafeArea: true,
       backgroundColor: HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,

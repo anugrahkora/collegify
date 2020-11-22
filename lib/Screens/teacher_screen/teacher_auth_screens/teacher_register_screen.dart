@@ -55,8 +55,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       ),
                       HeadingText(
                         text: 'Register',
-                        size: 60.0,
+                        size: 70.0,
                         color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 6.0,
+                      ),
+                      HeadingText(
+                        text: 'as teacher.',
+                        size: 23.0,
+                        color: Colors.black,
                       ),
                       SizedBox(
                         height: 30.0,
@@ -158,10 +166,15 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                         setState(() {
                                           loading = false;
                                         });
+                                      } else {
+                                        setState(() {
+                                          loading = false;
+                                        });
                                       }
                                     } on FirebaseAuthException catch (e) {
                                       setState(() {
                                         _message = e.toString();
+                                        loading = false;
                                       });
                                     }
                                   }

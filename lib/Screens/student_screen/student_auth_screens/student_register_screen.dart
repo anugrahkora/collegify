@@ -1,5 +1,6 @@
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
+import 'package:collegify/shared/components/dropDownList.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   final AuthService _authService = AuthService();
 
   final _formkey = GlobalKey<FormState>();
+  String university;
   String collegeName = '';
   String name = '';
   String registrationNumber = '';
@@ -35,7 +37,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
     Size size = MediaQuery.of(context).size;
 
     return loading
-        ? Loader(color: HexColor(studentPrimaryColour))
+        ? Loader(color: HexColor(appPrimaryColour))
         : Scaffold(
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
@@ -58,22 +60,29 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       ),
                       HeadingText(
                         text: 'Register',
-                        size: 60.0,
+                        size: 70.0,
                         color: Colors.white,
                       ),
                       SizedBox(
-                        height: 10.0,
+                        height: 6.0,
                       ),
                       HeadingText(
-                        text: 'as student',
-                        size: 25.0,
-                        color: Colors.white,
+                        text: 'as student.',
+                        size: 23.0,
+                        color: Colors.black,
                       ),
                       SizedBox(
                         height: 30.0,
                       ),
+                      DropDownListForInstitutionData(
+                        institution: 'college',
+                        selectedInstitution: university,
+                        onpressed: (val) {
+                          university = val;
+                        },
+                      ),
                       RoundedInputField(
-                        hintText: 'College',
+                        hintText: 'College name',
                         validator: (val) =>
                             val.isEmpty ? 'This field is mandatory' : null,
                         onChanged: (val) {

@@ -18,10 +18,6 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  Future checkUserRole(DocumentSnapshot snapshot) async {
-    try {} catch (e) {}
-  }
-
   Future signOut() async {
     try {
       SharedPreferences usertype = await SharedPreferences.getInstance();
@@ -37,9 +33,9 @@ class AuthService {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e.toString());
-      return null;
+      rethrow;
     }
   }
 
@@ -55,7 +51,7 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
-      await DatabaseService(uid: user.uid, name: name)
+      await DatabaseService(uid: user.uid)
           .updateStudentData(name, regNumber, course, year, role);
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {

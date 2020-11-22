@@ -61,7 +61,7 @@ class _StudNavigationScreenState extends State<StudentNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().studentUsers,
+      value: DatabaseService().userCollection,
       child: PersistentTabView(
         controller: _controller,
         screens: _buildScreens(),
