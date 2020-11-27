@@ -4,6 +4,8 @@ import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// dropdown list for listing the all the available universities
+
 class DropDownListForInstitutionData extends StatefulWidget {
   final String institution;
   final Function onpressed;
@@ -17,8 +19,6 @@ class DropDownListForInstitutionData extends StatefulWidget {
 
 class _DropDownListForInstitutionDataState
     extends State<DropDownListForInstitutionData> {
-  bool loading = true;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,7 +45,7 @@ class _DropDownListForInstitutionDataState
             institution.add(
               DropdownMenuItem(
                 child: Text(
-                  documentSnapshot.id,
+                  documentSnapshot.id.replaceAll('_', ' '),
                   style: GoogleFonts.montserrat(color: Colors.black54),
                 ),
                 value: "${documentSnapshot.id}",
@@ -66,6 +66,8 @@ class _DropDownListForInstitutionDataState
     );
   }
 }
+
+// dropdown list for listing all colleges under a selected university
 
 class DropdownListForCollegeName extends StatefulWidget {
   final String institution;
@@ -97,19 +99,23 @@ class _DropdownListForCollegeNameState
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection("college")
+            .collection("${widget.institution}")
             .doc("${widget.universityName}")
             .collection('CollegeNames')
             .snapshots(),
         builder: (context, snapshot) {
           List<DropdownMenuItem> collegeName = [];
-          print('${widget.universityName}');
+
           if (!snapshot.hasData) {
-            return Text('Loading');
+            return SizedBox(
+              width: size.width * 0.5,
+              child: Text(
+                'Please select a University',
+                style: GoogleFonts.montserrat(color: Colors.black54),
+              ),
+            );
           }
-          // } else if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return Text('waiting');
-          // }
+
           for (int i = 0; i < snapshot.data.docs.length; i++) {
             DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
             collegeName.add(
@@ -117,7 +123,7 @@ class _DropdownListForCollegeNameState
                 child: SizedBox(
                   width: size.width * 0.5,
                   child: Text(
-                    documentSnapshot.id,
+                    documentSnapshot.id.replaceAll('_', ' '),
                     style: GoogleFonts.montserrat(color: Colors.black54),
                   ),
                 ),
@@ -131,6 +137,90 @@ class _DropdownListForCollegeNameState
               hint: Text("Select College"),
               value: widget.selectedCollegeName,
               items: collegeName,
+              onChanged: widget.onpressed,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+//dropdown list for listing all departments under selected college
+
+class DropDownListForDepartmentName extends StatefulWidget {
+  final String institution;
+  final String universityName;
+  final String collegeName;
+  final String selectedDepartmentName;
+  final Function onpressed;
+
+  DropDownListForDepartmentName(
+      {this.collegeName,
+      this.institution,
+      this.onpressed,
+      this.selectedDepartmentName,
+      this.universityName});
+  @override
+  _DropDownListForDepartmentNameState createState() =>
+      _DropDownListForDepartmentNameState();
+}
+
+class _DropDownListForDepartmentNameState
+    extends State<DropDownListForDepartmentName> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(29),
+      ),
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("${widget.institution}")
+            .doc("${widget.universityName}")
+            .collection('CollegeNames')
+            .doc("${widget.collegeName}")
+            .collection('DepartmentNames')
+            .snapshots(),
+        builder: (context, snapshot) {
+          List<DropdownMenuItem> departmentName = [];
+
+          if (!snapshot.hasData) {
+            return SizedBox(
+              width: size.width * 0.5,
+              child: Text(
+                'Please select a University & College',
+                style: GoogleFonts.montserrat(color: Colors.black54),
+              ),
+            );
+          }
+
+          for (int i = 0; i < snapshot.data.docs.length; i++) {
+            DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
+            departmentName.add(
+              DropdownMenuItem(
+                child: SizedBox(
+                  width: size.width * 0.5,
+                  child: Text(
+                    documentSnapshot.id.replaceAll('_', ' '),
+                    style: GoogleFonts.montserrat(color: Colors.black54),
+                  ),
+                ),
+                value: "${documentSnapshot.id}",
+              ),
+            );
+          }
+
+          return DropdownButtonHideUnderline(
+            child: DropdownButton(
+              hint: Text("Select your department"),
+              value: widget.selectedDepartmentName,
+              items: departmentName,
               onChanged: widget.onpressed,
             ),
           );

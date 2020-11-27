@@ -6,7 +6,6 @@
     ".dart_tool": true,
     ".flutter-plugins": true,
     "README.md": true,
-    "pubspec.lock": true,
-    "lib\\Screens\\parent_screen": true
+    "pubspec.lock": true
   }
 }

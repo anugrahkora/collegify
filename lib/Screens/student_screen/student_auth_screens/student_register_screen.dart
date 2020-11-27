@@ -21,6 +21,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   final _formkey = GlobalKey<FormState>();
   String university;
   String collegeName;
+  String departmentName;
   String name = '';
   String registrationNumber = '';
   String course = '';
@@ -74,26 +75,44 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       SizedBox(
                         height: 30.0,
                       ),
+                      //list of universities
                       DropDownListForInstitutionData(
                         institution: 'college',
                         selectedInstitution: university,
                         onpressed: (val) {
-                          university = val;
+                          setState(() {
+                            collegeName = null;
+                            university = val;
+                          });
                         },
                       ),
                       SizedBox(
                         height: 5.0,
                       ),
+                      // list of colleges
                       DropdownListForCollegeName(
                         institution: 'college',
                         universityName: university,
                         selectedCollegeName: collegeName,
                         onpressed: (val) {
-                          collegeName = val;
+                          setState(() {
+                            departmentName = null;
+                            collegeName = val;
+                          });
                         },
                       ),
                       SizedBox(
                         height: 5.0,
+                      ),
+                      //list of departments
+                      DropDownListForDepartmentName(
+                        institution: 'college',
+                        universityName: university,
+                        collegeName: collegeName,
+                        selectedDepartmentName: departmentName,
+                        onpressed: (val) {
+                          departmentName = val;
+                        },
                       ),
                       SizedBox(
                         height: 5.0,
