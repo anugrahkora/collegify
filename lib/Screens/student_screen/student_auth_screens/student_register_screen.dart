@@ -20,7 +20,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
 
   final _formkey = GlobalKey<FormState>();
   String university;
-  String collegeName = '';
+  String collegeName;
   String name = '';
   String registrationNumber = '';
   String course = '';
@@ -81,13 +81,19 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                           university = val;
                         },
                       ),
-                      RoundedInputField(
-                        hintText: 'College name',
-                        validator: (val) =>
-                            val.isEmpty ? 'This field is mandatory' : null,
-                        onChanged: (val) {
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      DropdownListForCollegeName(
+                        institution: 'college',
+                        universityName: university,
+                        selectedCollegeName: collegeName,
+                        onpressed: (val) {
                           collegeName = val;
                         },
+                      ),
+                      SizedBox(
+                        height: 5.0,
                       ),
                       SizedBox(
                         height: 5.0,

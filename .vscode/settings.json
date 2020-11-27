@@ -4,13 +4,9 @@
     "ios": true,
     "build": true,
     ".dart_tool": true,
-    ".idea": true,
-    ".vscode": true,
     ".flutter-plugins": true,
-    ".flutter-plugins-dependencies": true,
     "README.md": true,
     "pubspec.lock": true,
-    "android": true,
     "lib\\Screens\\parent_screen": true
   }
 }

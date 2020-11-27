@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
       screens: _buildScreens(),
       items: _navBarsItems(),
 
-      confineInSafeArea: true,
+      confineInSafeArea: false,
       backgroundColor: HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset:
