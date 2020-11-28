@@ -7,23 +7,44 @@ class DatabaseService {
     this.uid,
   });
 
-  final CollectionReference collectionReference = FirebaseFirestore.instance
-      .collection('kannur_university')
-      .doc('stems')
-      .collection('users');
-  Future checkUserRole(DocumentSnapshot snapshot) async {
+  final CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('college');
+
+  Future checkUserRole(String institution, String university, String college,
+      String department, String course) async {
     try {
       //todo implement role checking
+
     } catch (e) {}
   }
 
-  Future updateStudentData(String name, String regNumber, String course,
-      String currentYear, String role) async {
-    return await collectionReference.doc(uid).set({
+  Future updateStudentData(
+      String university,
+      String college,
+      String department,
+      String course,
+      String name,
+      String regNumber,
+      String year,
+      String role) async {
+    return await collectionReference
+        .doc(university)
+        .collection('CollegeNames')
+        .doc(college)
+        .collection('DepartmentNames')
+        .doc(department)
+        .collection('CourseNames')
+        .doc(course)
+        .collection('users')
+        .doc(uid)
+        .set({
+      'University': university,
+      'College': college,
+      'Departmnet': department,
+      'course': course,
+      'Current Year': year,
       'Name': name,
       'Registration Number': regNumber,
-      'course': course,
-      'Current Year': currentYear,
       'role': role
     });
   }
@@ -36,6 +57,19 @@ class DatabaseService {
       'department': department,
       'role': role,
     });
+  }
+
+  // adding new university
+
+  Future addNewUniversity(String universityName) async {
+    try {
+      final DocumentReference newUniversityDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName');
+      return newUniversityDocument.id;
+    } catch (e) {
+      return null;
+    }
   }
 
   Stream<QuerySnapshot> get userCollection {

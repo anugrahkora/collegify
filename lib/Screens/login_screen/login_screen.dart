@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           } on FirebaseAuthException catch (e) {
                             setState(() {
-                              _message = e.toString();
+                              _message = e.message.toString();
                               loading = false;
                             });
                           }
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   child: Text(
-                    "forgot password? ",
+                    "Forgot passsword?",
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontSize: 15),
                   ),

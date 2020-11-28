@@ -1,10 +1,10 @@
+import 'package:collegify/Screens/admin_screen/admin_home.dart';
+import 'package:collegify/Screens/admin_screen/admin_navigation.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'Screens/parent_screen/parent_home/parent_navigation_screen.dart';
-import 'Screens/student_screen/student_home/student_home.dart';
-import 'Screens/student_screen/student_home/student_userDetails.dart';
 import 'Screens/welcome_screen/Welcomescreen_wrapper.dart';
 import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
 //import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
@@ -38,6 +38,7 @@ class InitializeMyapp extends StatelessWidget {
           '/parentRegisterScreen': (context) => ParentRegisterScreen(),
           '/studentNavigationScreen': (context) => StudentNavigationScreen(),
           '/teacherNavigationScreen': (context) => TeacherNavigationScreen(),
+          '/adminHome': (context) => AdminHome(),
         },
       ),
     );

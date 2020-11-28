@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/admin_screen/admin_home.dart';
+import 'package:collegify/Screens/admin_screen/admin_user_screen.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_home.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
@@ -16,8 +17,7 @@ import 'package:provider/provider.dart';
 List<Widget> _buildScreens() {
   return [
     AdminHome(),
-    StudentUserDetails(),
-    StudentAnalytics(),
+    AdminUserScreen(),
   ];
 }
 
@@ -30,14 +30,8 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person_2_fill),
-      title: ("Add Staff "),
-      activeColor: CupertinoColors.activeBlue,
-      inactiveColor: CupertinoColors.systemGrey,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person_alt_circle_fill),
-      title: ("Profile"),
+      icon: Icon(CupertinoIcons.profile_circled),
+      title: ('Profile'),
       activeColor: CupertinoColors.activeBlue,
       inactiveColor: CupertinoColors.systemGrey,
     ),
@@ -46,12 +40,12 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
-class StudentNavigationScreen extends StatefulWidget {
+class AdminNavigationScreen extends StatefulWidget {
   @override
-  _StudNavigationScreenState createState() => _StudNavigationScreenState();
+  _AdminigationScreenState createState() => _AdminigationScreenState();
 }
 
-class _StudNavigationScreenState extends State<StudentNavigationScreen> {
+class _AdminigationScreenState extends State<AdminNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(

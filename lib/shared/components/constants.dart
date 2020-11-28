@@ -104,7 +104,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
     return TextFieldContainer(
       child: TextFormField(
         validator: widget.validator,
-        onSaved: widget.onChanged,
+        onChanged: widget.onChanged,
         obscureText: widget.boolean,
         decoration: InputDecoration(
           hintText: widget.hintText,

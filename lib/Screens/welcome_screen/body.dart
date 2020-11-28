@@ -1,3 +1,4 @@
+import 'package:collegify/Screens/admin_screen/admin_home.dart';
 import 'package:collegify/Screens/login_screen/login_screen.dart';
 import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
 //import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
@@ -64,7 +65,8 @@ class _BodyState extends State<Body> {
       LoginScreen(),
       StudentRegisterScreen(),
       TeacherRegisterScreen(),
-      ParentRegisterScreen()
+      ParentRegisterScreen(),
+      AdminHome(),
     ];
   }
 
@@ -103,6 +105,16 @@ class _BodyState extends State<Body> {
       PersistentBottomNavBarItem(
         icon: ImageIcon(
           AssetImage('assets/icons/iconParent.png'),
+          color: HexColor(appSecondaryColour),
+        ),
+        title: ("Parent"),
+        activeColor: Colors.white,
+        inactiveColor: CupertinoColors.systemGrey,
+        activeContentColor: HexColor(appSecondaryColour),
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          CupertinoIcons.checkmark_alt_circle,
           color: HexColor(appSecondaryColour),
         ),
         title: ("Parent"),
