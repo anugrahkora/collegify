@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //this class is used to
   UserModel _userFromFirebaseUser(User user) {
     return user != null ? UserModel(uid: user.uid) : null;
   }
@@ -71,6 +70,7 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
+
       await DatabaseService(uid: user.uid)
           .updateTeacherData(firstname, lastname, department, role);
       return _userFromFirebaseUser(user);
@@ -80,4 +80,10 @@ class AuthService {
       rethrow;
     }
   }
+
+  // Future<Map<dynamic, dynamic>> get currentUserClaims async {
+  //   final role = FirebaseAuth.instance.currentUser;
+  //   final idTokenResult = await role.getIdTokenResult(true);
+  //   return idTokenResult.claims;
+  // }
 }

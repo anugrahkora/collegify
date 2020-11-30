@@ -65,8 +65,6 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
               RoundedButton(
                 text: 'Register',
                 color: HexColor(appSecondaryColour),
-                textColor: Colors.white,
-                press: () {},
               ),
               SizedBox(
                 height: 15.0,

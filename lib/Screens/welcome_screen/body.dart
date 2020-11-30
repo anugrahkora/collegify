@@ -117,7 +117,7 @@ class _BodyState extends State<Body> {
           CupertinoIcons.checkmark_alt_circle,
           color: HexColor(appSecondaryColour),
         ),
-        title: ("Parent"),
+        title: ("Admin"),
         activeColor: Colors.white,
         inactiveColor: CupertinoColors.systemGrey,
         activeContentColor: HexColor(appSecondaryColour),

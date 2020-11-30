@@ -66,9 +66,25 @@ class DatabaseService {
       final DocumentReference newUniversityDocument = FirebaseFirestore.instance
           .collection('college')
           .doc('$universityName');
-      return newUniversityDocument.id;
+      return await newUniversityDocument
+          .set({"UniversityName": universityName});
     } catch (e) {
-      return null;
+      rethrow;
+    }
+  }
+
+  //add new college uner a given university
+
+  Future addNewCollege(String universityName, String collegeName) async {
+    try {
+      final DocumentReference newCollegeDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName');
+      return await newCollegeDocument.set({"Collegename": collegeName});
+    } catch (e) {
+      rethrow;
     }
   }
 

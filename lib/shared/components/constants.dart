@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const appPrimaryColour = '#55D9C1';
@@ -38,16 +40,16 @@ class HeadingText extends StatelessWidget {
 }
 
 class RoundedButton extends StatefulWidget {
-  final String text, route;
-  final Function press;
-  final Color color, textColor;
+  final String text;
+  final Function onPressed;
+  final Color color;
+  final bool loading;
 
   RoundedButton({
     this.text,
-    this.route,
-    this.press,
     this.color,
-    this.textColor,
+    this.loading,
+    this.onPressed,
   }) : super();
 
   @override
@@ -66,12 +68,17 @@ class _RoundedButtonState extends State<RoundedButton> {
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: widget.color,
-          onPressed: widget.press,
-          child: Text(
-            widget.text,
-            style:
-                GoogleFonts.montserrat(color: widget.textColor, fontSize: 20),
-          ),
+          onPressed: widget.onPressed,
+          child: widget.loading
+              ? Loader(
+                  color: HexColor(appSecondaryColour),
+                  size: 20,
+                )
+              : Text(
+                  widget.text,
+                  style:
+                      GoogleFonts.montserrat(color: Colors.white, fontSize: 16),
+                ),
         ),
       ),
     );
@@ -182,60 +189,6 @@ class AlertWidget extends StatelessWidget {
     }
     return SizedBox(
       height: 0,
-    );
-  }
-}
-
-class DropDownListContainer extends StatefulWidget {
-  //final Widget child;
-  final Color color;
-  final int data;
-  final ValueChanged<int> onpressed;
-  DropDownListContainer({
-    this.color,
-    this.onpressed,
-    this.data,
-  });
-
-  @override
-  _DropDownListContainerState createState() => _DropDownListContainerState();
-}
-
-class _DropDownListContainerState extends State<DropDownListContainer> {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
-        color: widget.color,
-        borderRadius: BorderRadius.circular(29),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: widget.data,
-          items: [
-            DropdownMenuItem(
-              child: Text('1st year',
-                  style: GoogleFonts.montserrat(color: Colors.black54)),
-              value: 1,
-            ),
-            DropdownMenuItem(
-              child: Text('2nd year',
-                  style: GoogleFonts.montserrat(color: Colors.black54)),
-              value: 2,
-            ),
-            DropdownMenuItem(
-              child: Text('3rd year',
-                  style: GoogleFonts.montserrat(color: Colors.black54)),
-              value: 3,
-            ),
-          ],
-          onChanged: widget.onpressed,
-        ),
-      ),
     );
   }
 }
