@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
   final String uid;
+  final String displayName;
 
   DatabaseService({
+    this.displayName,
     this.uid,
   });
 
@@ -49,13 +51,26 @@ class DatabaseService {
     });
   }
 
-  Future updateTeacherData(
-      String firstName, String lastName, String department, String role) async {
-    return await collectionReference.doc(uid).set({
-      'first_name': firstName,
-      'last_name': lastName,
-      'department': department,
-      'role': role,
+  Future updateTeacherData(String university, String college, String department,
+      String course, String name, String role) async {
+    return await collectionReference
+        .doc(university)
+        .collection('CollegeNames')
+        .doc(college)
+        .collection('DepartmentNames')
+        .doc(department)
+        .collection('CourseNames')
+        .doc(course)
+        .collection('users')
+        .doc(uid)
+        .set({
+      'University': university,
+      'College': college,
+      'Departmnet': department,
+      'course': course,
+      'Current Year': 0,
+      'Name': name,
+      'role': role
     });
   }
 

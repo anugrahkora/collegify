@@ -13,6 +13,12 @@ class AuthService {
     return user != null ? UserModel(uid: user.uid) : null;
   }
 
+  // UserModel _studentFromFirebaseuser(User user,String role) {
+  //   return user != null
+  //       ? UserModel(uid: user.uid, displayname: role)
+  //       : null;
+  // }
+
   Stream<UserModel> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
@@ -64,15 +70,23 @@ class AuthService {
     }
   }
 
-  Future teacherregisterWithEmailpasswd(String email, String password,
-      String firstname, String lastname, String department, String role) async {
+  Future teacherregisterWithEmailpasswd(
+    String university,
+    String college,
+    String department,
+    String course,
+    String name,
+    String email,
+    String password,
+    String role,
+  ) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
 
-      await DatabaseService(uid: user.uid)
-          .updateTeacherData(firstname, lastname, department, role);
+      await DatabaseService(uid: user.uid).updateTeacherData(
+          university, college, department, course, name, role);
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
@@ -80,10 +94,4 @@ class AuthService {
       rethrow;
     }
   }
-
-  // Future<Map<dynamic, dynamic>> get currentUserClaims async {
-  //   final role = FirebaseAuth.instance.currentUser;
-  //   final idTokenResult = await role.getIdTokenResult(true);
-  //   return idTokenResult.claims;
-  // }
 }

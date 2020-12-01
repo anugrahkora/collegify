@@ -5,6 +5,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
 import 'package:collegify/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,11 +32,14 @@ class _WelcomescreenState extends State<Welcomescreen> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance
         .addPostFrameCallback((_) async => await checkUserType());
-
+    //final role = FirebaseAuth.instance.currentUser;
     final user = Provider.of<UserModel>(context, listen: false);
-    if (user != null)
+
+    if (user != null) {
       // Navigator.pushReplacementNamed(context, '/StudentHome');
+      print(user.displayname);
       return StudentNavigationScreen();
+    }
     // } else if (user != null && usertype == 2) {
     //   return TeacherNavigationScreen();
     // } else if (user != null && usertype == 3) {

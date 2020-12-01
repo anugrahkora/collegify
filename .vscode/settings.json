@@ -7,7 +7,6 @@
     ".flutter-plugins": true,
     "README.md": true,
     "pubspec.lock": true,
-    "lib\\Screens\\teacher_screen": true,
     "lib\\Screens\\parent_screen": true
   }
 }

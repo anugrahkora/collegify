@@ -234,6 +234,9 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               SnackBar(
                                 content: Text('User successfully registered'),
                               );
+                              // dynamic role =
+                              //     await _authService.currentUserClaims;
+                              // print(role);
                               setState(() {
                                 loading = false;
                               });

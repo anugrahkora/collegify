@@ -360,3 +360,93 @@ class _DropDownListState extends State<DropDownList> {
     );
   }
 }
+
+class DropDownListForYearData extends StatefulWidget {
+  final String universityName;
+  final String collegeName;
+  final String departmentName;
+  final String courseName;
+  final String selectedYear;
+  final Function onpressed;
+
+  const DropDownListForYearData(
+      {Key key,
+      this.universityName,
+      this.collegeName,
+      this.departmentName,
+      this.onpressed,
+      this.courseName,
+      this.selectedYear})
+      : super(key: key);
+  @override
+  _DropDownListForYearDataState createState() =>
+      _DropDownListForYearDataState();
+}
+
+class _DropDownListForYearDataState extends State<DropDownListForYearData> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(29),
+      ),
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('college')
+            .doc("${widget.universityName}")
+            .collection('CollegeNames')
+            .doc("${widget.collegeName}")
+            .collection('DepartmentNames')
+            .doc("${widget.departmentName}")
+            .collection('CourseNames')
+            .doc("${widget.courseName}")
+            .collection('years')
+            .snapshots(),
+        builder: (context, snapshot) {
+          List<DropdownMenuItem> yearData = [];
+
+          if (!snapshot.hasData) {
+            return SizedBox(
+              width: size.width * 0.5,
+              child: Text(
+                'Please select a University,College, Department and course',
+                style: GoogleFonts.montserrat(color: Colors.black54),
+              ),
+            );
+          }
+
+          for (int i = 0; i < snapshot.data.docs.length; i++) {
+            DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
+            yearData.add(
+              DropdownMenuItem(
+                child: SizedBox(
+                  width: size.width * 0.5,
+                  child: Text(
+                    documentSnapshot.id.replaceAll('_', ' '),
+                    style: GoogleFonts.montserrat(color: Colors.black54),
+                  ),
+                ),
+                value: "${documentSnapshot.id}",
+              ),
+            );
+          }
+
+          return DropdownButtonHideUnderline(
+            child: DropdownButton(
+              elevation: 16,
+              hint: Text("Select your course"),
+              value: widget.selectedYear,
+              items: yearData,
+              onChanged: widget.onpressed,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
