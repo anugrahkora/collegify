@@ -1,23 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/models/role_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DatabaseService {
   final String uid;
-  final String displayName;
 
   DatabaseService({
-    this.displayName,
     this.uid,
   });
 
-  final CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection('college');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future checkUserRole(String institution, String university, String college,
-      String department, String course) async {
-    try {
-      //todo implement role checking
+  //gets the current user
+  // Future checkRole() {
+  //   _auth.currentUser.reload();
+  //   return userCollectionReference.doc(uid).snapshots();
+  // }
 
-    } catch (e) {}
+  //references of users
+  final CollectionReference userCollectionReference =
+      FirebaseFirestore.instance.collection('users');
+//Stream of user data
+  Stream<DocumentSnapshot> get role {
+    _auth.currentUser.reload();
+    return userCollectionReference.doc(uid).snapshots();
+  }
+  /////
+  /////
+  ///
+  ///
+  ///
+  ///
+
+  Future<DocumentSnapshot> checkRole() async {
+    return await userCollectionReference.doc(uid).get();
   }
 
   Future updateStudentData(
@@ -29,17 +46,7 @@ class DatabaseService {
       String regNumber,
       String year,
       String role) async {
-    return await collectionReference
-        .doc(university)
-        .collection('CollegeNames')
-        .doc(college)
-        .collection('DepartmentNames')
-        .doc(department)
-        .collection('CourseNames')
-        .doc(course)
-        .collection('users')
-        .doc(uid)
-        .set({
+    return await userCollectionReference.doc(uid).set({
       'University': university,
       'College': college,
       'Departmnet': department,
@@ -53,17 +60,7 @@ class DatabaseService {
 
   Future updateTeacherData(String university, String college, String department,
       String course, String name, String role) async {
-    return await collectionReference
-        .doc(university)
-        .collection('CollegeNames')
-        .doc(college)
-        .collection('DepartmentNames')
-        .doc(department)
-        .collection('CourseNames')
-        .doc(course)
-        .collection('users')
-        .doc(uid)
-        .set({
+    return await userCollectionReference.doc(uid).set({
       'University': university,
       'College': college,
       'Departmnet': department,
@@ -76,34 +73,60 @@ class DatabaseService {
 
   // adding new university
 
-  Future addNewUniversity(String universityName) async {
+  Future addNewDepartment(
+      String universityName, String collegeName, String departmentName) async {
     try {
-      final DocumentReference newUniversityDocument = FirebaseFirestore.instance
-          .collection('college')
-          .doc('$universityName');
-      return await newUniversityDocument
-          .set({"UniversityName": universityName});
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  //add new college uner a given university
-
-  Future addNewCollege(String universityName, String collegeName) async {
-    try {
-      final DocumentReference newCollegeDocument = FirebaseFirestore.instance
+      final DocumentReference newDepartmentDocument = FirebaseFirestore.instance
           .collection('college')
           .doc('$universityName')
           .collection('CollegeNames')
-          .doc('$collegeName');
-      return await newCollegeDocument.set({"Collegename": collegeName});
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName');
+      return await newDepartmentDocument.set({"Department": departmentName});
     } catch (e) {
       rethrow;
     }
   }
 
-  Stream<QuerySnapshot> get userCollection {
-    return collectionReference.snapshots();
+  //add new college under a given university
+
+  Future addNewCourse(String universityName, String collegeName,
+      String departmentName, String courseName) async {
+    try {
+      final DocumentReference newCourseDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName');
+      return await newCourseDocument.set({"Course": courseName});
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // add new year
+  Future addNewYear(String universityName, String collegeName,
+      String departmentName, String courseName, String year) async {
+    try {
+      final DocumentReference newYearDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('years')
+          .doc('$year');
+      return await newYearDocument.set({"year": year});
+    } catch (e) {
+      rethrow;
+    }
   }
 }

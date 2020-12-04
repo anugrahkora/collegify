@@ -62,8 +62,8 @@ class TeacherNavigationScreen extends StatefulWidget {
 class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().userCollection,
+    return StreamProvider<DocumentSnapshot>.value(
+      value: DatabaseService().role,
       child: PersistentTabView(
         controller: _controller,
         screens: _buildScreens(),

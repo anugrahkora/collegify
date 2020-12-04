@@ -126,7 +126,10 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   departmentName: departmentName,
                   selectedCourseName: courseName,
                   onpressed: (val) {
-                    courseName = val;
+                    setState(() {
+                      courseName = val;
+                      year = null;
+                    });
                   },
                 ),
                 SizedBox(
@@ -159,14 +162,16 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 SizedBox(
                   height: 5.0,
                 ),
-                DropDownList(
-                  list: ['1st', '2nd', '3rd'],
-                  selectedItem: year,
-                  onpressed: (val) {
-                    year = val;
-                  },
-                ),
-
+                DropDownListForYearData(
+                    universityName: university,
+                    collegeName: collegeName,
+                    departmentName: departmentName,
+                    selectedYear: year,
+                    onpressed: (val) {
+                      setState(() {
+                        year = val;
+                      });
+                    }),
                 SizedBox(
                   height: 5.0,
                 ),
@@ -223,7 +228,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               collegeName,
                               departmentName,
                               courseName,
-                              year.toString(),
+                              year,
                               name,
                               registrationNumber,
                               'student',

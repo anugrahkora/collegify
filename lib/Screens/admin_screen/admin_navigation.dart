@@ -48,8 +48,8 @@ class AdminNavigationScreen extends StatefulWidget {
 class _AdminigationScreenState extends State<AdminNavigationScreen> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().userCollection,
+    return StreamProvider<DocumentSnapshot>.value(
+      value: DatabaseService().role,
       child: PersistentTabView(
         controller: _controller,
         screens: _buildScreens(),

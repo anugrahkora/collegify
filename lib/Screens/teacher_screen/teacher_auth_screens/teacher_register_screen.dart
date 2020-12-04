@@ -189,9 +189,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                 loading = true;
                               });
                               try {
-                                // SharedPreferences usertype =
-                                //     await SharedPreferences.getInstance();
-                                // usertype.setInt('usertype', 2);
                                 dynamic result = await _authService
                                     .teacherregisterWithEmailpasswd(
                                         university,
@@ -204,9 +201,8 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                         'teacher');
                                 if (result != null) {
                                   print('teacher registered');
-                                  setState(() {
-                                    loading = false;
-                                  });
+
+                                  loading = false;
                                 } else {
                                   setState(() {
                                     loading = false;
@@ -220,11 +216,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                               }
                             }
                           },
-                          child: HeadingText(
-                            color: Colors.white,
-                            text: 'Register',
-                            size: 16.0,
-                          ),
+                          child: loading
+                              ? Loader(
+                                  color: HexColor(appSecondaryColour),
+                                  size: 20,
+                                )
+                              : HeadingText(
+                                  color: Colors.white,
+                                  text: 'Register',
+                                  size: 16.0,
+                                ),
                         ))),
                 SizedBox(
                   height: 15.0,

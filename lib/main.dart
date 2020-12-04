@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/admin_screen/admin_home.dart';
 import 'package:collegify/Screens/admin_screen/admin_navigation.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
 import 'package:collegify/authentication/auth_service.dart';
+import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'Screens/parent_screen/parent_home/parent_navigation_screen.dart';
@@ -27,8 +29,14 @@ void main() async {
 class InitializeMyapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserModel>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<UserModel>(
+          create: (context) => AuthService().user,
+        ),
+        StreamProvider<DocumentSnapshot>(
+            create: (context) => DatabaseService().role)
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Welcomescreen(),

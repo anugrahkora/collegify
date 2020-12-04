@@ -13,20 +13,12 @@ class AuthService {
     return user != null ? UserModel(uid: user.uid) : null;
   }
 
-  // UserModel _studentFromFirebaseuser(User user,String role) {
-  //   return user != null
-  //       ? UserModel(uid: user.uid, displayname: role)
-  //       : null;
-  // }
-
   Stream<UserModel> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
   Future signOut() async {
     try {
-      SharedPreferences usertype = await SharedPreferences.getInstance();
-      usertype.setInt('usertype', 0);
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
@@ -61,7 +53,8 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
       await DatabaseService(uid: user.uid).updateStudentData(
-          university, college, department, course, year, name, regNumber, role);
+          university, college, department, course, name, regNumber, year, role);
+
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
@@ -90,8 +83,16 @@ class AuthService {
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
-      //return null;
+
       rethrow;
     }
   }
+  // Future<Map<dynamic, dynamic>> get _currentUserClaims async {
+  //   final user = _auth.currentUser;
+
+  //   // If refresh is set to true, a refresh of the id token is forced.
+  //   final idTokenResult = await user.getIdTokenResult(true);
+
+  //   return idTokenResult.claims;
+  // }
 }

@@ -95,9 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             print(password);
                             if (result != null) {
                               print('user Logged in');
-                              setState(() {
-                                loading = false;
-                              });
+
+                              loading = false;
                             } else {
                               setState(() {
                                 loading = false;

@@ -17,7 +17,7 @@ class StudentUserDetails extends StatefulWidget {
 class _StudentUserDetailsState extends State<StudentUserDetails> {
   @override
   Widget build(BuildContext context) {
-    final studentUsers = Provider.of<QuerySnapshot>(context);
+    //final studentUsers = Provider.of<DocumentSnapshot>(context);
     //print(userDetails);
     // for (var doc in studentUsers.docs) {
     //   print(doc.data());

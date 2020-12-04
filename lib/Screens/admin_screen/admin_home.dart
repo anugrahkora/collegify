@@ -15,8 +15,8 @@ class _AdminHomeState extends State<AdminHome> {
   final _formkey = GlobalKey<FormState>();
   bool loading = false;
   //bool flag = false;
-  String university, newUniversity;
-  String college, newCollege;
+  String university;
+  String college;
   String department, newDepartment;
   String course, newCourse;
   String year, newYear;
@@ -77,49 +77,6 @@ class _AdminHomeState extends State<AdminHome> {
                 SizedBox(
                   height: 5.0,
                 ),
-                RoundedInputField(
-                  hintText: "Add new University",
-                  onChanged: (val) {
-                    newUniversity = val.replaceAll(' ', '_');
-                  },
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                RoundedButton(
-                  text: 'Add new University',
-                  loading: loading,
-                  color: HexColor(appSecondaryColour),
-                  onPressed: () async {
-                    try {
-                      setState(() {
-                        loading = true;
-                      });
-                      dynamic result = await DatabaseService()
-                          .addNewUniversity(newUniversity);
-                      if (result == null) {
-                        setState(() {
-                          _message =
-                              "Successfuly added ${newUniversity.replaceAll('_', ' ')} ";
-                          loading = false;
-                        });
-                      } else {
-                        setState(() {
-                          loading = false;
-                        });
-                      }
-                    } catch (e) {
-                      setState(() {
-                        _message = e.toString();
-                        loading = false;
-                      });
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                // list of colleges
                 DropdownListForCollegeName(
                   universityName: university,
                   selectedCollegeName: college,
@@ -134,17 +91,34 @@ class _AdminHomeState extends State<AdminHome> {
                 SizedBox(
                   height: 5.0,
                 ),
+                DropDownListForDepartmentName(
+                  universityName: university,
+                  collegeName: college,
+                  selectedDepartmentName: department,
+                  onpressed: (val) {
+                    setState(() {
+                      course = null;
+                      newDepartment = null;
+                      newCourse = null;
+                      newYear = null;
+                      department = val;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
                 RoundedInputField(
-                  hintText: "Add new College",
+                  hintText: "Add new department",
                   onChanged: (val) {
-                    newCollege = val.replaceAll(' ', '_');
+                    newDepartment = val.replaceAll(' ', '_');
                   },
                 ),
                 SizedBox(
                   height: 5.0,
                 ),
                 RoundedButton(
-                  text: 'Add new college',
+                  text: 'Add new department',
                   loading: loading,
                   color: HexColor(appSecondaryColour),
                   onPressed: () async {
@@ -153,11 +127,11 @@ class _AdminHomeState extends State<AdminHome> {
                         loading = true;
                       });
                       dynamic result = await DatabaseService()
-                          .addNewCollege(university, newCollege);
+                          .addNewDepartment(university, college, newDepartment);
                       if (result == null) {
                         setState(() {
                           _message =
-                              "Successfuly added ${newCollege.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')} ";
+                              "Successfuly added ${newDepartment.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')} ";
                           loading = false;
                         });
                       } else {
@@ -176,37 +150,17 @@ class _AdminHomeState extends State<AdminHome> {
                 SizedBox(
                   height: 15.0,
                 ),
-                //list of departments
-                DropDownListForDepartmentName(
-                  universityName: university,
-                  collegeName: college,
-                  selectedDepartmentName: department,
-                  onpressed: (val) {
-                    setState(() {
-                      course = null;
-                      department = val;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                RoundedInputField(
-                  hintText: "Add new Department",
-                  onChanged: (val) {
-                    newDepartment = val.replaceAll(' ', '_');
-                  },
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
+
+                // list of courses
                 DropDownListForCourseNames(
                   universityName: university,
                   collegeName: college,
                   departmentName: department,
                   selectedCourseName: course,
                   onpressed: (val) {
-                    course = val;
+                    setState(() {
+                      course = val;
+                    });
                   },
                 ),
                 SizedBox(
@@ -219,12 +173,94 @@ class _AdminHomeState extends State<AdminHome> {
                   },
                 ),
                 SizedBox(
+                  height: 5.0,
+                ),
+                RoundedButton(
+                  text: 'Add new course',
+                  loading: loading,
+                  color: HexColor(appSecondaryColour),
+                  onPressed: () async {
+                    try {
+                      setState(() {
+                        loading = true;
+                      });
+                      dynamic result = await DatabaseService().addNewCourse(
+                          university, college, department, newCourse);
+                      if (result == null) {
+                        setState(() {
+                          _message =
+                              "Successfuly added ${newCourse.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')}, ${department.replaceAll('_', ' ')}";
+                          loading = false;
+                        });
+                      } else {
+                        setState(() {
+                          loading = false;
+                        });
+                      }
+                    } catch (e) {
+                      setState(() {
+                        _message = e.toString();
+                        loading = false;
+                      });
+                    }
+                  },
+                ),
+                SizedBox(
                   height: 15.0,
+                ),
+
+                DropDownListForYearData(
+                  universityName: university,
+                  collegeName: college,
+                  departmentName: department,
+                  courseName: course,
+                  selectedYear: year,
+                  onpressed: (val) {
+                    year = val;
+                  },
+                ),
+
+                SizedBox(
+                  height: 5.0,
                 ),
                 RoundedInputField(
                   hintText: "Add new year",
                   onChanged: (val) {
                     newYear = val.replaceAll(' ', '_');
+                  },
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+
+                RoundedButton(
+                  text: 'Add new year',
+                  loading: loading,
+                  color: HexColor(appSecondaryColour),
+                  onPressed: () async {
+                    try {
+                      setState(() {
+                        loading = true;
+                      });
+                      dynamic result = await DatabaseService().addNewYear(
+                          university, college, department, course, newYear);
+                      if (result == null) {
+                        setState(() {
+                          _message =
+                              "Successfuly added ${newYear.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')}, ${department.replaceAll('_', ' ')} ,${newCourse.replaceAll('_', ' ')}";
+                          loading = false;
+                        });
+                      } else {
+                        setState(() {
+                          loading = false;
+                        });
+                      }
+                    } catch (e) {
+                      setState(() {
+                        _message = e.toString();
+                        loading = false;
+                      });
+                    }
                   },
                 ),
               ],

@@ -272,7 +272,7 @@ class _DropDownListForCourseNamesState
             .collection('CourseNames')
             .snapshots(),
         builder: (context, snapshot) {
-          List<DropdownMenuItem> departmentName = [];
+          List<DropdownMenuItem> courseName = [];
 
           if (!snapshot.hasData) {
             return SizedBox(
@@ -286,7 +286,7 @@ class _DropDownListForCourseNamesState
 
           for (int i = 0; i < snapshot.data.docs.length; i++) {
             DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
-            departmentName.add(
+            courseName.add(
               DropdownMenuItem(
                 child: SizedBox(
                   width: size.width * 0.5,
@@ -305,7 +305,7 @@ class _DropDownListForCourseNamesState
               elevation: 16,
               hint: Text("Select your course"),
               value: widget.selectedCourseName,
-              items: departmentName,
+              items: courseName,
               onChanged: widget.onpressed,
             ),
           );
@@ -439,7 +439,7 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
           return DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
-              hint: Text("Select your course"),
+              hint: Text("Select year"),
               value: widget.selectedYear,
               items: yearData,
               onChanged: widget.onpressed,
