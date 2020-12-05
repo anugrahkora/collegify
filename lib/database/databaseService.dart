@@ -10,32 +10,30 @@ class DatabaseService {
     this.uid,
   });
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   //gets the current user
-  // Future checkRole() {
-  //   _auth.currentUser.reload();
-  //   return userCollectionReference.doc(uid).snapshots();
-  // }
+  Future<DocumentSnapshot> checkRole() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    _auth.currentUser.reload();
+    DocumentSnapshot snapshot = (await userCollectionReference.doc(uid).get());
+    return snapshot.exists ? snapshot : null;
+  }
 
   //references of users
   final CollectionReference userCollectionReference =
       FirebaseFirestore.instance.collection('users');
 //Stream of user data
-  Stream<DocumentSnapshot> get role {
-    _auth.currentUser.reload();
-    return userCollectionReference.doc(uid).snapshots();
-  }
-  /////
-  /////
-  ///
-  ///
-  ///
-  ///
+  // Stream<QuerySnapshot> get role {
+  //   User user = FirebaseAuth.instance.currentUser;
 
-  Future<DocumentSnapshot> checkRole() async {
-    return await userCollectionReference.doc(uid).get();
-  }
+  //   user.reload();
+  //   return userCollectionReference.snapshots();
+  // }
+  /////
+  /////
+  ///
+  ///
+  ///
+  ///
 
   Future updateStudentData(
       String university,

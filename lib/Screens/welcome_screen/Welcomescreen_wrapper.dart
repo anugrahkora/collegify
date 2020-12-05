@@ -6,6 +6,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
 import 'package:collegify/database/databaseService.dart';
+import 'package:collegify/Screens/welcome_screen/get_user_role.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -23,9 +24,16 @@ class _WelcomescreenState extends State<Welcomescreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    final role = Provider.of<DocumentSnapshot>(context);
     if (user != null) {
-      print(role..data()['role']);
+      Future<DocumentSnapshot> snapshot = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get()
+          .then((docs) {
+        print(docs.data()['role']);
+        return null;
+      });
+
       return StudentNavigationScreen();
     }
 

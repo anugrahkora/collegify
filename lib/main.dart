@@ -34,8 +34,8 @@ class InitializeMyapp extends StatelessWidget {
         StreamProvider<UserModel>(
           create: (context) => AuthService().user,
         ),
-        StreamProvider<DocumentSnapshot>(
-            create: (context) => DatabaseService().role)
+        // StreamProvider<QuerySnapshot>(
+        //     create: (context) => DatabaseService().role)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
