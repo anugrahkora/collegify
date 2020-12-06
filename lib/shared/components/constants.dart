@@ -3,7 +3,6 @@ import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 const appPrimaryColour = '#55D9C1';
 const appSecondaryColour = '#0D0D0D';
@@ -155,14 +154,15 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 
 class AlertWidget extends StatelessWidget {
   final String message;
+  final Color color;
 
   final Function onpressed;
-  AlertWidget({this.message, this.onpressed});
+  AlertWidget({this.message, this.onpressed, this.color});
   @override
   Widget build(BuildContext context) {
     if (message != null) {
       return Container(
-        color: Colors.amber,
+        color: color,
         padding: EdgeInsets.all(8.0),
         child: Row(
           children: <Widget>[

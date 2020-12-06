@@ -7,6 +7,7 @@
     "README.md": true,
     "pubspec.lock": true,
     "android": true,
-    "lib\\models": true
+    "lib\\models": true,
+    "lib\\Screens\\parent_screen": true
   }
 }

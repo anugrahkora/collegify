@@ -1,8 +1,8 @@
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/shared/components/constants.dart';
-import 'package:collegify/shared/components/loadingWidget.dart';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hexcolor/hexcolor.dart';
 import 'package:collegify/shared/components/dropDownList.dart';
 
@@ -14,7 +14,6 @@ class AdminHome extends StatefulWidget {
 class _AdminHomeState extends State<AdminHome> {
   final _formkey = GlobalKey<FormState>();
   bool loading = false;
-  //bool flag = false;
   String university;
   String college;
   String department, newDepartment;
@@ -23,7 +22,7 @@ class _AdminHomeState extends State<AdminHome> {
   String _message;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: HexColor(appPrimaryColour),
       body: SafeArea(
@@ -36,6 +35,7 @@ class _AdminHomeState extends State<AdminHome> {
                   height: 25.0,
                 ),
                 AlertWidget(
+                  color: Colors.greenAccent,
                   message: _message,
                   onpressed: () {
                     setState(() {
@@ -131,7 +131,7 @@ class _AdminHomeState extends State<AdminHome> {
                       if (result == null) {
                         setState(() {
                           _message =
-                              "Successfuly added ${newDepartment.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')} ";
+                              "Successfuly added ${newDepartment.replaceAll('_', ' ')} in ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')} ";
                           loading = false;
                         });
                       } else {
@@ -189,7 +189,7 @@ class _AdminHomeState extends State<AdminHome> {
                       if (result == null) {
                         setState(() {
                           _message =
-                              "Successfuly added ${newCourse.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')}, ${department.replaceAll('_', ' ')}";
+                              "Successfuly added ${newCourse.replaceAll('_', ' ')} in ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')}, ${department.replaceAll('_', ' ')}";
                           loading = false;
                         });
                       } else {

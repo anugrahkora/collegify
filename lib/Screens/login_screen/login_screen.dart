@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -36,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 25.0,
                 ),
                 AlertWidget(
+                  color: Colors.amber,
                   message: _message,
                   onpressed: () {
                     setState(() {

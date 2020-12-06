@@ -49,6 +49,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   height: 30.0,
                 ),
                 AlertWidget(
+                  color: Colors.amber,
                   message: _message,
                   onpressed: () {
                     setState(() {

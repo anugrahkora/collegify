@@ -7,7 +7,7 @@ import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'Screens/parent_screen/parent_home/parent_navigation_screen.dart';
-import 'Screens/welcome_screen/Welcomescreen_wrapper.dart';
+import 'Screens/welcome_screen/role_check.dart';
 import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
 //import 'package:collegify/Screens/parent_screen/parent_screen_authenticate.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_navigation.dart';
@@ -34,12 +34,10 @@ class InitializeMyapp extends StatelessWidget {
         StreamProvider<UserModel>(
           create: (context) => AuthService().user,
         ),
-        // StreamProvider<QuerySnapshot>(
-        //     create: (context) => DatabaseService().role)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Welcomescreen(),
+        home: RoleCheck(),
         routes: {
           '/studentRegisterScreen': (context) => StudentRegisterScreen(),
           '/parentNavigationScreen': (context) => ParentNavigationScreen(),

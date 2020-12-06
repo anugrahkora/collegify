@@ -6,6 +6,7 @@ import 'package:collegify/Screens/student_screen/student_home/student_userDetail
 import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_home.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_profile.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ List<Widget> _buildScreens() {
     TeacherHome(),
     CreateNoteScreen(),
     StudentAttendance(),
+    TeacherProfileScreen(),
   ];
 }
 

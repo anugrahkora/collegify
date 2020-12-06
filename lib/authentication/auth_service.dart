@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collegify/Screens/student_screen/student_auth_screens/student_register_screen.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //this class is used for all auth services
 class AuthService {
@@ -13,10 +10,12 @@ class AuthService {
     return user != null ? UserModel(uid: user.uid) : null;
   }
 
+  // Stream of user containing the uid
   Stream<UserModel> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
+//function to peform signout
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -26,6 +25,7 @@ class AuthService {
     }
   }
 
+//function to login user
   Future loginWithEmailpasswd(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
@@ -35,6 +35,8 @@ class AuthService {
       rethrow;
     }
   }
+
+//function to register user with credentials
 
   Future studentregisterWithEmailpasswd(
     String university,
@@ -49,9 +51,11 @@ class AuthService {
     String password,
   ) async {
     try {
+      //creates student user
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
+      //adds the new user data to the database
       await DatabaseService(uid: user.uid).updateStudentData(
           university, college, department, course, name, regNumber, year, role);
 
@@ -63,6 +67,7 @@ class AuthService {
     }
   }
 
+//teacher register function
   Future teacherregisterWithEmailpasswd(
     String university,
     String college,
@@ -87,12 +92,4 @@ class AuthService {
       rethrow;
     }
   }
-  // Future<Map<dynamic, dynamic>> get _currentUserClaims async {
-  //   final user = _auth.currentUser;
-
-  //   // If refresh is set to true, a refresh of the id token is forced.
-  //   final idTokenResult = await user.getIdTokenResult(true);
-
-  //   return idTokenResult.claims;
-  // }
 }

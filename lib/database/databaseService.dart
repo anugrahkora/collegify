@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collegify/models/role_model.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -10,30 +10,9 @@ class DatabaseService {
     this.uid,
   });
 
-  //gets the current user
-  Future<DocumentSnapshot> checkRole() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    _auth.currentUser.reload();
-    DocumentSnapshot snapshot = (await userCollectionReference.doc(uid).get());
-    return snapshot.exists ? snapshot : null;
-  }
-
   //references of users
   final CollectionReference userCollectionReference =
       FirebaseFirestore.instance.collection('users');
-//Stream of user data
-  // Stream<QuerySnapshot> get role {
-  //   User user = FirebaseAuth.instance.currentUser;
-
-  //   user.reload();
-  //   return userCollectionReference.snapshots();
-  // }
-  /////
-  /////
-  ///
-  ///
-  ///
-  ///
 
   Future updateStudentData(
       String university,
