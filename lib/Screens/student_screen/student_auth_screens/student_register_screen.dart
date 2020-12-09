@@ -6,12 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentRegisterScreen extends StatefulWidget {
-  final Function toggleView;
-  final String message;
-  StudentRegisterScreen({this.toggleView, this.message});
+  StudentRegisterScreen();
   @override
   _StudentRegisterScreenState createState() => _StudentRegisterScreenState();
 }
@@ -237,15 +234,10 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               password,
                             );
                             if (result != null) {
+                              print('registered');
                               SnackBar(
                                 content: Text('User successfully registered'),
                               );
-                              // dynamic role =
-                              //     await _authService.currentUserClaims;
-                              // print(role);
-                              setState(() {
-                                loading = false;
-                              });
                             } else {
                               setState(() {
                                 loading = false;
@@ -270,19 +262,6 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               size: 16.0,
                             ),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    widget.toggleView();
-                  },
-                  child: HeadingText(
-                    text: 'Already registered?',
-                    color: Colors.white,
-                    size: 10,
                   ),
                 ),
               ],

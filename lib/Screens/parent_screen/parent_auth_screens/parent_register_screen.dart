@@ -9,6 +9,7 @@ class ParentRegisterScreen extends StatefulWidget {
 }
 
 class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,17 +66,10 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
               RoundedButton(
                 text: 'Register',
                 color: HexColor(appSecondaryColour),
+                loading: loading,
               ),
               SizedBox(
                 height: 15.0,
-              ),
-              InkWell(
-                onTap: () {},
-                child: HeadingText(
-                  text: 'Already registered?',
-                  color: Colors.white,
-                  size: 15,
-                ),
               ),
             ],
           ),

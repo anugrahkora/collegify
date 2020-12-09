@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/admin_screen/admin_home.dart';
 import 'package:collegify/Screens/admin_screen/admin_navigation.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/navigation.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Teacher_Navigation.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';

@@ -199,7 +199,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                         name,
                                         email,
                                         password,
-                                        'teacher');
+                                        'notVerified');
                                 if (result != null) {
                                   print('teacher registered');
 

@@ -8,6 +8,9 @@
     "pubspec.lock": true,
     "android": true,
     "lib\\models": true,
+    "lib\\Screens\\not_verified.dart": true,
+    "lib\\Screens\\admin_screen": true,
+    "lib\\Screens\\login_screen": true,
     "lib\\Screens\\parent_screen": true
   }
 }
