@@ -35,12 +35,12 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
           .then((docs) {
         if (docs.data().isNotEmpty) {
           setState(() {
-            name = docs.data()['Name'];
-            university = docs.data()['University'];
-            collegeName = docs.data()['College'];
-            departmentName = docs.data()['Department'];
-            courseName = docs.data()['course'];
-            year = docs.data()['year'];
+            name = docs.data()['Name']?? '-----';
+            university = docs.data()['University']?? '-----';
+            collegeName = docs.data()['College']?? '-----';
+            departmentName = docs.data()['Department']?? '-----';
+            courseName = docs.data()['Course']?? '-----';
+            year = docs.data()['Current_Year']?? '-----';
           });
         }
       });
@@ -63,15 +63,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
                 height: 10.0,
               ),
               HeadingText(
-                text: university,
-                size: 115.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: departmentName,
+                text: university.replaceAll('_', ' '),
                 size: 15.0,
                 color: HexColor(appSecondaryColour),
               ),
@@ -79,7 +71,15 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
                 height: 10.0,
               ),
               HeadingText(
-                text: courseName,
+                text: departmentName.replaceAll('_', ' '),
+                size: 15.0,
+                color: HexColor(appSecondaryColour),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              HeadingText(
+                text: courseName.replaceAll('_', ' '),
                 size: 15.0,
                 color: HexColor(appSecondaryColour),
               ),

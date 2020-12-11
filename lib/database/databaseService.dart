@@ -24,27 +24,30 @@ class DatabaseService {
       String year,
       String role) async {
     return await userCollectionReference.doc(uid).set({
+      'Uid':uid,
       'University': university,
       'College': college,
-      'Departmnet': department,
-      'course': course,
-      'Current Year': year,
+      'Department': department,
+      'Course': course,
+      'Current_Year': year,
       'Name': name,
-      'Registration Number': regNumber,
-      'role': role
+      'Registration_Number': regNumber,
+      'Role': role
     });
   }
 
   Future updateTeacherData(String university, String college, String department,
       String course, String name, String role) async {
     return await userCollectionReference.doc(uid).set({
+      'Uid':uid,
       'University': university,
       'College': college,
-      'Departmnet': department,
-      'course': course,
-      'Current Year': 0,
+      'Department': department,
+      'Course': course,
+      'Current_Year': 0,
       'Name': name,
-      'role': role
+      'Role': role,
+      
     });
   }
 
@@ -106,4 +109,11 @@ class DatabaseService {
       rethrow;
     }
   }
+
+  // Future getRole() async {
+  //   String role = '';
+  //   DocumentSnapshot userData = await userCollectionReference.doc(uid).get();
+  //   role = userData.data()['Role'];
+  //   return role;
+  // }
 }

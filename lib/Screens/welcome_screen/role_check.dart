@@ -6,6 +6,7 @@ import 'package:collegify/Screens/student_screen/student_home/student_navigation
 import 'package:collegify/Screens/teacher_screen/teacher_home/Teacher_Navigation.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
+import 'package:collegify/database/databaseService.dart';
 
 import 'package:collegify/models/user_model.dart';
 
@@ -22,8 +23,11 @@ class _RoleCheckState extends State<RoleCheck> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+    
 
     if (user != null) {
+      
+     
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -31,7 +35,7 @@ class _RoleCheckState extends State<RoleCheck> {
           .then((docs) {
         if (docs.data().isNotEmpty) {
           setState(() {
-            role = docs.data()['role'];
+            role = docs.data()['Role'];
           });
         }
       });

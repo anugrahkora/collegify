@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_home.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
-import 'package:collegify/Screens/student_screen/student_home/student_userDetails.dart';
+import 'package:collegify/Screens/student_screen/student_home/student_Profile.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:flutter/material.dart';
 
