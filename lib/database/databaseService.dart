@@ -24,7 +24,7 @@ class DatabaseService {
       String year,
       String role) async {
     return await userCollectionReference.doc(uid).set({
-      'Uid':uid,
+      'Uid': uid,
       'University': university,
       'College': college,
       'Department': department,
@@ -39,7 +39,7 @@ class DatabaseService {
   Future updateTeacherData(String university, String college, String department,
       String course, String name, String role) async {
     return await userCollectionReference.doc(uid).set({
-      'Uid':uid,
+      'Uid': uid,
       'University': university,
       'College': college,
       'Department': department,
@@ -47,7 +47,6 @@ class DatabaseService {
       'Current_Year': 0,
       'Name': name,
       'Role': role,
-      
     });
   }
 
@@ -105,6 +104,18 @@ class DatabaseService {
           .collection('years')
           .doc('$year');
       return await newYearDocument.set({"year": year});
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future addNewClass( String className) async {
+    try {
+      final DocumentReference newClassDocument =
+          FirebaseFirestore.instance.collection('users').doc(uid);
+      return await newClassDocument.update({
+        'Subjects': FieldValue.arrayUnion([className]),
+      });
     } catch (e) {
       rethrow;
     }
