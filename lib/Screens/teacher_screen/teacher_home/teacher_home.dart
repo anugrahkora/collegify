@@ -4,8 +4,10 @@ import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TeacherHome extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class TeacherHome extends StatefulWidget {
 class _TeacherHomeState extends State<TeacherHome> {
   bool loading = false;
   List<String> classList = new List<String>();
+  String _className;
   //getting the list of classes
   Future getClass(String uid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -62,9 +65,10 @@ class _TeacherHomeState extends State<TeacherHome> {
               foregroundColor: Colors.black,
               onPressed: () async {
                 try {
-                  await DatabaseService(uid: user.uid).addNewClass('python');
+                  _openPopup(context, user.uid);
+                  
                 } catch (e) {
-                  print(e);
+                
                 }
               },
               icon: Icon(Icons.add),
@@ -79,6 +83,56 @@ class _TeacherHomeState extends State<TeacherHome> {
               child: buildListView(size),
             ),
           );
+  }
+
+  _openPopup(context, String _uid) {
+    final _formkey = GlobalKey<FormState>();
+    Alert(
+        style: AlertStyle(
+          backgroundColor: HexColor(appPrimaryColour),
+          isOverlayTapDismiss: false,
+          alertBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        context: context,
+        title: "Class Name",
+        content: Form(
+          key: _formkey,
+          child: Column(
+            children: <Widget>[
+              RoundedInputField(
+                validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
+                onChanged: (val) {
+                  setState(() {
+                    _className = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        buttons: [
+          DialogButton(
+            radius: BorderRadius.circular(20),
+            color: HexColor(appSecondaryColour),
+            onPressed: () async {
+              if (_formkey.currentState.validate()) {
+                try {
+                  await DatabaseService(uid: _uid).addNewClass(_className);
+                 
+                } catch (e) {
+                  print(e);
+                }
+              }
+            },
+            child: HeadingText(
+              text: 'Add',
+              color: Colors.white,
+              size: 18,
+            ),
+          )
+        ]).show();
   }
 
   ListView buildListView(Size size) {

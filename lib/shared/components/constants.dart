@@ -3,6 +3,7 @@ import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 const appPrimaryColour = '#55D9C1';
 const appSecondaryColour = '#0D0D0D';

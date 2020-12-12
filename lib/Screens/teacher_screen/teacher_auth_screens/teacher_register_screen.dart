@@ -185,7 +185,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                           color: HexColor(appSecondaryColour),
                           onPressed: () async {
                             if (_formkey.currentState.validate()) {
-                              _formkey.currentState.save();
+                              
                               setState(() {
                                 loading = true;
                               });
