@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
-import 'package:collegify/shared/components/loadingWidget.dart';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -17,10 +18,12 @@ class TeacherHome extends StatefulWidget {
 class _TeacherHomeState extends State<TeacherHome> {
   bool loading = false;
   List<String> classList = new List<String>();
+  DocumentSnapshot snapshot;
   String _className;
   //getting the list of classes
   Future getClass(String uid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    snapshot = await firebaseFirestore.collection('users').doc(uid).get();
 
     await firebaseFirestore.collection('users').doc(uid).get().then((docs) {
       classList = List.from(docs.data()['Subjects']);
@@ -35,17 +38,18 @@ class _TeacherHomeState extends State<TeacherHome> {
     getClass(user.uid);
     return classList.isEmpty
         ? Scaffold(
-            appBar: AppBar(
-              leading: GestureDetector(
-                child: Icon(
-                  Icons.menu,
-                ),
-              ),
-              title: HeadingText(
-                text: 'Classes',
-                color: Colors.black87,
-              ),
-              backgroundColor: HexColor(appPrimaryColour),
+            floatingActionButton: FloatingActionButton(
+              splashColor: HexColor(appSecondaryColour),
+              hoverElevation: 20,
+              elevation: 3.0,
+              backgroundColor: const Color(0xff03dac6),
+              foregroundColor: Colors.black,
+              onPressed: () async {
+                try {
+                  _openPopup(context, user.uid);
+                } catch (e) {}
+              },
+              child: Icon(Icons.add),
             ),
             backgroundColor: HexColor(appPrimaryColour),
             body: Container(
@@ -57,7 +61,7 @@ class _TeacherHomeState extends State<TeacherHome> {
             ),
           )
         : Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
+            floatingActionButton: FloatingActionButton(
               splashColor: HexColor(appSecondaryColour),
               hoverElevation: 20,
               elevation: 3.0,
@@ -66,17 +70,9 @@ class _TeacherHomeState extends State<TeacherHome> {
               onPressed: () async {
                 try {
                   _openPopup(context, user.uid);
-                  
-                } catch (e) {
-                
-                }
+                } catch (e) {}
               },
-              icon: Icon(Icons.add),
-              label: HeadingText(
-                color: Colors.black,
-                text: 'new class',
-                size: 13,
-              ),
+              child: Icon(Icons.add),
             ),
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
@@ -85,6 +81,69 @@ class _TeacherHomeState extends State<TeacherHome> {
           );
   }
 
+  ListView buildListView(Size size) {
+    return ListView.builder(
+      itemCount: classList.length,
+      itemBuilder: (BuildContext context, index) {
+        return
+            // Padding(
+            //   padding: const EdgeInsets.all(28.0),
+            //   child: ListTile(
+            //     hoverColor: HexColor(appSecondaryColour),
+            //     tileColor: HexColor(appPrimaryColour),
+            //     selectedTileColor: HexColor(appSecondaryColour),
+            //     title: HeadingText(
+            //       color: Colors.white,
+            //       text: classList[index],
+            //       size: 20,
+            //     ),
+            //     onTap: () {
+            //   Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => CreateNoteScreen(snapshot: snapshot,className: classList[index],),),);
+            //       print('tapped');
+            //     },
+            //   ),
+            // );
+            Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              alignment: Alignment.topCenter,
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: HexColor(appSecondaryColour),
+                borderRadius: BorderRadius.circular(55),
+              ),
+              child: InkWell(
+                child: HeadingText(
+                  color: Colors.white,
+                  text: classList[index],
+                  size: 23,
+                
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateNoteScreen(snapshot: snapshot,className: classList[index],),),);
+                  print('tapped');
+                },
+              ),
+            ),
+          ],
+       );
+      },
+    );
+  }
+
+  // popup function
   _openPopup(context, String _uid) {
     final _formkey = GlobalKey<FormState>();
     Alert(
@@ -120,7 +179,6 @@ class _TeacherHomeState extends State<TeacherHome> {
               if (_formkey.currentState.validate()) {
                 try {
                   await DatabaseService(uid: _uid).addNewClass(_className);
-                 
                 } catch (e) {
                   print(e);
                 }
@@ -133,36 +191,5 @@ class _TeacherHomeState extends State<TeacherHome> {
             ),
           )
         ]).show();
-  }
-
-  ListView buildListView(Size size) {
-    return ListView.builder(
-      itemCount: classList.length,
-      itemBuilder: (BuildContext context, index) {
-        return Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.topCenter,
-              margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              width: size.width * 0.8,
-              height: 100.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(29),
-              ),
-              child: HeadingText(
-                color: Colors.black87,
-                text: classList[index],
-                size: 20,
-              ),
-            ),
-          ],
-        );
-      },
-    );
   }
 }

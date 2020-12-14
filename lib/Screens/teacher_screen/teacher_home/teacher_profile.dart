@@ -32,13 +32,16 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
           .get()
           .then((docs) {
         if (docs.data().isNotEmpty) {
-          setState(() {
+          if(
+            this.mounted
+          ){setState(() {
             name = docs.data()['Name'] ?? '----';
             university = docs.data()['University'] ?? '----';
             collegeName = docs.data()['College'] ?? '----';
             departmentName = docs.data()['Department'] ?? '----';
             courseName = docs.data()['Course'] ?? '----';
           });
+          }
         }
       });
     }
@@ -94,6 +97,7 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
                 onPressed: () async {
                   loading = true;
                   await _authService.signOut();
+                  // dispose();
                 },
               ),
             ],

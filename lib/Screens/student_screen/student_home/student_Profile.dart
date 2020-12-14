@@ -34,7 +34,9 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
           .get()
           .then((docs) {
         if (docs.data().isNotEmpty) {
-          setState(() {
+          if(this.mounted){
+
+            setState(() {
             name = docs.data()['Name']?? '-----';
             university = docs.data()['University']?? '-----';
             collegeName = docs.data()['College']?? '-----';
@@ -42,6 +44,8 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
             courseName = docs.data()['Course']?? '-----';
             year = docs.data()['Current_Year']?? '-----';
           });
+          }
+          
         }
       });
     }

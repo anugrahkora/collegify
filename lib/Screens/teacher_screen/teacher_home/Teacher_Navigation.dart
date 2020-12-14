@@ -1,18 +1,19 @@
-import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
+
+
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_home.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_profile.dart';
-import 'package:collegify/database/databaseService.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 List<Widget> _buildScreens() {
   return [
     TeacherHome(),
-    CreateNoteScreen(), //add classes and notes
+    
     StudentAttendance(), // from student screen
     TeacherProfileScreen(),
   ];
@@ -23,12 +24,6 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.home),
       title: ("Classes"),
-      activeColor: CupertinoColors.activeBlue,
-      inactiveColor: CupertinoColors.systemGrey,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.book_solid),
-      title: ("Students"),
       activeColor: CupertinoColors.activeBlue,
       inactiveColor: CupertinoColors.systemGrey,
     ),
