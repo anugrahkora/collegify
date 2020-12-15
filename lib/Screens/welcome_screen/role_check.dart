@@ -22,6 +22,7 @@ class _RoleCheckState extends State<RoleCheck> {
   String role;
   @override
   Widget build(BuildContext context) {
+    
     final user = Provider.of<UserModel>(context);
     
 

@@ -31,6 +31,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   String year;
   String _message;
   bool loading = false;
+  bool universityLoading = true;
   String role = '';
   @override
   Widget build(BuildContext context) {
@@ -57,27 +58,56 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     });
                   },
                 ),
-                HeadingText(
-                  text: 'Register',
-                  size: 70.0,
-                  color: Colors.white,
+                SizedBox(
+                  height: 15.0,
+                ),
+                Container(
+                  child:Center(
+                    child: Image.asset('assets/images/student_register_cropped.jpg',
+                     width: size.width*0.8,
+              height: 200,
+              fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: 6.0,
+                  height: 20.0,
                 ),
-                HeadingText(
-                  text: 'as student.',
-                  size: 23.0,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
+              //    Container(
+              //     child: Center(child: Text(
+              //     'Register',
+              //     style:TextStyle(
+              //       fontFamily: 'Qibtiyah',
+              //       fontSize: 80,
+              //       color: Colors.black,
+
+              //     ),
+              //      ),
+              //   ),
+              //   ),
+                
+              //  Container(
+              //     child: Center(child: Text(
+              //     'as student',
+              //     style:TextStyle(
+              //       fontFamily: 'Qibtiyah',
+              //       fontSize: 30,
+              //       color: Colors.black,
+
+              //     ),
+              //      ),
+              //   ),
+              //   ),
+                // SizedBox(
+                //   height: 30.0,
+                // ),
                 //list of universities
                 DropDownListForUniversityNames(
+                 
                   selectedUniversity: university,
                   onpressed: (val) {
                     setState(() {
+                      universityLoading = false;
                       collegeName = null;
                       departmentName = null;
                       courseName = null;

@@ -5,7 +5,10 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/Teacher_Navigation
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
+import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'Screens/parent_screen/parent_home/parent_navigation_screen.dart';
 import 'Screens/welcome_screen/role_check.dart';
 import 'package:collegify/Screens/parent_screen/parent_auth_screens/parent_register_screen.dart';
@@ -19,6 +22,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: HexColor(appPrimaryColour), // status bar color
+  ));
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
@@ -36,6 +43,9 @@ class InitializeMyapp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+
+        color: HexColor(appPrimaryColour),
+        theme: ThemeData(primarySwatch: Colors.green),
         debugShowCheckedModeBanner: false,
         home: RoleCheck(),
         routes: {

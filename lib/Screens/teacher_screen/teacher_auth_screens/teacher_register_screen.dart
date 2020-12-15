@@ -57,22 +57,47 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     });
                   },
                 ),
-                HeadingText(
-                  text: 'Register',
-                  size: 70.0,
-                  color: Colors.white,
+                 SizedBox(
+                  height: 15.0,
+                ),
+                Container(
+                  child:Center(
+                    child: Image.asset('assets/images/teacher_register_cropped.jpg',
+                     width: size.width*0.8,
+              height: 200,
+              fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: 6.0,
+                  height: 20.0,
                 ),
-                HeadingText(
-                  text: 'as teacher.',
-                  size: 23.0,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
+              //    Container(
+              //     child: Center(child: Text(
+              //     'Register',
+              //     style:TextStyle(
+              //       fontFamily: 'Qibtiyah',
+              //       fontSize: 100,
+              //       color: Colors.black
+
+              //     ),
+              //      ),
+              //   ),
+              //   ),
+                
+              //  Container(
+              //     child: Center(child: Text(
+              //     'as teacher',
+              //     style:TextStyle(
+              //       fontFamily: 'Qibtiyah',
+              //       fontSize: 40,
+              //       color: Colors.black,
+
+              //     ),
+              //      ),
+              //   ),
+              //   ),
+                
                 DropDownListForUniversityNames(
                   selectedUniversity: university,
                   onpressed: (val) {

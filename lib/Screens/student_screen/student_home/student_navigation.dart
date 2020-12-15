@@ -15,9 +15,10 @@ import 'package:provider/provider.dart';
 List<Widget> _buildScreens() {
   return [
     StudentHome(),
-    StudentUserDetails(),
+    
     StudentAnalytics(),
-    StudentMarks()
+    StudentMarks(),
+    StudentUserDetails(),
   ];
 }
 

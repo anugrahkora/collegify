@@ -27,6 +27,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+    //get the user data
     if (user != null) {
       FirebaseFirestore.instance
           .collection('users')
@@ -34,22 +35,38 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
           .get()
           .then((docs) {
         if (docs.data().isNotEmpty) {
-          if(this.mounted){
-
+          if (this.mounted) {
             setState(() {
-            name = docs.data()['Name']?? '-----';
-            university = docs.data()['University']?? '-----';
-            collegeName = docs.data()['College']?? '-----';
-            departmentName = docs.data()['Department']?? '-----';
-            courseName = docs.data()['Course']?? '-----';
-            year = docs.data()['Current_Year']?? '-----';
-          });
+              name = docs.data()['Name'] ?? '-----';
+              university = docs.data()['University'] ?? '-----';
+              collegeName = docs.data()['College'] ?? '-----';
+              departmentName = docs.data()['Department'] ?? '-----';
+              courseName = docs.data()['Course'] ?? '-----';
+              year = docs.data()['Current_Year'] ?? '-----';
+            });
           }
-          
         }
       });
     }
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: HexColor(appPrimaryColour),
+        title: HeadingText(
+          alignment: Alignment.topLeft,
+          text: name,
+          color: Colors.black,
+        ),
+        
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
+          child: ImageIcon(
+            AssetImage('assets/icons/iconStudent.png'),
+            color:HexColor(appSecondaryColour),
+            
+          ),
+        ),
+      ),
+      backgroundColor: HexColor(appPrimaryColour),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -58,53 +75,38 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
               SizedBox(
                 height: 20.0,
               ),
-              HeadingText(
-                text: name,
-                size: 20.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: university.replaceAll('_', ' '),
-                size: 15.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: departmentName.replaceAll('_', ' '),
-                size: 15.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: courseName.replaceAll('_', ' '),
-                size: 15.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: year,
-                size: 15.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: registrationNumber,
-                size: 15.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 40.0,
+              Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    
+                    RoundedField(
+                      label: 'University',
+                      text: university.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'College',
+                      text: collegeName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Department',
+                      text: departmentName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Course',
+                      text: courseName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Year',
+                      text: year,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
               RoundedButton(
                 text: 'SignOut',

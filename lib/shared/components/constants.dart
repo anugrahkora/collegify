@@ -7,6 +7,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 const appPrimaryColour = '#55D9C1';
 const appSecondaryColour = '#0D0D0D';
+const appPrimaryColourDark = '#37DBC2';
 const studentPrimaryColour = '#A9CBD9';
 const teacherPrimaryColour = '#73A2BF';
 const parentPrimaryColour = '#537FA6';
@@ -16,22 +17,83 @@ class HeadingText extends StatelessWidget {
   final String text;
   final Color color;
   final double size;
-  const HeadingText({
-    Key key,
-    this.color,
-    this.text,
-    this.size,
-  }) : super(key: key);
+  final Alignment alignment;
+  const HeadingText(
+      {Key key,
+      this.color,
+      this.text,
+      this.size,
+      this.alignment: Alignment.center})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text(
-          text,
-          style: GoogleFonts.montserrat(
-            fontSize: size,
-            color: color,
+      alignment: alignment,
+      child: Text(
+        text,
+        style: GoogleFonts.montserrat(
+          fontSize: size,
+          color: color,
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedField extends StatefulWidget {
+  final String label;
+  final String text;
+  final Color color;
+
+  const RoundedField({Key key, this.text, this.color, this.label})
+      : super(key: key);
+  @override
+  _RoundedFieldState createState() => _RoundedFieldState();
+}
+
+class _RoundedFieldState extends State<RoundedField> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: HexColor(appSecondaryColour),
+          width: 1.5,
+        ),
+        color: HexColor(appPrimaryColour),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(29.0)),
+      ),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      width: size.width * 0.8,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              HeadingText(
+                //alignment: Alignment.topLeft,
+                text: widget.label,
+                color: widget.color,
+                size: 16.0,
+              ),
+              SizedBox(
+                width: 3.0,
+              ),
+              Text(' : '),
+              SizedBox(
+                width: 3.0,
+              ),
+              HeadingText(
+                alignment: Alignment.topLeft,
+                text: widget.text,
+                color: widget.color,
+                size: 16.0,
+              ),
+            ],
           ),
         ),
       ),
@@ -114,6 +176,8 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
         onChanged: widget.onChanged,
         obscureText: widget.boolean,
         decoration: InputDecoration(
+          hintStyle:
+              GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
           hintText: widget.hintText,
           border: InputBorder.none,
         ),
@@ -161,9 +225,17 @@ class AlertWidget extends StatelessWidget {
   AlertWidget({this.message, this.onpressed, this.color});
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     if (message != null) {
       return Container(
-        color: color,
+        margin: EdgeInsets.symmetric(vertical: 10),
+        //padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        width: size.width * 0.8,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(29),
+        ),
+
         padding: EdgeInsets.all(8.0),
         child: Row(
           children: <Widget>[

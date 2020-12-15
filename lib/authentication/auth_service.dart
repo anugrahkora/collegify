@@ -92,4 +92,27 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future parentRegisterWithEmailPassword(
+      String university,
+      String college,
+      String department,
+      String course,
+      String parentName,
+      String wardName,
+      String registrationNumber,
+      String role,
+      String email,
+      String password) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user;
+      await DatabaseService(uid: user.uid)
+          .updateParentData(university, college, department, course,parentName, wardName, registrationNumber, role);
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
 }

@@ -43,16 +43,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     });
                   },
                 ),
-                HeadingText(
-                  text: 'Login',
-                  size: 70.0,
-                  color: Colors.white,
+               
+                SizedBox(
+                  height: 10.0,
+                ),
+                // Container(
+                //   child: Center(child: Text(
+                //   'Collegify',
+                //   style:TextStyle(
+                //     fontFamily: 'Qibtiyah',
+                //     fontSize: 100,
+                //     color: Colors.black,
+
+                //   ),
+                //    ),
+                // ),
+                // ),
+                Container(
+                  child:Center(
+                    child: Image.asset('assets/images/collegify_cropped.jpg',
+                     width: size.width*0.8,
+              height: 150,
+              fit: BoxFit.contain,
+                    ),
+                  ),
+                
                 ),
                 SizedBox(
-                  height: 25.0,
+                  height: 20.0,
                 ),
                 RoundedInputField(
-                  hintText: "Email",
+                  hintText: "email",
                   validator: (val) =>
                       val.isEmpty ? 'Oops! you left this field empty' : null,
                   onChanged: (val) {
@@ -63,9 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 5.0,
                 ),
                 RoundedInputField(
-                  hintText: "Password",
+                  hintText: "password",
                   validator: (val) =>
-                      val.isEmpty ? 'Oops! you left this field empty' : null,
+                      val.isEmpty ? "Can't be empty" : null,
                   boolean: true,
                   onChanged: (val) {
                     password = val;
@@ -128,9 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   child: Text(
-                    "Forgot passsword?",
+                    "Forgot password?",
                     style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 15),
+                        color: Colors.black, fontSize: 15),
                   ),
                 )
               ],

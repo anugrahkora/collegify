@@ -15,7 +15,7 @@ class TeacherProfileScreen extends StatefulWidget {
 class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
   bool loading = false;
   String name = '';
-  String university = '';
+  String university ='';
   String collegeName = '';
   String departmentName = '';
   String courseName = '';
@@ -46,64 +46,75 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
       });
     }
     return Scaffold(
+       appBar: AppBar(
+        backgroundColor: HexColor(appPrimaryColour),
+        title: HeadingText(
+          alignment: Alignment.topLeft,
+          text: name,
+          color: Colors.black,
+        ),
+        
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
+          child: ImageIcon(
+            AssetImage('assets/icons/iconTeacher.png'),
+            color:HexColor(appSecondaryColour),
+            
+          ),
+        ),
+      ),
+      backgroundColor: HexColor(appPrimaryColour),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               SizedBox(
-                height: 40.0,
+                height: 20.0,
               ),
-              HeadingText(
-                text: name,
-                size: 20.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: university.replaceAll('_', ' '),
-                size: 10.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: collegeName.replaceAll('_', ' '),
-                size: 10.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: departmentName.replaceAll('_', ' '),
-                size: 10.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              HeadingText(
-                text: courseName.replaceAll('_', ' '),
-                size: 10.0,
-                color: HexColor(appSecondaryColour),
-              ),
-              RoundedButton(
+              Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    
+                    RoundedField(
+                      label: 'University',
+                      text: university.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'College',
+                      text: collegeName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Department',
+                      text: departmentName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Course',
+                      text: courseName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedButton(
                 text: 'SignOut',
                 color: HexColor(appSecondaryColour),
                 loading: loading,
                 onPressed: () async {
                   loading = true;
+
                   await _authService.signOut();
-                  // dispose();
                 },
               ),
+                  ],
+                ),
+        ),
             ],
-          ),
+      ),
         ),
       ),
+
     );
   }
 }

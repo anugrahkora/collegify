@@ -29,7 +29,8 @@ class _BodyState extends State<Body> {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-
+      
+      
       confineInSafeArea: false,
       backgroundColor: HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,
@@ -56,7 +57,7 @@ class _BodyState extends State<Body> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style13, // Choose the nav bar style with this property.
     );
   }
 
