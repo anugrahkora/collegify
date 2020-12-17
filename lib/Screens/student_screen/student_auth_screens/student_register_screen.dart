@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:collegify/Screens/email_verification_screen/email_verification_screen.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/dropDownList.dart';
@@ -33,6 +36,26 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   bool loading = false;
   bool universityLoading = true;
   String role = '';
+  // bool _isEmailVerified;
+  // Timer _timer;
+
+  // @override
+  // void initState() {
+
+  //   super.initState();
+  //    Future(() async {
+  //       _timer = Timer.periodic(Duration(seconds: 10), (timer) async {
+  //           await FirebaseAuth.instance.currentUser.reload();
+  //           User user = await FirebaseAuth.instance.currentUser;
+  //           if (user.emailVerified) {
+  //               setState((){
+  //                   _isEmailVerified = user.emailVerified;
+  //               });
+  //               timer.cancel();
+  //           }
+  //       });
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -62,48 +85,21 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   height: 15.0,
                 ),
                 Container(
-                  child:Center(
-                    child: Image.asset('assets/images/student_register_cropped.jpg',
-                     width: size.width*0.8,
-              height: 200,
-              fit: BoxFit.contain,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/student_register_cropped.jpg',
+                      width: size.width * 0.8,
+                      height: 200,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
-              //    Container(
-              //     child: Center(child: Text(
-              //     'Register',
-              //     style:TextStyle(
-              //       fontFamily: 'Qibtiyah',
-              //       fontSize: 80,
-              //       color: Colors.black,
 
-              //     ),
-              //      ),
-              //   ),
-              //   ),
-                
-              //  Container(
-              //     child: Center(child: Text(
-              //     'as student',
-              //     style:TextStyle(
-              //       fontFamily: 'Qibtiyah',
-              //       fontSize: 30,
-              //       color: Colors.black,
-
-              //     ),
-              //      ),
-              //   ),
-              //   ),
-                // SizedBox(
-                //   height: 30.0,
-                // ),
                 //list of universities
                 DropDownListForUniversityNames(
-                 
                   selectedUniversity: university,
                   onpressed: (val) {
                     setState(() {
@@ -194,6 +190,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     universityName: university,
                     collegeName: collegeName,
                     departmentName: departmentName,
+                    courseName: courseName,
                     selectedYear: year,
                     onpressed: (val) {
                       setState(() {
@@ -248,8 +245,11 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                             setState(() {
                               loading = true;
                             });
+
                             print(email);
                             print(password);
+
+                            
                             dynamic result = await _authService
                                 .studentregisterWithEmailpasswd(
                               university,
@@ -264,13 +264,16 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                               password,
                             );
                             if (result != null) {
+                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>EmailVerifyScreen()));
+
                               print('registered');
-                              SnackBar(
-                                content: Text('User successfully registered'),
-                              );
+                              // SnackBar(
+                              //   content: Text('User successfully registered'),
+                              // );
                             } else {
                               setState(() {
                                 loading = false;
+                                _message = 'error';
                               });
                             }
                           } on FirebaseAuthException catch (e) {
@@ -301,4 +304,12 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
       ),
     );
   }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   if (_timer != null) {
+  //       _timer.cancel();
+  //   }
+  // }
 }

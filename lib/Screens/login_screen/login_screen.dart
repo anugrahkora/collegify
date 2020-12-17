@@ -96,6 +96,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 25.0,
                 ),
                 Container(
+                  decoration: BoxDecoration(
+        color: HexColor(appPrimaryColour),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
+            offset: Offset(6,2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+           BoxShadow(
+            color: Color.fromRGBO(85,217, 193, 0.9),
+            offset: Offset(-6,-2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+        ],borderRadius: BorderRadius.circular(29),),
                   //margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
@@ -149,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   child: Text(
-                    "Forgot password?",
+                    "Forgot passwyord?",
                     style: GoogleFonts.montserrat(
                         color: Colors.black, fontSize: 15),
                   ),

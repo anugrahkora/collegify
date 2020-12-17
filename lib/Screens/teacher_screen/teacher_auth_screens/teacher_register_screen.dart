@@ -72,31 +72,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-              //    Container(
-              //     child: Center(child: Text(
-              //     'Register',
-              //     style:TextStyle(
-              //       fontFamily: 'Qibtiyah',
-              //       fontSize: 100,
-              //       color: Colors.black
-
-              //     ),
-              //      ),
-              //   ),
-              //   ),
-                
-              //  Container(
-              //     child: Center(child: Text(
-              //     'as teacher',
-              //     style:TextStyle(
-              //       fontFamily: 'Qibtiyah',
-              //       fontSize: 40,
-              //       color: Colors.black,
-
-              //     ),
-              //      ),
-              //   ),
-              //   ),
+             
                 
                 DropDownListForUniversityNames(
                   selectedUniversity: university,

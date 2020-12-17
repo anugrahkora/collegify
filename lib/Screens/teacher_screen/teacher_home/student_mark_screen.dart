@@ -2,12 +2,12 @@ import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class StudentMarks extends StatefulWidget {
+class StudentMarkScreen extends StatefulWidget {
   @override
-  _StudentMarksState createState() => _StudentMarksState();
+  _StudentMarkScreenState createState() => _StudentMarkScreenState();
 }
 
-class _StudentMarksState extends State<StudentMarks> {
+class _StudentMarkScreenState extends State<StudentMarkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

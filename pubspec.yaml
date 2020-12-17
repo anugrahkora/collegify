@@ -39,6 +39,7 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   form_field_validator: ^1.0.1
   rflutter_alert: ^1.1.0
+  email_validator: ^1.0.6
   
 
 dev_dependencies:

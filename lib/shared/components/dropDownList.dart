@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 // dropdown list for listing the all the available universities
 
@@ -30,6 +32,7 @@ class _DropDownListForUniversityNamesState
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: Colors.white,
+        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -103,6 +106,7 @@ class _DropdownListForCollegeNameState
       height: 58,
       decoration: BoxDecoration(
         color: Colors.white,
+        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -191,6 +195,7 @@ class _DropDownListForDepartmentNameState
       height: 58.0,
       decoration: BoxDecoration(
         color: Colors.white,
+        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -284,7 +289,8 @@ class _DropDownListForCourseNamesState
       width: size.width * 0.8,
       height: 58.0,
       decoration: BoxDecoration(
-        color: Colors.white,
+       color: Colors.white,
+        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -424,7 +430,8 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
       width: size.width * 0.8,
       height: 58,
       decoration: BoxDecoration(
-        color: Colors.white,
+       color: Colors.white,
+        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -459,7 +466,7 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
                 child: SizedBox(
                   width: size.width * 0.5,
                   child: Text(
-                    documentSnapshot.id.replaceAll('_', ' '),
+                    documentSnapshot.id,
                     style: GoogleFonts.montserrat(color: Colors.black54),
                   ),
                 ),

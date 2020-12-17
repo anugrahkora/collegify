@@ -1,4 +1,6 @@
+import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class StudentAttendanceStatus extends StatefulWidget {
   @override
@@ -9,6 +11,17 @@ class StudentAttendanceStatus extends StatefulWidget {
 class _StudentAttendanceStatusState extends State<StudentAttendanceStatus> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: HexColor(appPrimaryColour),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Text("Attendance screen"),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

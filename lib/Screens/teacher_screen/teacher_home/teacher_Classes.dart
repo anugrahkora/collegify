@@ -86,26 +86,7 @@ class _TeacherHomeState extends State<TeacherHome> {
       itemCount: classList.length,
       itemBuilder: (BuildContext context, index) {
         return
-            // Padding(
-            //   padding: const EdgeInsets.all(28.0),
-            //   child: ListTile(
-            //     hoverColor: HexColor(appSecondaryColour),
-            //     tileColor: HexColor(appPrimaryColour),
-            //     selectedTileColor: HexColor(appSecondaryColour),
-            //     title: HeadingText(
-            //       color: Colors.white,
-            //       text: classList[index],
-            //       size: 20,
-            //     ),
-            //     onTap: () {
-            //   Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => CreateNoteScreen(snapshot: snapshot,className: classList[index],),),);
-            //       print('tapped');
-            //     },
-            //   ),
-            // );
+            
             Column(
           children: [
             SizedBox(

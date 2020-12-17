@@ -1,30 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/models/user_model.dart';
-
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 
-class TeacherProfileScreen extends StatefulWidget {
+class ParentHome extends StatefulWidget {
   @override
-  _TeacherProfileScreenState createState() => _TeacherProfileScreenState();
+  _ParentHomeState createState() => _ParentHomeState();
 }
 
-class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
-  bool loading = false;
-  String name = '';
-  String university ='';
-  String collegeName = '';
-  String departmentName = '';
-  String courseName = '';
+class _ParentHomeState extends State<ParentHome> {
+  bool _loading = false;
+  String _university='';
+  String _collegeName='';
+  String _departmentName='';
+
+  String _courseName='';
+
+  String _parentName = '';
+  String _wardName = '';
+  String _registrationNumber = '';
   final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
+    
     if (user != null) {
       FirebaseFirestore.instance
           .collection('users')
@@ -35,11 +39,14 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
           if(
             this.mounted
           ){setState(() {
-            name = docs.data()['Name'] ?? '----';
-            university = docs.data()['University'] ?? '----';
-            collegeName = docs.data()['College'] ?? '----';
-            departmentName = docs.data()['Department'] ?? '----';
-            courseName = docs.data()['Course'] ?? '----';
+            _parentName = docs.data()['Name'] ?? '----';
+            _university = docs.data()['University'] ?? '----';
+            _collegeName = docs.data()['College'] ?? '----';
+            _departmentName = docs.data()['Department'] ?? '----';
+            _courseName = docs.data()['Course'] ?? '----';
+            
+            _wardName=docs.data()['Ward_Name']?? '----';
+            _registrationNumber=docs.data()['Registration_Number']?? '----';
           });
           }
         }
@@ -50,14 +57,14 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
         backgroundColor: HexColor(appPrimaryColour),
         title: HeadingText(
           alignment: Alignment.topLeft,
-          text: name,
+          text: _parentName,
           color: Colors.black,
         ),
         
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
           child: ImageIcon(
-            AssetImage('assets/icons/iconTeacher.png'),
+            AssetImage('assets/icons/iconParent.png'),
             color:HexColor(appSecondaryColour),
             
           ),
@@ -79,33 +86,47 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
                     
                     RoundedField(
                       label: 'University',
-                      text: university.replaceAll('_', ' '),
+                      text: _university.replaceAll('_', ' '),
                       color: Colors.black,
                     ),
                     RoundedField(
                       label: 'College',
-                      text: collegeName.replaceAll('_', ' '),
+                      text: _collegeName.replaceAll('_', ' '),
                       color: Colors.black,
                     ),
                     RoundedField(
                       label: 'Department',
-                      text: departmentName.replaceAll('_', ' '),
+                      text: _departmentName.replaceAll('_', ' '),
                       color: Colors.black,
                     ),
                     RoundedField(
                       label: 'Course',
-                      text: courseName.replaceAll('_', ' '),
+                      text: _courseName.replaceAll('_', ' '),
                       color: Colors.black,
                     ),
+                     RoundedField(
+                      label: 'Name of the ward',
+                      text: _wardName.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+                    RoundedField(
+                      label: 'Registration Number',
+                      text: _registrationNumber.replaceAll('_', ' '),
+                      color: Colors.black,
+                    ),
+
                     SizedBox(
                       height: 40.0,
                     ),
+                   
+
+
                     RoundedButton(
                 text: 'SignOut',
                 color: HexColor(appSecondaryColour),
-                loading: loading,
+                loading: _loading,
                 onPressed: () async {
-                  loading = true;
+                  _loading = true;
 
                   await _authService.signOut();
                 },

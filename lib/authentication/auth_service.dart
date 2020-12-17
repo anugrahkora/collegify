@@ -1,6 +1,12 @@
+
+
+import 'package:collegify/Screens/email_verification_screen/email_verification_screen.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 
 //this class is used for all auth services
 class AuthService {
@@ -24,6 +30,20 @@ class AuthService {
       return null;
     }
   }
+
+  // //function to verify the email
+  // Future verifyEmail(String email, String password) async {
+  //   try {
+  //     UserCredential userCredential = await _auth
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //      User user = userCredential.user;
+  //      return _userFromFirebaseUser(user);
+
+  //   } catch (e) {
+  //     print(e.message.toString());
+  //     rethrow;
+  //   }
+  // }
 
 //function to login user
   Future loginWithEmailpasswd(String email, String password) async {
@@ -55,11 +75,14 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
-      //adds the new user data to the database
+
       await DatabaseService(uid: user.uid).updateStudentData(
           university, college, department, course, name, regNumber, year, role);
 
       return _userFromFirebaseUser(user);
+
+      //adds the new user data to the database
+
     } on FirebaseAuthException catch (e) {
       print(e.toString());
 
@@ -108,8 +131,8 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
-      await DatabaseService(uid: user.uid)
-          .updateParentData(university, college, department, course,parentName, wardName, registrationNumber, role);
+      await DatabaseService(uid: user.uid).updateParentData(university, college,
+          department, course, parentName, wardName, registrationNumber, role);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       rethrow;

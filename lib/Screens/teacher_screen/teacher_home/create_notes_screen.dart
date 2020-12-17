@@ -30,15 +30,15 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
             SizedBox(
               height: 20.0,
             ),
-            Container(
-                child: RoundedButton(
-              color: HexColor(appSecondaryColour),
-              text: 'Back',
-              loading: false,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )),
+            // Container(
+            //     child: RoundedButton(
+            //   color: HexColor(appSecondaryColour),
+            //   text: 'Back',
+            //   loading: false,
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),),
           ],
         ),
       ),

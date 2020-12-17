@@ -109,7 +109,7 @@ class _AdminHomeState extends State<AdminHome> {
                   height: 5.0,
                 ),
                 RoundedInputField(
-                  hintText: "Add new department",
+                  hintText: "New Department Name",
                   onChanged: (val) {
                     newDepartment = val.replaceAll(' ', '_');
                   },
@@ -167,7 +167,7 @@ class _AdminHomeState extends State<AdminHome> {
                   height: 5.0,
                 ),
                 RoundedInputField(
-                  hintText: "Add new Course",
+                  hintText: "New Course name",
                   onChanged: (val) {
                     newCourse = val.replaceAll(' ', '_');
                   },
@@ -226,7 +226,7 @@ class _AdminHomeState extends State<AdminHome> {
                 RoundedInputField(
                   hintText: "Add new year",
                   onChanged: (val) {
-                    newYear = val.replaceAll(' ', '_');
+                    newYear = val;
                   },
                 ),
                 SizedBox(
@@ -247,7 +247,7 @@ class _AdminHomeState extends State<AdminHome> {
                       if (result == null) {
                         setState(() {
                           _message =
-                              "Successfuly added ${newYear.replaceAll('_', ' ')} to ${university.replaceAll('_', ' ')},${college.replaceAll('_', ' ')}, ${department.replaceAll('_', ' ')} ,${newCourse.replaceAll('_', ' ')}";
+                              "Successfuly added $newYear to ${university.replaceAll('_', ' ')},${course.replaceAll('_', ' ')}";
                           loading = false;
                         });
                       } else {

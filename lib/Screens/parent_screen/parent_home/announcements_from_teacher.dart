@@ -1,4 +1,6 @@
+import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AnnouncementFromTeacher extends StatefulWidget {
   @override
@@ -9,6 +11,17 @@ class AnnouncementFromTeacher extends StatefulWidget {
 class _AnnouncementFromTeacherState extends State<AnnouncementFromTeacher> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: HexColor(appPrimaryColour),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Text("Announcement screen"),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

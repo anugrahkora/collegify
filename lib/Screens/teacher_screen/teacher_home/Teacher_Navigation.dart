@@ -1,12 +1,16 @@
 
 
+import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_profile.dart';
+import 'package:collegify/shared/components/constants.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -14,7 +18,9 @@ List<Widget> _buildScreens() {
   return [
     TeacherHome(),
     
-    StudentAttendance(), // from student screen
+    StudentAttendance(),
+    StudentMarkScreen(),
+     // from student screen
     TeacherProfileScreen(),
   ];
 }
@@ -22,22 +28,33 @@ List<Widget> _buildScreens() {
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.home),
+      icon: Icon(CupertinoIcons.book,color: Colors.black),
       title: ("Classes"),
-      activeColor: CupertinoColors.activeBlue,
+      activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
+      activeContentColor: HexColor(appSecondaryColour),
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person),
+      icon: Icon(CupertinoIcons.check_mark,color: Colors.black),
+      title: ("Attendance"),
+      activeColor: Colors.white,
+      inactiveColor: CupertinoColors.systemGrey,
+      activeContentColor: HexColor(appSecondaryColour),
+    ),
+    
+    PersistentBottomNavBarItem(
+      icon: Icon(CupertinoIcons.graph_circle,color: Colors.black),
       title: ("Marks"),
-      activeColor: CupertinoColors.activeBlue,
+      activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
+      activeContentColor: HexColor(appSecondaryColour),
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person),
-      title: ("User"),
-      activeColor: CupertinoColors.activeBlue,
+      icon: Icon(CupertinoIcons.person,color: Colors.black,),
+      title: ("Profile"),
+      activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
+      activeContentColor: HexColor(appSecondaryColour),
     ),
   ];
 }
@@ -58,17 +75,17 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.white,
+      backgroundColor:  HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears.
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument.
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
-      ),
+      // decoration: NavBarDecoration(
+      //   borderRadius: BorderRadius.circular(10.0),
+      //   colorBehindNavBar: Colors.white,
+      // ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: ItemAnimationProperties(
