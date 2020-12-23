@@ -16,7 +16,7 @@ class _StudentAnalyticsState extends State<StudentAnalytics> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text("student analytics screen"),
+              Center(child: Text("student analytics screen")),
             ],
           ),
         ),

@@ -1,17 +1,6 @@
 {
   "files.exclude": {
     "": true,
-    "ios": true,
-    ".dart_tool": true,
-    ".flutter-plugins": true,
-    "README.md": true,
-    "pubspec.lock": true,
-    "android": true,
-    "lib\\Screens\\not_verified.dart": true,
-    "lib\\models": true,
-    "lib\\Screens\\admin_screen": true,
-    "lib\\Screens\\email_verification_screen": true,
-    "lib\\Screens\\loading_screen": true,
-    "lib\\Screens\\login_screen": true
+    "lib\\Screens\\student_screen": true
   }
 }

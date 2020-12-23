@@ -41,7 +41,7 @@ class _DropDownListForUniversityNamesState
           List<DropdownMenuItem> university = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(height: 58, child: Text('Loading..'));
+            return SizedBox(height: 58, child: Center(child: Text('Loading..')));
           }
 
           for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -214,9 +214,11 @@ class _DropDownListForDepartmentNameState
               width: size.width * 0.6,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text(
-                  'Please select a University & College',
-                  style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                child: Center(
+                  child: Text(
+                    'Please select a University & College',
+                    style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                  ),
                 ),
               ),
             );
@@ -310,9 +312,11 @@ class _DropDownListForCourseNamesState
             return SizedBox(
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text(
-                  'Please select a University,College and Department',
-                  style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                child: Center(
+                  child: Text(
+                    'Please select a University,College and Department',
+                    style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                  ),
                 ),
               ),
             );

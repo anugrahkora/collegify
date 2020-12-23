@@ -16,7 +16,7 @@ class _StudentMarksState extends State<StudentMarks> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text("Student Mark screen"),
+              Center(child: Text("Student Mark screen")),
             ],
           ),
         ),

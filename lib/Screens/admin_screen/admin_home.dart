@@ -247,7 +247,7 @@ class _AdminHomeState extends State<AdminHome> {
                       if (result == null) {
                         setState(() {
                           _message =
-                              "Successfuly added $newYear to ${university.replaceAll('_', ' ')},${course.replaceAll('_', ' ')}";
+                              "Successfuly added $newYear ";  ///to ${university.replaceAll('_', ' ')},${course.replaceAll('_', ' ')}
                           loading = false;
                         });
                       } else {

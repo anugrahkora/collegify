@@ -20,6 +20,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_re
 //import 'package:collegify/Screens/teacher_screen/teacher_auth_screens/teacher_screen_authenticate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -36,6 +37,7 @@ void main() async {
 class InitializeMyapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Size size = MediaQuery.of(context).size;
     return MultiProvider(
       providers: [
         StreamProvider<UserModel>(
@@ -43,11 +45,26 @@ class InitializeMyapp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-
         color: HexColor(appPrimaryColour),
         theme: ThemeData(primarySwatch: Colors.green),
         debugShowCheckedModeBanner: false,
-        home: RoleCheck(),
+        home: AnimatedSplashScreen(
+          nextScreen: RoleCheck(),
+          splash: Container(
+            child: Center(
+              child: Image.asset(
+                'assets/images/collegify_cropped.jpg',
+                width:600.0,
+                height: 450.0,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          backgroundColor: HexColor(appPrimaryColour),
+          centered: true,
+          splashTransition: SplashTransition.fadeTransition,
+          splashIconSize: 100.0,
+        ),
         routes: {
           '/studentRegisterScreen': (context) => StudentRegisterScreen(),
           '/parentNavigationScreen': (context) => ParentNavigationScreen(),

@@ -48,7 +48,8 @@ class _RoleCheckState extends State<RoleCheck> {
       } else if (role == 'parent') {
         return ParentNavigationScreen();
       }
-      return Body();
+     
     }
+     return Body();
   }
 }

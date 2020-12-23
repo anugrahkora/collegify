@@ -5,8 +5,8 @@ import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
+
+
 
 //this class is used for all auth services
 class AuthService {

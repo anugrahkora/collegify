@@ -16,7 +16,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text("Student attendance screen"),
+              Center(child: Text("Student attendance screen")),
             ],
           ),
         ),

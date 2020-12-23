@@ -57,23 +57,23 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     });
                   },
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 15.0,
                 ),
                 Container(
-                  child:Center(
-                    child: Image.asset('assets/images/teacher_register_cropped.jpg',
-                     width: size.width*0.8,
-              height: 200,
-              fit: BoxFit.contain,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/teacher_register_cropped.jpg',
+                      width: size.width * 0.8,
+                      height: 200,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
-             
-                
+
                 DropDownListForUniversityNames(
                   selectedUniversity: university,
                   onpressed: (val) {
@@ -139,13 +139,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 SizedBox(
                   height: 5.0,
                 ),
-                SizedBox(
-                  height: 5.0,
-                ),
-
-                SizedBox(
-                  height: 5.0,
-                ),
                 RoundedInputField(
                   hintText: 'Email',
                   validator: (val) => val.isEmpty ? 'Field mandatory' : null,
@@ -186,35 +179,39 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                           color: HexColor(appSecondaryColour),
                           onPressed: () async {
                             if (_formkey.currentState.validate()) {
-                              
-                              setState(() {
-                                loading = true;
-                              });
-                              try {
-                                dynamic result = await _authService
-                                    .teacherregisterWithEmailpasswd(
-                                        university,
-                                        collegeName,
-                                        departmentName,
-                                        courseName,
-                                        name,
-                                        email,
-                                        password,
-                                        'notVerified');
-                                if (result != null) {
-                                  print('teacher registered');
+                              if (university != null &&
+                                  collegeName != null &&
+                                  departmentName != null &&
+                                  courseName != null) {
+                                setState(() {
+                                  loading = true;
+                                });
+                                try {
+                                  dynamic result = await _authService
+                                      .teacherregisterWithEmailpasswd(
+                                          university,
+                                          collegeName,
+                                          departmentName,
+                                          courseName,
+                                          name,
+                                          email,
+                                          password,
+                                          'notVerified');
+                                  if (result != null) {
+                                    print('teacher registered');
 
-                                  loading = false;
-                                } else {
+                                    loading = false;
+                                  } else {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  }
+                                } on FirebaseAuthException catch (e) {
                                   setState(() {
+                                    _message = e.toString();
                                     loading = false;
                                   });
                                 }
-                              } on FirebaseAuthException catch (e) {
-                                setState(() {
-                                  _message = e.toString();
-                                  loading = false;
-                                });
                               }
                             }
                           },

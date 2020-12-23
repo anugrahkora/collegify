@@ -22,7 +22,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
   String collegeName = '';
   String departmentName = '';
   String courseName = '';
-  int year;
+  String year='';
   String registrationNumber = '';
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
                     ),
                     RoundedField(
                       label: 'Year',
-                      text: year.toString(),
+                      text: year,
                       color: Colors.black,
                     ),
                   ],

@@ -1,12 +1,8 @@
-import 'dart:async';
-
-import 'package:collegify/Screens/email_verification_screen/email_verification_screen.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/dropDownList.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -19,7 +15,8 @@ class StudentRegisterScreen extends StatefulWidget {
 class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   final AuthService _authService = AuthService();
 
-  final _formkey = GlobalKey<FormState>();
+  final _formkey =
+      GlobalKey<FormState>(); // this is used for validation purpose
   String university;
   String collegeName;
   String departmentName;
@@ -36,26 +33,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   bool loading = false;
   bool universityLoading = true;
   String role = '';
-  // bool _isEmailVerified;
-  // Timer _timer;
 
-  // @override
-  // void initState() {
-
-  //   super.initState();
-  //    Future(() async {
-  //       _timer = Timer.periodic(Duration(seconds: 10), (timer) async {
-  //           await FirebaseAuth.instance.currentUser.reload();
-  //           User user = await FirebaseAuth.instance.currentUser;
-  //           if (user.emailVerified) {
-  //               setState((){
-  //                   _isEmailVerified = user.emailVerified;
-  //               });
-  //               timer.cancel();
-  //           }
-  //       });
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -202,7 +180,8 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 ),
                 RoundedInputField(
                   hintText: 'Email',
-                  validator: (val) => val.isEmpty ? 'enter an email' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Please enter a valid email' : null,
                   onChanged: (val) {
                     email = val;
                   },
@@ -212,8 +191,9 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 ),
                 RoundedInputField(
                     hintText: 'Password',
-                    validator: (val) =>
-                        val.isEmpty ? 'atleast provide a password' : null,
+                    validator: (val) => val.length < 6
+                        ? 'provide a password 6 character long'
+                        : null,
                     boolean: true,
                     onChanged: (val) {
                       password = val;
@@ -241,45 +221,49 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       color: HexColor(appSecondaryColour),
                       onPressed: () async {
                         if (_formkey.currentState.validate()) {
-                          try {
-                            setState(() {
-                              loading = true;
-                            });
-
-                            print(email);
-                            print(password);
-
-                            
-                            dynamic result = await _authService
-                                .studentregisterWithEmailpasswd(
-                              university,
-                              collegeName,
-                              departmentName,
-                              courseName,
-                              year,
-                              name,
-                              registrationNumber,
-                              'student',
-                              email,
-                              password,
-                            );
-                            if (result != null) {
-                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>EmailVerifyScreen()));
-
-                              print('registered');
-                              // SnackBar(
-                              //   content: Text('User successfully registered'),
-                              // );
-                            } else {
+                          if (university != null &&
+                              collegeName != null &&
+                              departmentName != null &&
+                              courseName != null &&
+                              year != null) {
+                            try {
                               setState(() {
+                                loading = true;
+                              });
+
+                              print(email);
+                              print(password);
+
+                              dynamic result = await _authService
+                                  .studentregisterWithEmailpasswd(
+                                university,
+                                collegeName,
+                                departmentName,
+                                courseName,
+                                year,
+                                name,
+                                registrationNumber,
+                                'student',
+                                email,
+                                password,
+                              );
+                              if (result != null) {
+                                print('registered');
+                              } else {
+                                setState(() {
+                                  loading = false;
+                                  _message = 'error';
+                                });
+                              }
+                            } on FirebaseAuthException catch (e) {
+                              setState(() {
+                                _message = e.message.toString();
                                 loading = false;
-                                _message = 'error';
                               });
                             }
-                          } on FirebaseAuthException catch (e) {
+                          } else {
                             setState(() {
-                              _message = e.message.toString();
-                              loading = false;
+                              _message = 'please select your insitution data';
                             });
                           }
                         }
@@ -304,12 +288,4 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
       ),
     );
   }
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   if (_timer != null) {
-  //       _timer.cancel();
-  //   }
-  // }
 }

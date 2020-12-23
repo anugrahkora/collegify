@@ -16,7 +16,7 @@ class _StudentNotesState extends State<StudentNotes> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text("student  Note screen"),
+              Center(child: Text("student  Note screen")),
             ],
           ),
         ),
