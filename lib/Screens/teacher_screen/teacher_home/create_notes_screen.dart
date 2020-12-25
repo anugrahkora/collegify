@@ -18,21 +18,23 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+        backgroundColor: HexColor(appPrimaryColour),
+        title: HeadingText(
+          alignment: Alignment.topLeft,
+          text:  widget.className?? '---',
+          color: Colors.black,
+        ),),
+
       backgroundColor: HexColor(appPrimaryColour) ,
       body: SafeArea(
+        
         child: Column(
           children: [
             SizedBox(
               height: 30.0,
             ),
-            HeadingText(
-              text: widget.className?? '---',
-              size: 20.0,
-              color: Colors.black,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
+            
             
           ],
         ),

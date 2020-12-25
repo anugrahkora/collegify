@@ -22,7 +22,7 @@ class _RoleCheckState extends State<RoleCheck> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
+    final user = Provider.of<UserModel>(context,);
 
     //User _verifiedUser = _auth.currentUser;
     if (user != null) {
@@ -53,3 +53,6 @@ class _RoleCheckState extends State<RoleCheck> {
      return Body();
   }
 }
+
+
+
