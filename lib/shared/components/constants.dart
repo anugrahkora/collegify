@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 const appPrimaryColour = '#55D9C1';
 const appSecondaryColour = '#0D0D0D';
@@ -57,36 +57,24 @@ class _RoundedFieldState extends State<RoundedField> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: HexColor(appSecondaryColour),
-          width: 1.5,
-        ),
-        color: HexColor(appPrimaryColour),
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.all(Radius.circular(29.0)),
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     color: HexColor(appSecondaryColour),
+      //     width: 1.5,
+      //   ),
+      //   color: HexColor(appPrimaryColour),
+      //   shape: BoxShape.rectangle,
+      //   borderRadius: BorderRadius.all(Radius.circular(29.0)),
+      // ),
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
+        padding: const EdgeInsets.symmetric(vertical: 5.0,),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              HeadingText(
-                //alignment: Alignment.topLeft,
-                text: widget.label,
-                color: widget.color,
-                size: 16.0,
-              ),
-              SizedBox(
-                width: 3.0,
-              ),
-              Text(' : '),
-              SizedBox(
-                width: 3.0,
-              ),
+              
               HeadingText(
                 alignment: Alignment.topLeft,
                 text: widget.text,
@@ -153,6 +141,7 @@ class RoundedInputField extends StatefulWidget {
   final Color color;
   final bool boolean;
   final Function validator;
+ //final List<TextInputFormatter> textInputFormatter;
 
   RoundedInputField({
     Key key,
@@ -172,6 +161,8 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
+        
+        //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         validator: widget.validator,
         onChanged: widget.onChanged,
         obscureText: widget.boolean,
@@ -189,7 +180,6 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
 class TextFieldContainer extends StatefulWidget {
   final Widget child;
   final Color color;
-  
 
   const TextFieldContainer({
     Key key,
@@ -206,14 +196,83 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-
-      
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: Colors.white,
-       
+        borderRadius: BorderRadius.circular(29),
+      ),
+      child: widget.child,
+    );
+  }
+}
+class RoundedInputFieldNumbers extends StatefulWidget {
+  final String hintText;
+  final ValueChanged<String> onChanged;
+  final Color color;
+  final bool boolean;
+  final Function validator;
+ //final List<TextInputFormatter> textInputFormatter;
+
+  RoundedInputFieldNumbers({
+    Key key,
+    this.hintText,
+    this.onChanged,
+    this.color,
+    this.boolean = false,
+    this.validator,
+  }) : super(key: key);
+
+  @override
+  _RoundedInputFieldNumbersState createState() => _RoundedInputFieldNumbersState();
+}
+
+class _RoundedInputFieldNumbersState extends State<RoundedInputFieldNumbers> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      child: TextFormField(
+        keyboardType: TextInputType.numberWithOptions(decimal: false),
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        validator: widget.validator,
+        onChanged: widget.onChanged,
+        obscureText: widget.boolean,
+        decoration: InputDecoration(
+          hintStyle:
+              GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+          hintText: widget.hintText,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class TextFieldContainerNumbers extends StatefulWidget {
+  final Widget child;
+  final Color color;
+
+  const TextFieldContainerNumbers({
+    Key key,
+    this.child,
+    this.color: Colors.white,
+  }) : super(key: key);
+
+  @override
+  _TextFieldContainerNumbersState createState() => _TextFieldContainerNumbersState();
+}
+
+class _TextFieldContainerNumbersState extends State<TextFieldContainerNumbers> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(29),
       ),
       child: widget.child,

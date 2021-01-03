@@ -4,12 +4,12 @@ import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
 
+
 import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
 
 class TeacherHome extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class TeacherHome extends StatefulWidget {
 
 class _TeacherHomeState extends State<TeacherHome> {
   bool loading = false;
-  List<String> classList = new List<String>();
+  List<QueryDocumentSnapshot> classList = new List<QueryDocumentSnapshot>();
   DocumentSnapshot snapshot;
   String _className;
   //getting the list of classes
@@ -26,8 +26,13 @@ class _TeacherHomeState extends State<TeacherHome> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     snapshot = await firebaseFirestore.collection('users').doc(uid).get();
 
-    await firebaseFirestore.collection('users').doc(uid).get().then((docs) {
-      classList = List.from(docs.data()['Subjects']);
+    await firebaseFirestore
+        .collection('users')
+        .doc(uid)
+        .collection('Classes')
+        .get()
+        .then((query) {
+      classList = query.docs.toList();
     });
   }
 
@@ -86,9 +91,7 @@ class _TeacherHomeState extends State<TeacherHome> {
     return ListView.builder(
       itemCount: classList.length,
       itemBuilder: (BuildContext context, index) {
-        return
-            
-            Column(
+        return Column(
           children: [
             SizedBox(
               height: 20,
@@ -106,27 +109,32 @@ class _TeacherHomeState extends State<TeacherHome> {
               child: InkWell(
                 child: HeadingText(
                   color: Colors.white,
-                  text: classList[index],
+                  text: classList[index].data()['ClassName'],
                   size: 23,
-                
                 ),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateNoteScreen(snapshot: snapshot,className: classList[index],),),);
-                  print('tapped');
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateNoteScreen(
+                        snapshot: snapshot,
+                        className: classList[index].data()['ClassName'],
+                        year: classList[index].data()['Semester'],
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
           ],
-       );
+        );
       },
     );
   }
 
   // popup function
   _openPopup(context, String _uid) {
+    String semester;
     final _formkey = GlobalKey<FormState>();
     Alert(
         style: AlertStyle(
@@ -143,11 +151,17 @@ class _TeacherHomeState extends State<TeacherHome> {
           child: Column(
             children: <Widget>[
               RoundedInputField(
+                hintText: 'Class Name',
                 validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
                 onChanged: (val) {
-                  setState(() {
-                    _className = val;
-                  });
+                  _className = val;
+                },
+              ),
+              RoundedInputFieldNumbers(
+                hintText: 'Semester',
+                validator: (val) => val.isEmpty? 'Field Mandatory' : null,
+                onChanged: (val) {
+                  semester = val;
                 },
               ),
             ],
@@ -155,12 +169,14 @@ class _TeacherHomeState extends State<TeacherHome> {
         ),
         buttons: [
           DialogButton(
+            
             radius: BorderRadius.circular(20),
             color: HexColor(appSecondaryColour),
             onPressed: () async {
               if (_formkey.currentState.validate()) {
                 try {
-                  await DatabaseService(uid: _uid).addNewClass(_className);
+                  await DatabaseService(uid: _uid).addNewClass(_className,semester);
+                  Navigator.of(context, rootNavigator: true).pop();
                 } catch (e) {
                   print(e);
                 }

@@ -1,6 +1,6 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
-import 'package:collegify/Screens/student_screen/student_home/student_home.dart';
+import 'package:collegify/Screens/student_screen/student_home/teachers_names.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_Profile.dart';
 
@@ -13,41 +13,44 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 
-List<Widget> _buildScreens() {
-  return [
-    StudentNotes(),
-    
-    StudentAnalytics(),
-    StudentMarks(),
-    StudentUserDetails(),
-  ];
-}
 
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.book,color: Colors.black,),
+      icon: Icon(
+        CupertinoIcons.book,
+        color: Colors.black,
+      ),
       title: ("Notes"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: HexColor(appSecondaryColour),
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.check_mark,color: Colors.black,),
+      icon: Icon(
+        CupertinoIcons.check_mark,
+        color: Colors.black,
+      ),
       title: ("Attendance"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: HexColor(appSecondaryColour),
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.graph_circle,color: Colors.black,),
+      icon: Icon(
+        CupertinoIcons.graph_circle,
+        color: Colors.black,
+      ),
       title: ("Analytics"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: HexColor(appSecondaryColour),
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.person,color: Colors.black,),
+      icon: Icon(
+        CupertinoIcons.person,
+        color: Colors.black,
+      ),
       title: ("Profile"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
@@ -59,6 +62,9 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
 class StudentNavigationScreen extends StatefulWidget {
+  final DocumentSnapshot documentSnapshot;
+
+  const StudentNavigationScreen({Key key, this.documentSnapshot}) : super(key: key);
   @override
   _StudNavigationScreenState createState() => _StudNavigationScreenState();
 }
@@ -71,7 +77,7 @@ class _StudNavigationScreenState extends State<StudentNavigationScreen> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor:  HexColor(appPrimaryColour),
+      backgroundColor: HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears.
@@ -99,4 +105,12 @@ class _StudNavigationScreenState extends State<StudentNavigationScreen> {
           NavBarStyle.style1, // Choose the nav bar style with this property.
     );
   }
+  List<Widget> _buildScreens() {
+  return [
+    TeacherNames(documentSnapshot: widget.documentSnapshot,),
+    StudentAnalytics(),
+    StudentMarks(),
+    StudentUserDetails(),
+  ];
+}
 }

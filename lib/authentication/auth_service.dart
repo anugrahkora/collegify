@@ -1,12 +1,7 @@
-
-
 import 'package:collegify/Screens/email_verification_screen/email_verification_screen.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
-
 
 //this class is used for all auth services
 class AuthService {
@@ -96,6 +91,7 @@ class AuthService {
     String college,
     String department,
     String course,
+    String semester,
     String name,
     String email,
     String password,
@@ -108,6 +104,8 @@ class AuthService {
 
       await DatabaseService(uid: user.uid).updateTeacherData(
           university, college, department, course, name, role);
+      await DatabaseService(uid: user.uid).assignTeachers(
+          university, college, department, course, semester, name);
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       print(e.toString());

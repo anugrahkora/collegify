@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 class DatabaseService {
   final String uid;
 
@@ -13,7 +10,6 @@ class DatabaseService {
   //references of users
   final CollectionReference userCollectionReference =
       FirebaseFirestore.instance.collection('users');
-
 //setting student data
   Future updateStudentData(
       String university,
@@ -22,7 +18,7 @@ class DatabaseService {
       String course,
       String name,
       String regNumber,
-      String year,
+      String semester,
       String role) async {
     return await userCollectionReference.doc(uid).set({
       'Uid': uid,
@@ -30,7 +26,7 @@ class DatabaseService {
       'College': college,
       'Department': department,
       'Course': course,
-      'Current_Year': year,
+      'Semester': semester,
       'Name': name,
       'Registration_Number': regNumber,
       'Role': role
@@ -41,16 +37,20 @@ class DatabaseService {
 
   Future updateTeacherData(String university, String college, String department,
       String course, String name, String role) async {
+        try{
     return await userCollectionReference.doc(uid).set({
       'Uid': uid,
       'University': university,
       'College': college,
       'Department': department,
       'Course': course,
-      'Current_Year': 0,
+      'Semester': 0,
       'Name': name,
       'Role': role,
     });
+        }catch(e){
+
+        }
   }
 
   //setting parent data
@@ -117,7 +117,7 @@ class DatabaseService {
 
   // add new year
   Future addNewYear(String universityName, String collegeName,
-      String departmentName, String courseName, String year) async {
+      String departmentName, String courseName, String semester) async {
     try {
       final DocumentReference newYearDocument = FirebaseFirestore.instance
           .collection('college')
@@ -128,30 +128,53 @@ class DatabaseService {
           .doc('$departmentName')
           .collection('CourseNames')
           .doc('$courseName')
-          .collection('years')
-          .doc('$year');
-      return await newYearDocument.set({"year": year});
+          .collection('Semester')
+          .doc('$semester');
+      return await newYearDocument.set({"Semester": semester});
     } catch (e) {
       rethrow;
     }
   }
 
-  Future addNewClass(String className) async {
+//add new class for teachers
+  Future addNewClass(String className, String semester) async {
     try {
-      final DocumentReference newClassDocument =
-          FirebaseFirestore.instance.collection('users').doc(uid);
-      return await newClassDocument.update({
-        'Subjects': FieldValue.arrayUnion([className]),
+      final DocumentReference newClassDocument = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('Classes')
+          .doc(className);
+      return await newClassDocument.set({
+        'ClassName': className,
+        'Semester': semester,
       });
     } catch (e) {
       rethrow;
     }
-  }
 
-  // Future getRole() async {
-  //   String role = '';
-  //   DocumentSnapshot userData = await userCollectionReference.doc(uid).get();
-  //   role = userData.data()['Role'];
-  //   return role;
-  // }
+   
+    
+
+    
+  }
+  Future assignTeachers(String universityName, String collegeName,
+        String departmentName, String courseName, String semester,String name) async {
+      try {
+        final DocumentReference assignTeacherDocument = FirebaseFirestore
+            .instance
+            .collection('college')
+            .doc('$universityName')
+            .collection('CollegeNames')
+            .doc('$collegeName')
+            .collection('DepartmentNames')
+            .doc('$departmentName')
+            .collection('CourseNames')
+            .doc('$courseName')
+            .collection('Semester')
+            .doc('$semester');
+       return await assignTeacherDocument.update({
+        'Teacher_Names': FieldValue.arrayUnion([name]),
+      });
+      } catch (e) {}
+    }
 }

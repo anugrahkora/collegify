@@ -10,9 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:collegify/shared/components/dropDownList.dart';
 
 class TeacherRegisterScreen extends StatefulWidget {
-  final Function toggleView;
-
-  TeacherRegisterScreen({this.toggleView});
   @override
   _TeacherRegisterScreenState createState() => _TeacherRegisterScreenState();
 }
@@ -25,9 +22,8 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
   String university;
   String collegeName;
   String departmentName;
-
   String courseName;
-
+  String semester;
   String email = '';
   String password = '';
   String confirmPassword = '';
@@ -123,11 +119,27 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   departmentName: departmentName,
                   selectedCourseName: courseName,
                   onpressed: (val) {
-                    courseName = val;
+                    setState(() {
+                      courseName = val;
+                    });
+                    
                   },
                 ),
                 SizedBox(
                   height: 5.0,
+                ),
+                DropDownListForYearData(
+                  universityName: university,
+                  collegeName: collegeName,
+                  departmentName: departmentName,
+                  courseName: courseName,
+                  selectedYear: semester,
+                  onpressed: (val) {
+                    setState(() {
+                     semester = val;
+                    });
+                   
+                  },
                 ),
                 RoundedInputField(
                   hintText: 'Name',
@@ -169,65 +181,66 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       confirmPassword = val;
                     }),
                 Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    width: size.width * 0.8,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(29),
-                        child: FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 40),
-                          color: HexColor(appSecondaryColour),
-                          onPressed: () async {
-                            if (_formkey.currentState.validate()) {
-                              if (university != null &&
-                                  collegeName != null &&
-                                  departmentName != null &&
-                                  courseName != null) {
-                                setState(() {
-                                  loading = true;
-                                });
-                                try {
-                                  dynamic result = await _authService
-                                      .teacherregisterWithEmailpasswd(
-                                          university,
-                                          collegeName,
-                                          departmentName,
-                                          courseName,
-                                          name,
-                                          email,
-                                          password,
-                                          'notVerified');
-                                  if (result != null) {
-                                    print('teacher registered');
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  width: size.width * 0.8,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(29),
+                    child: FlatButton(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                      color: HexColor(appSecondaryColour),
+                      onPressed: () async {
+                        if (_formkey.currentState.validate()) {
+                          if (university != null &&
+                              collegeName != null &&
+                              departmentName != null &&
+                              courseName != null) {
+                            setState(() {
+                              loading = true;
+                            });
+                            try {
+                              dynamic result = await _authService
+                                  .teacherregisterWithEmailpasswd(
+                                      university,
+                                      collegeName,
+                                      departmentName,
+                                      courseName,
+                                      semester,
+                                      name,
+                                      email,
+                                      password,
+                                      'notVerified');
 
-                                    loading = false;
-                                  } else {
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                  }
-                                } on FirebaseAuthException catch (e) {
-                                  setState(() {
-                                    _message = e.toString();
-                                    loading = false;
-                                  });
-                                }
+                              if (result != null) {
+                                print('teacher registered');
+
+                                loading = false;
+                              } else {
+                                setState(() {
+                                  loading = false;
+                                });
                               }
+                            } on FirebaseAuthException catch (e) {
+                              setState(() {
+                                _message = e.toString();
+                                loading = false;
+                              });
                             }
-                          },
-                          child: loading
-                              ? Loader(
-                                  color: HexColor(appSecondaryColour),
-                                  size: 20,
-                                )
-                              : HeadingText(
-                                  color: Colors.white,
-                                  text: 'Register',
-                                  size: 16.0,
-                                ),
-                        ))),
-                SizedBox(
-                  height: 15.0,
+                          }
+                        }
+                      },
+                      child: loading
+                          ? Loader(
+                              color: HexColor(appSecondaryColour),
+                              size: 20,
+                            )
+                          : HeadingText(
+                              color: Colors.white,
+                              text: 'Register',
+                              size: 16.0,
+                            ),
+                    ),
+                  ),
                 ),
               ],
             ),

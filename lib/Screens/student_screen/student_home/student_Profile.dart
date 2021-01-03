@@ -22,7 +22,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
   String collegeName = '';
   String departmentName = '';
   String courseName = '';
-  String year='';
+  String semester;
   String registrationNumber = '';
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
               collegeName = docs.data()['College'] ?? '-----';
               departmentName = docs.data()['Department'] ?? '-----';
               courseName = docs.data()['Course'] ?? '-----';
-              year = docs.data()['Current_Year'] ?? '-----';
+              semester = docs.data()['Semester'] ?? '-----';
             });
           }
         }
@@ -56,13 +56,11 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
           text: name,
           color: Colors.black,
         ),
-        
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
           child: ImageIcon(
             AssetImage('assets/icons/iconStudent.png'),
-            color:HexColor(appSecondaryColour),
-            
+            color: HexColor(appSecondaryColour),
           ),
         ),
       ),
@@ -79,7 +77,6 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
-                    
                     RoundedField(
                       label: 'University',
                       text: university.replaceAll('_', ' '),
@@ -102,14 +99,14 @@ class _StudentUserDetailsState extends State<StudentUserDetails> {
                     ),
                     RoundedField(
                       label: 'Year',
-                      text: year,
+                      text: 'Semester  $semester ',
                       color: Colors.black,
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 40.0,
+                height: 140.0,
               ),
               RoundedButton(
                 text: 'SignOut',

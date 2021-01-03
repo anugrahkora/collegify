@@ -32,7 +32,6 @@ class _DropDownListForUniversityNamesState
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: Colors.white,
-        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -41,7 +40,9 @@ class _DropDownListForUniversityNamesState
           List<DropdownMenuItem> university = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(height: 58, child: Center(child: Text('Loading..')));
+            return SizedBox(
+              child: Text('Loading..'),
+            );
           }
 
           for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -52,7 +53,8 @@ class _DropDownListForUniversityNamesState
                   scrollDirection: Axis.horizontal,
                   child: Text(
                     documentSnapshot.id.replaceAll('_', ' '),
-                    style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                    style: GoogleFonts.montserrat(
+                        color: Colors.black54, fontSize: 14),
                   ),
                 ),
                 value: "${documentSnapshot.id}",
@@ -65,7 +67,8 @@ class _DropDownListForUniversityNamesState
               elevation: 16,
               hint: Text(
                 "Select university",
-                style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
               ),
               value: widget.selectedUniversity,
               items: university,
@@ -106,7 +109,6 @@ class _DropdownListForCollegeNameState
       height: 58,
       decoration: BoxDecoration(
         color: Colors.white,
-        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -119,41 +121,41 @@ class _DropdownListForCollegeNameState
           List<DropdownMenuItem> collegeName = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(
-              width: size.width * 0.6,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text(
-                  'Please select a University',
-                  style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-                ),
-              ),
+            return Text(
+              'Loading',
+              style:
+                  GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
             );
           }
-
-          for (int i = 0; i < snapshot.data.docs.length; i++) {
-            DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
-            collegeName.add(
-              DropdownMenuItem(
-                child: SizedBox(
-                  width: size.width * 0.6,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                      documentSnapshot.id.replaceAll('_', ' '),
-                      style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+            for (int i = 0; i < snapshot.data.docs.length; i++) {
+              DocumentSnapshot documentSnapshot = snapshot.data.docs[i];
+              collegeName.add(
+                DropdownMenuItem(
+                  child: SizedBox(
+                    width: size.width * 0.6,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        documentSnapshot.id.replaceAll('_', ' '),
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black54, fontSize: 14),
+                      ),
                     ),
                   ),
+                  value: "${documentSnapshot.id}",
                 ),
-                value: "${documentSnapshot.id}",
-              ),
-            );
+              );
+           
           }
 
           return DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
-              hint: Text("Select College", style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),),
+              hint: Text(
+                "Select College",
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
               value: widget.selectedCollegeName,
               items: collegeName,
               onChanged: widget.onpressed,
@@ -195,7 +197,6 @@ class _DropDownListForDepartmentNameState
       height: 58.0,
       decoration: BoxDecoration(
         color: Colors.white,
-        
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -210,17 +211,10 @@ class _DropDownListForDepartmentNameState
           List<DropdownMenuItem> departmentName = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(
-              width: size.width * 0.6,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Center(
-                  child: Text(
-                    'Please select a University & College',
-                    style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-                  ),
-                ),
-              ),
+            return Text(
+              'Loading',
+              style:
+                  GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
             );
           }
 
@@ -234,7 +228,8 @@ class _DropDownListForDepartmentNameState
                     scrollDirection: Axis.horizontal,
                     child: Text(
                       documentSnapshot.id.replaceAll('_', ' '),
-                      style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.black54, fontSize: 14),
                     ),
                   ),
                 ),
@@ -246,7 +241,11 @@ class _DropDownListForDepartmentNameState
           return DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
-              hint: Text("Select your department",style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),),
+              hint: Text(
+                "Select your department",
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
               value: widget.selectedDepartmentName,
               items: departmentName,
               onChanged: widget.onpressed,
@@ -291,8 +290,7 @@ class _DropDownListForCourseNamesState
       width: size.width * 0.8,
       height: 58.0,
       decoration: BoxDecoration(
-       color: Colors.white,
-        
+        color: Colors.white,
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -310,13 +308,11 @@ class _DropDownListForCourseNamesState
 
           if (!snapshot.hasData) {
             return SizedBox(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Center(
-                  child: Text(
-                    'Please select a University,College and Department',
-                    style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-                  ),
+              child: Center(
+                child: Text(
+                  'Loading',
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black54, fontSize: 14),
                 ),
               ),
             );
@@ -331,7 +327,8 @@ class _DropDownListForCourseNamesState
                     scrollDirection: Axis.horizontal,
                     child: Text(
                       documentSnapshot.id.replaceAll('_', ' '),
-                      style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.black54, fontSize: 14),
                     ),
                   ),
                 ),
@@ -343,7 +340,11 @@ class _DropDownListForCourseNamesState
           return DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
-              hint: Text("Select your course",style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),),
+              hint: Text(
+                "Select your course",
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
               value: widget.selectedCourseName,
               items: courseName,
               onChanged: widget.onpressed,
@@ -390,7 +391,8 @@ class _DropDownListState extends State<DropDownList> {
               value: value,
               child: Text(
                 value,
-                style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
               ),
             );
           }).toList(),
@@ -434,8 +436,7 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
       width: size.width * 0.8,
       height: 58,
       decoration: BoxDecoration(
-       color: Colors.white,
-        
+        color: Colors.white,
         borderRadius: BorderRadius.circular(29),
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -448,7 +449,7 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
             .doc("${widget.departmentName}")
             .collection('CourseNames')
             .doc("${widget.courseName}")
-            .collection('years')
+            .collection('Semester')
             .snapshots(),
         builder: (context, snapshot) {
           List<DropdownMenuItem> yearData = [];
@@ -458,7 +459,8 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
               width: size.width * 0.5,
               child: Text(
                 'Please select a University,College, Department and course',
-                style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
               ),
             );
           }
@@ -482,7 +484,11 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
           return DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
-              hint: Text("Select year",style: GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),),
+              hint: Text(
+                "Select Semester",
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
               value: widget.selectedYear,
               items: yearData,
               onChanged: widget.onpressed,
