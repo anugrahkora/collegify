@@ -69,12 +69,13 @@ class _RoundedFieldState extends State<RoundedField> {
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0,),
+        padding: const EdgeInsets.symmetric(
+          vertical: 5.0,
+        ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              
               HeadingText(
                 alignment: Alignment.topLeft,
                 text: widget.text,
@@ -141,7 +142,7 @@ class RoundedInputField extends StatefulWidget {
   final Color color;
   final bool boolean;
   final Function validator;
- //final List<TextInputFormatter> textInputFormatter;
+  //final List<TextInputFormatter> textInputFormatter;
 
   RoundedInputField({
     Key key,
@@ -161,7 +162,6 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        
         //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         validator: widget.validator,
         onChanged: widget.onChanged,
@@ -207,13 +207,14 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     );
   }
 }
+
 class RoundedInputFieldNumbers extends StatefulWidget {
   final String hintText;
   final ValueChanged<String> onChanged;
   final Color color;
   final bool boolean;
   final Function validator;
- //final List<TextInputFormatter> textInputFormatter;
+  //final List<TextInputFormatter> textInputFormatter;
 
   RoundedInputFieldNumbers({
     Key key,
@@ -225,7 +226,8 @@ class RoundedInputFieldNumbers extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RoundedInputFieldNumbersState createState() => _RoundedInputFieldNumbersState();
+  _RoundedInputFieldNumbersState createState() =>
+      _RoundedInputFieldNumbersState();
 }
 
 class _RoundedInputFieldNumbersState extends State<RoundedInputFieldNumbers> {
@@ -260,7 +262,8 @@ class TextFieldContainerNumbers extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TextFieldContainerNumbersState createState() => _TextFieldContainerNumbersState();
+  _TextFieldContainerNumbersState createState() =>
+      _TextFieldContainerNumbersState();
 }
 
 class _TextFieldContainerNumbersState extends State<TextFieldContainerNumbers> {
@@ -283,9 +286,10 @@ class _TextFieldContainerNumbersState extends State<TextFieldContainerNumbers> {
 class AlertWidget extends StatelessWidget {
   final String message;
   final Color color;
+  final IconData icon;
 
   final Function onpressed;
-  AlertWidget({this.message, this.onpressed, this.color});
+  AlertWidget({this.message, this.onpressed, this.color, this.icon:Icons.error_outline_rounded});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -304,7 +308,7 @@ class AlertWidget extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.error_outline_rounded),
+              child:Icon(icon),
             ),
             Expanded(
               child: AutoSizeText(

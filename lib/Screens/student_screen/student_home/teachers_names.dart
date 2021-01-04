@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_notes.dart';
-import 'package:collegify/models/user_model.dart';
+
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
 
 class TeacherNames extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
@@ -16,16 +15,17 @@ class TeacherNames extends StatefulWidget {
 
 class _TeacherNamesState extends State<TeacherNames> {
   List classes = [];
-  List<String> teacherNames=[];
+  List<String> teacherNames = [];
   String university;
   String collegeName;
   String departmentName;
   String courseName;
   String name;
   String semester;
+  String selectedTeacher;
   // DocumentReference documentReference;
 
-  Future getTeacherNames() async {
+  Future getTeacherData() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     university = widget.documentSnapshot.data()['University'];
     collegeName = widget.documentSnapshot.data()['College'];
@@ -46,7 +46,10 @@ class _TeacherNamesState extends State<TeacherNames> {
         .doc('$semester')
         .get()
         .then((docs) {
-      teacherNames = List.from(docs.data()['Teacher_Names']);
+          setState(() {
+             teacherNames = List.from(docs.data()['Teacher_Names']);
+          });
+     
     });
   }
 
@@ -54,7 +57,7 @@ class _TeacherNamesState extends State<TeacherNames> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // final user = Provider.of<UserModel>(context);
-    getTeacherNames();
+    getTeacherData();
 
     return teacherNames.isEmpty
         ? Scaffold(
@@ -76,13 +79,13 @@ class _TeacherNamesState extends State<TeacherNames> {
             ),
           )
         : Scaffold(
-      
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
               child: buildListView(size),
             ),
           );
   }
+
   ListView buildListView(Size size) {
     return ListView.builder(
       itemCount: teacherNames.length,
@@ -109,12 +112,17 @@ class _TeacherNamesState extends State<TeacherNames> {
                   size: 23,
                 ),
                 onTap: () {
+                  // setState(() async{
+                  //   selectedTeacher = teacherNames[index];
+                  // });
+                  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+                  // await firebaseFirestore.collection('users').where('')
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => StudentNotes(
                         teacherName: teacherNames[index],
-
+                        docs: widget.documentSnapshot,
                       ),
                     ),
                   );

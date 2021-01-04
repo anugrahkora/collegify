@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
-//import 'package:file_picker/file_picker.dart';
+
 import 'package:hexcolor/hexcolor.dart';
-//import 'package:image_cropper/image_cropper.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -139,7 +139,7 @@ class _UploaderState extends State<Uploader> {
 
   _startUpload() {
     String _filePath =
-        '${widget.docs.data()['University']}/${widget.docs.data()['College']}/$_notes/${widget.docs.data()['Department']}/${widget.docs.data()['Course']}/${widget.semester}/${widget.className}/${DateTime.now()}';
+        '${widget.docs.data()['University']}/${widget.docs.data()['College']}/$_notes/${widget.docs.data()['Department']}/${widget.docs.data()['Course']}/${widget.semester}/${widget.docs.data()['University']}/${widget.className}/${DateTime.now()}';
     if (widget.file != null) {
       try {
         final _storage = FirebaseStorage.instance.ref().child(_filePath);
@@ -187,6 +187,7 @@ class _UploaderState extends State<Uploader> {
                       height: 4.0,
                     ),
                     AlertWidget(
+                      icon: Icons.done,
                       message: _message,
                       color: Colors.green,
                       onpressed: () {
@@ -198,10 +199,7 @@ class _UploaderState extends State<Uploader> {
                     ),
                   ],
 
-                  // Text(
-                  //   '${(progressPercent*100)} % ',
-                  //   style: TextStyle(fontSize: 20),
-                  // ),
+                 
                 ]);
           });
     } else {
