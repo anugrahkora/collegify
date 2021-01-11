@@ -103,7 +103,7 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
   return [
     TeacherHome(),
 
-    StudentAttendance(),
+    StudentAttendance(documentSnapshot: widget.documentSnapshot,),
     StudentMarkScreen(),
     // from student screen
     TeacherProfileScreen(),

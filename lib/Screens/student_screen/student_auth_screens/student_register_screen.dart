@@ -50,15 +50,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 SizedBox(
                   height: 30.0,
                 ),
-                AlertWidget(
-                  color: Colors.amber,
-                  message: _message,
-                  onpressed: () {
-                    setState(() {
-                      _message = null;
-                    });
-                  },
-                ),
+               
                 SizedBox(
                   height: 15.0,
                 ),
@@ -210,6 +202,15 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     onChanged: (val) {
                       confirmPassword = val;
                     }),
+                     AlertWidget(
+                  color: Colors.amber,
+                  message: _message,
+                  onpressed: () {
+                    setState(() {
+                      _message = null;
+                    });
+                  },
+                ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,

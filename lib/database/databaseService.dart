@@ -37,20 +37,18 @@ class DatabaseService {
 
   Future updateTeacherData(String university, String college, String department,
       String course, String name, String role) async {
-        try{
-    return await userCollectionReference.doc(uid).set({
-      'Uid': uid,
-      'University': university,
-      'College': college,
-      'Department': department,
-      'Course': course,
-      'Semester': 0,
-      'Name': name,
-      'Role': role,
-    });
-        }catch(e){
-
-        }
+    try {
+      return await userCollectionReference.doc(uid).set({
+        'Uid': uid,
+        'University': university,
+        'College': college,
+        'Department': department,
+        'Course': course,
+        'Semester': 0,
+        'Name': name,
+        'Role': role,
+      });
+    } catch (e) {}
   }
 
   //setting parent data
@@ -151,30 +149,61 @@ class DatabaseService {
     } catch (e) {
       rethrow;
     }
-
-   
-    
-
-    
   }
-  Future assignTeachers(String universityName, String collegeName,
-        String departmentName, String courseName, String semester,String name) async {
-      try {
-        final DocumentReference assignTeacherDocument = FirebaseFirestore
-            .instance
-            .collection('college')
-            .doc('$universityName')
-            .collection('CollegeNames')
-            .doc('$collegeName')
-            .collection('DepartmentNames')
-            .doc('$departmentName')
-            .collection('CourseNames')
-            .doc('$courseName')
-            .collection('Semester')
-            .doc('$semester');
-       return await assignTeacherDocument.update({
+
+  //create an array of the student names in the semester document of each courses
+  Future assignStudents(
+      String universityName,
+      String collegeName,
+      String departmentName,
+      String courseName,
+      String semester,
+      String name) async {
+    try {
+      final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('Semester')
+          .doc('$semester');
+      return await assignTeacherDocument.update({
+        'Student_Names': FieldValue.arrayUnion([name]),
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //create an array of the teacher names in the semester document of each courses
+  Future assignTeachers(
+      String universityName,
+      String collegeName,
+      String departmentName,
+      String courseName,
+      String semester,
+      String name) async {
+    try {
+      final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('Semester')
+          .doc('$semester');
+      return await assignTeacherDocument.update({
         'Teacher_Names': FieldValue.arrayUnion([name]),
       });
-      } catch (e) {}
+    } catch (e) {
+      rethrow;
     }
+  }
 }

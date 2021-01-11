@@ -16,7 +16,6 @@
     ".gitignore": true,
     "assets": true,
     "lib\\Screens\\email_verification_screen": true,
-    "lib\\Screens\\login_screen": true,
     "lib\\Screens\\not_verified.dart": true,
     "lib\\Screens\\parent_screen": true,
     "lib\\Screens\\admin_screen": true,

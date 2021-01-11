@@ -58,7 +58,7 @@ class AuthService {
     String college,
     String department,
     String course,
-    String year,
+    String semester,
     String name,
     String regNumber,
     String role,
@@ -72,7 +72,9 @@ class AuthService {
       User user = userCredential.user;
 
       await DatabaseService(uid: user.uid).updateStudentData(
-          university, college, department, course, name, regNumber, year, role);
+          university, college, department, course, name, regNumber, semester, role);
+          await DatabaseService(uid: user.uid).assignStudents(
+          university, college, department, course, semester, name);
 
       return _userFromFirebaseUser(user);
 

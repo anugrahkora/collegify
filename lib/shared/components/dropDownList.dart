@@ -41,7 +41,7 @@ class _DropDownListForUniversityNamesState
 
           if (!snapshot.hasData) {
             return SizedBox(
-              child: Text('Loading..'),
+              child: Center(child: Text('Loading..')),
             );
           }
 
@@ -121,10 +121,12 @@ class _DropdownListForCollegeNameState
           List<DropdownMenuItem> collegeName = [];
 
           if (!snapshot.hasData) {
-            return Text(
-              'Loading',
-              style:
-                  GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+            return Center(
+              child: Text(
+                'Loading',
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
             );
           }
             for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -211,10 +213,12 @@ class _DropDownListForDepartmentNameState
           List<DropdownMenuItem> departmentName = [];
 
           if (!snapshot.hasData) {
-            return Text(
-              'Loading',
-              style:
-                  GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+            return Center(
+              child: Text(
+                'Loading',
+                style:
+                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
+              ),
             );
           }
 

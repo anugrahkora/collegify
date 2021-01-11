@@ -51,7 +51,7 @@ class _RoleCheckState extends State<RoleCheck> {
       } else if (role == 'admin') {
         return AdminNavigationScreen();
       } else if (role == 'notVerified') {
-        return TeacherNavigationScreen();
+        return TeacherNavigationScreen(documentSnapshot: documentSnapshot,);
       } else if (role == 'parent') {
         return ParentNavigationScreen();
       }
