@@ -15,10 +15,10 @@ import 'package:provider/provider.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //systemNavigationBarColor: Colors.blue, // navigation bar color
-    statusBarColor: HexColor(appPrimaryColour), // status bar color
-  ));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   //systemNavigationBarColor: Colors.blue, // navigation bar color
+  //   statusBarColor: HexColor(appPrimaryColour), // status bar color
+  // ));
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
@@ -35,26 +35,26 @@ class InitializeMyapp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         color: HexColor(appPrimaryColour),
-        theme: ThemeData(primarySwatch: Colors.green),
+        
         debugShowCheckedModeBanner: false,
-        home: 
-        AnimatedSplashScreen(
-          nextScreen: RoleCheck(),
-          splash: Container(
-            child: Center(
-              child: Image.asset(
-                'assets/images/collegify_cropped.jpg',
-                width:600.0,
-                height: 450.0,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          backgroundColor: HexColor(appPrimaryColour),
-          centered: true,
-          splashTransition: SplashTransition.fadeTransition,
-          splashIconSize: 100.0,
-        ),
+        home: RoleCheck(),
+        // AnimatedSplashScreen(
+        //   nextScreen: RoleCheck(),
+        //   splash: Container(
+        //     child: Center(
+        //       child: Image.asset(
+        //         'assets/images/collegify_cropped.jpg',
+        //         width:600.0,
+        //         height: 450.0,
+        //         fit: BoxFit.contain,
+        //       ),
+        //     ), 
+        //   ),
+        //   backgroundColor: HexColor(appPrimaryColour),
+        //   centered: true,
+        //   splashTransition: SplashTransition.fadeTransition,
+        //   splashIconSize: 100.0,
+        // ),
         
       ),
     );

@@ -13,31 +13,21 @@ class StudentAttendance extends StatefulWidget {
 
 class _StudentAttendanceState extends State<StudentAttendance> {
   List<String> studentNames = [];
-  String university;
-  String collegeName;
-  String departmentName;
-  String courseName;
-  String name;
-  int semester;
+  
   Future getStudentNames() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    university = widget.documentSnapshot.data()['University'];
-    collegeName = widget.documentSnapshot.data()['College'];
-    departmentName = widget.documentSnapshot.data()['Department'];
-    courseName = widget.documentSnapshot.data()['Course'];
-    semester = widget.documentSnapshot.data()['Semester'];
 
     await firebaseFirestore
         .collection('college')
-        .doc('$university')
+        .doc('${widget.documentSnapshot.data()['University']}')
         .collection('CollegeNames')
-        .doc('$collegeName')
+        .doc('${widget.documentSnapshot.data()['College']}')
         .collection('DepartmentNames')
-        .doc('$departmentName')
+        .doc('${widget.documentSnapshot.data()['Department']}')
         .collection('CourseNames')
-        .doc('$courseName')
+        .doc('${widget.documentSnapshot.data()['Course']}')
         .collection('Semester')
-        .doc('$semester')
+        .doc('${widget.documentSnapshot.data()['Semester']}')
         .get()
         .then((docs) {
       setState(() {
@@ -56,7 +46,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
               backgroundColor: HexColor(appPrimaryColour),
               title: HeadingText(
                 alignment: Alignment.topLeft,
-                text: "Your Students",
+                text: "Your Students (${studentNames.length}",
                 color: Colors.black,
               ),
             ),
@@ -71,6 +61,14 @@ class _StudentAttendanceState extends State<StudentAttendance> {
             ),
           )
         : Scaffold(
+           appBar: AppBar(
+              backgroundColor: HexColor(appPrimaryColour),
+              title: HeadingText(
+                alignment: Alignment.topLeft,
+                text: "Your Students ( ${studentNames.length} )",
+                color: Colors.black,
+              ),
+            ),
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
               child: buildListView(size),

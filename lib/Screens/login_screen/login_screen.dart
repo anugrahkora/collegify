@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 25.0,
+                  height: 35.0,
                 ),
                 AlertWidget(
                   color: Colors.amber,
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     });
                   },
                 ),
-               
+
                 SizedBox(
                   height: 10.0,
                 ),
@@ -60,17 +60,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ),
                 // ),
                 Container(
-                  child:Center(
-                    child: Image.asset('assets/images/collegify_cropped.jpg',
-                     width: size.width*0.8,
-              height: 150,
-              fit: BoxFit.contain,
-                    ),
-                  ),
+                  
                 
+                 
+                  child: Center(
+                    child: HeadingText(
+                      text: "Collegify",
+                      size: 70.0,
+                      color: Colors.black54,
+                    ),
+                    //       Image.asset('assets/images/collegify_cropped.jpg',
+                    //        width: size.width*0.8,
+                    // height: 150,
+                    // fit: BoxFit.contain,
+                    //       ),
+                  ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 40.0,
                 ),
                 RoundedInputField(
                   hintText: "email",
@@ -85,8 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 RoundedInputField(
                   hintText: "password",
-                  validator: (val) =>
-                      val.isEmpty ? "Can't be empty" : null,
+                  validator: (val) => val.isEmpty ? "Can't be empty" : null,
                   boolean: true,
                   onChanged: (val) {
                     password = val;
@@ -97,21 +103,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-        color: HexColor(appPrimaryColour),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            offset: Offset(6,2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-           BoxShadow(
-            color: Color.fromRGBO(85,217, 193, 0.9),
-            offset: Offset(-6,-2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-        ],borderRadius: BorderRadius.circular(29),),
+                    color: HexColor(appPrimaryColour),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.1),
+                          offset: Offset(6, 2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                      BoxShadow(
+                          color: Color.fromRGBO(255, 255, 255, 1.0),
+                          offset: Offset(-6, -2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                    ],
+                    borderRadius: BorderRadius.circular(29),
+                  ),
                   //margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
@@ -149,25 +155,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: loading
                           ? Loader(
+                            spinnerColor: Colors.black54,
                               color: HexColor(appSecondaryColour),
                               size: 20.0,
                             )
                           : Text(
                               'login',
                               style: GoogleFonts.montserrat(
-                                  color: Colors.white, fontSize: 18),
+                                  color: Colors.black54, fontSize: 18),
                             ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 InkWell(
                   child: Text(
                     "Forgot password?",
                     style: GoogleFonts.montserrat(
-                        color: Colors.black, fontSize: 15),
+                        color: Colors.black54, fontSize: 15),
                   ),
                 )
               ],

@@ -23,6 +23,9 @@ class _TeacherNamesState extends State<TeacherNames> {
   String name;
   String semester;
   String selectedTeacher;
+  String teacherUid;
+  String teacherClassName;
+
   // DocumentReference documentReference;
 
   Future getTeacherData() async {
@@ -46,10 +49,37 @@ class _TeacherNamesState extends State<TeacherNames> {
         .doc('$semester')
         .get()
         .then((docs) {
-          setState(() {
-             teacherNames = List.from(docs.data()['Teacher_Names']);
-          });
-     
+      setState(() {
+        teacherNames = List.from(docs.data()['Teacher_Names']);
+      });
+    });
+    await firebaseFirestore
+        .collection('users')
+        .where('University', isEqualTo: university)
+        .where('College', isEqualTo: collegeName)
+        .where('Department', isEqualTo: departmentName)
+        .where('Course', isEqualTo: courseName)
+        .where('Semester', isEqualTo: semester)
+        .get()
+        .then((query) {
+      query.docs.forEach((docs) {
+        setState(() {
+          teacherUid = docs.data()['Uid'];
+        });
+      });
+    });
+    await firebaseFirestore
+        .collection('users')
+        .doc(teacherUid)
+        .collection('Classes')
+        .where('Semester', isEqualTo: semester)
+        .get()
+        .then((query) {
+      query.docs.forEach((docs) {
+        setState(() {
+          teacherClassName = docs.data()['ClassName'];
+        });
+      });
     });
   }
 
@@ -79,6 +109,14 @@ class _TeacherNamesState extends State<TeacherNames> {
             ),
           )
         : Scaffold(
+          //  appBar: AppBar(
+          //     backgroundColor: HexColor(appPrimaryColour),
+          //     title: HeadingText(
+          //       alignment: Alignment.topLeft,
+          //       text: "Teachers",
+          //       color: Colors.black,
+          //     ),
+          //   ),
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
               child: buildListView(size),
@@ -104,13 +142,31 @@ class _TeacherNamesState extends State<TeacherNames> {
               decoration: BoxDecoration(
                 color: HexColor(appSecondaryColour),
                 borderRadius: BorderRadius.circular(55),
+                 boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
+            offset: Offset(6,2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+           BoxShadow(
+            color: Color.fromRGBO(255,255,255,1.0),
+            offset: Offset(-6,-2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+        ],
               ),
               child: InkWell(
-                child: HeadingText(
-                  color: Colors.white,
-                  text: teacherNames[index],
-                  size: 23,
-                ),
+                child: 
+                    HeadingText(
+                      color: Colors.black87,
+                      text: teacherNames[index],
+                      size: 23,
+                    ),
+                    
+                 
+                
                 onTap: () {
                   // setState(() async{
                   //   selectedTeacher = teacherNames[index];

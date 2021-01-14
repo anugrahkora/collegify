@@ -3,7 +3,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_scree
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
-
+import 'package:collegify/shared/components/loadingWidget.dart';
 
 import 'package:flutter/material.dart';
 
@@ -71,7 +71,7 @@ class _TeacherHomeState extends State<TeacherHome> {
               splashColor: HexColor(appSecondaryColour),
               hoverElevation: 20,
               elevation: 3.0,
-              backgroundColor: const Color(0xff03dac6),
+              backgroundColor: const Color(0xFF0000),
               foregroundColor: Colors.black,
               onPressed: () async {
                 try {
@@ -99,18 +99,46 @@ class _TeacherHomeState extends State<TeacherHome> {
             Container(
               alignment: Alignment.topCenter,
               margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               width: size.width * 0.8,
-              height: 100.0,
-              decoration: BoxDecoration(
+              height: size.height * 0.15,
+             
+                decoration: BoxDecoration(
+                     boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.1),
+                          offset: Offset(6, 2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                      BoxShadow(
+                          color: Color.fromRGBO(255, 255, 255, 1.0),
+                          offset: Offset(-6, -2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                    ],
+                    
+                  
                 color: HexColor(appSecondaryColour),
                 borderRadius: BorderRadius.circular(55),
-              ),
+                ),
+              
               child: InkWell(
-                child: HeadingText(
-                  color: Colors.white,
-                  text: classList[index].data()['ClassName'],
-                  size: 23,
+                child: Column(
+                  children: [
+                    HeadingText(
+                      color: Colors.black54,
+                      text: classList[index].data()['ClassName'],
+                      size: 23,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    HeadingText(
+                      color: Colors.black54,
+                      text: classList[index].data()['Semester'],
+                      size: 23,
+                    ),
+                  ],
                 ),
                 onTap: () {
                   Navigator.push(
@@ -119,7 +147,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                       builder: (context) => CreateNoteScreen(
                         snapshot: snapshot,
                         className: classList[index].data()['ClassName'],
-                        year: classList[index].data()['Semester'],
+                        semester: classList[index].data()['Semester'],
                       ),
                     ),
                   );
@@ -145,7 +173,8 @@ class _TeacherHomeState extends State<TeacherHome> {
           ),
         ),
         context: context,
-        title: "Class Name",
+        title: "",
+        
         content: Form(
           key: _formkey,
           child: Column(
@@ -159,7 +188,7 @@ class _TeacherHomeState extends State<TeacherHome> {
               ),
               RoundedInputFieldNumbers(
                 hintText: 'Semester',
-                validator: (val) => val.isEmpty? 'Field Mandatory' : null,
+                validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
                 onChanged: (val) {
                   semester = val;
                 },
@@ -169,24 +198,37 @@ class _TeacherHomeState extends State<TeacherHome> {
         ),
         buttons: [
           DialogButton(
-            
-            radius: BorderRadius.circular(20),
-            color: HexColor(appSecondaryColour),
+            height: 50.0,
+            width: 100.0,
+            radius: BorderRadius.circular(25),
+            color: HexColor("#E1E6EC"),
             onPressed: () async {
               if (_formkey.currentState.validate()) {
                 try {
-                  await DatabaseService(uid: _uid).addNewClass(_className,semester);
+                  setState(() {
+                    loading = true;
+                  });
+                  await DatabaseService(uid: _uid)
+                      .addNewClass(_className, semester);
+                  setState(() {
+                    loading = false;
+                  });
                   Navigator.of(context, rootNavigator: true).pop();
                 } catch (e) {
                   print(e);
                 }
               }
             },
-            child: HeadingText(
-              text: 'Add',
-              color: Colors.white,
-              size: 18,
-            ),
+            child: loading
+                ? Loader(
+                    color: HexColor(appSecondaryColour),
+                    size: 18,
+                  )
+                : HeadingText(
+                    text: 'Add',
+                    color: Colors.black54,
+                    size: 18,
+                  ),
           )
         ]).show();
   }

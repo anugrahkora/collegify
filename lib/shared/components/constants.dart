@@ -5,13 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-const appPrimaryColour = '#55D9C1';
-const appSecondaryColour = '#0D0D0D';
+const appPrimaryColour = '#FFFFFF';
+const appSecondaryColour = '#FFFFFF';
 const appPrimaryColourDark = '#37DBC2';
-const studentPrimaryColour = '#A9CBD9';
-const teacherPrimaryColour = '#73A2BF';
-const parentPrimaryColour = '#537FA6';
-const welcomePrimaryColour = '#F2F2F2';
+
 
 class HeadingText extends StatelessWidget {
   final String text;
@@ -112,6 +109,22 @@ class _RoundedButtonState extends State<RoundedButton> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
+            offset: Offset(6,2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+           BoxShadow(
+            color: Color.fromRGBO(255,255,255,1.0),
+            offset: Offset(-6,-2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+        ],
+      ),
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: ClipRRect(
@@ -200,6 +213,20 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
+            offset: Offset(6,2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+           BoxShadow(
+            color: Color.fromRGBO(255,255,255,1.0),
+            offset: Offset(-6,-2),
+            blurRadius: 6.0,
+            spreadRadius: 3.0
+          ),
+        ],
         color: Colors.white,
         borderRadius: BorderRadius.circular(29),
       ),

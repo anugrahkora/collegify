@@ -7,9 +7,9 @@ import 'package:hexcolor/hexcolor.dart';
 class CreateNoteScreen extends StatefulWidget {
   final DocumentSnapshot snapshot;
   final String className;
-  final String year;
+  final String semester;
 
-  const CreateNoteScreen({Key key, this.snapshot, this.className, this.year})
+  const CreateNoteScreen({Key key, this.snapshot, this.className, this.semester})
       : super(key: key);
   @override
   _CreateNoteScreenState createState() => _CreateNoteScreenState();
@@ -25,7 +25,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         backgroundColor: HexColor(appPrimaryColour),
         title: HeadingText(
           alignment: Alignment.topLeft,
-          text: widget.className ?? '---',
+          text: widget.className,
           color: Colors.black,
         ),
       ),
@@ -53,7 +53,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                 builder: (context) => SelectFileScreen(
                   docs: widget.snapshot,
                   className: widget.className,
-                  semester: widget.year,
+                  semester: widget.semester,
                 ),
               ),
             );

@@ -48,24 +48,28 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 30.0,
+                  height: 40.0,
                 ),
-               
-                SizedBox(
-                  height: 15.0,
-                ),
-                Container(
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/student_register_cropped.jpg',
-                      width: size.width * 0.8,
-                      height: 200,
-                      fit: BoxFit.contain,
-                    ),
+          
+                 Container(
+              child: Center(
+                    child: ImageIcon(
+          AssetImage('assets/icons/iconStudentLarge.png'),
+          color:Colors.black54,size: 70,),
+                    // HeadingText(
+                    //   text: "student",
+                    //   size: 50.0,
+                    //   color: Colors.black54,
+                    // ),
+                    //       Image.asset('assets/images/collegify_cropped.jpg',
+                    //        width: size.width*0.8,
+                    // height: 150,
+                    // fit: BoxFit.contain,
+                    //       ),
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 30.0,
                 ),
 
                 //list of universities
@@ -211,7 +215,25 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     });
                   },
                 ),
+                  SizedBox(
+                  height: 15.0,
+                ),
                 Container(
+                  decoration: BoxDecoration(
+                     boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.1),
+                          offset: Offset(6, 2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                      BoxShadow(
+                          color: Color.fromRGBO(255, 255, 255, 1.0),
+                          offset: Offset(-6, -2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                    ],
+                     borderRadius: BorderRadius.circular(29),
+                  ),
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
@@ -271,11 +293,12 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       },
                       child: loading
                           ? Loader(
+                            spinnerColor: Colors.black54,
                               color: HexColor(appSecondaryColour),
                               size: 20,
                             )
                           : HeadingText(
-                              color: Colors.white,
+                              color: Colors.black54,
                               text: 'Register',
                               size: 16.0,
                             ),

@@ -8,7 +8,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/Teacher_Navigation
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
-import 'package:collegify/database/databaseService.dart';
+
 
 import 'package:collegify/models/user_model.dart';
 

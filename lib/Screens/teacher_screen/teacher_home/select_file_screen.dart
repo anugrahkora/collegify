@@ -139,7 +139,7 @@ class _UploaderState extends State<Uploader> {
 
   _startUpload() {
     String _filePath =
-        '${widget.docs.data()['University']}/${widget.docs.data()['College']}/$_notes/${widget.docs.data()['Department']}/${widget.docs.data()['Course']}/${widget.semester}/${widget.docs.data()['University']}/${widget.className}/${DateTime.now()}';
+        '${widget.docs.data()['University']}/${widget.docs.data()['College']}/$_notes/${widget.docs.data()['Department']}/${widget.docs.data()['Course']}/${widget.semester}/${widget.docs.data()['Name']}/${DateTime.now()}';
     if (widget.file != null) {
       try {
         final _storage = FirebaseStorage.instance.ref().child(_filePath);

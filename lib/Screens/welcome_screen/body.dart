@@ -25,12 +25,13 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return PersistentTabView(
+      navBarHeight: size.height*0.08,
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-      
-      
+
       confineInSafeArea: false,
       backgroundColor: HexColor(appPrimaryColour),
       handleAndroidBackButtonPress: true,
@@ -57,7 +58,7 @@ class _BodyState extends State<Body> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style13, // Choose the nav bar style with this property.
+          NavBarStyle.style7, // Choose the nav bar style with this property.
     );
   }
 
@@ -67,7 +68,6 @@ class _BodyState extends State<Body> {
       StudentRegisterScreen(),
       TeacherRegisterScreen(),
       ParentRegisterScreen(),
-      AdminHome(),
     ];
   }
 
@@ -76,52 +76,47 @@ class _BodyState extends State<Body> {
       PersistentBottomNavBarItem(
         icon: ImageIcon(
           AssetImage('assets/icons/iconLogin.png'),
-          color: HexColor(appSecondaryColour),
+          color: Colors.black54,
+          //  HexColor(appSecondaryColour),
         ),
-        title: ("LogIn"),
-        activeColor: Colors.white, //HexColor(appSecondaryColour),
+        title: ("Login"),
+        titleStyle: TextStyle(color: Colors.black54),
+        activeColor: Colors.black12,
         inactiveColor: CupertinoColors.systemGrey,
-        activeContentColor: HexColor(appSecondaryColour),
+        activeContentColor: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: ImageIcon(
           AssetImage('assets/icons/iconStudent.png'),
-          color: HexColor(appSecondaryColour),
+          color: Colors.black54,
+          //  HexColor(appSecondaryColour),
         ),
         title: ("Student"),
-        activeColor: Colors.white, //HexColor(appSecondaryColour),
+        activeColor: Colors.black12, //HexColor(appSecondaryColour),
         inactiveColor: CupertinoColors.systemGrey,
-        activeContentColor: HexColor(appSecondaryColour),
+        activeContentColor: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: ImageIcon(
           AssetImage('assets/icons/iconTeacher.png'),
-          color: HexColor(appSecondaryColour),
+          color: Colors.black54,
+          //  HexColor(appSecondaryColour),
         ),
         title: ("Teacher"),
-        activeColor: Colors.white,
+        activeColor: Colors.black12,
         inactiveColor: CupertinoColors.systemGrey,
-        activeContentColor: HexColor(appSecondaryColour),
+        activeContentColor: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: ImageIcon(
           AssetImage('assets/icons/iconParent.png'),
-          color: HexColor(appSecondaryColour),
+          color: Colors.black54,
+          //  HexColor(appSecondaryColour),
         ),
         title: ("Parent"),
-        activeColor: Colors.white,
+        activeColor: Colors.black12,
         inactiveColor: CupertinoColors.systemGrey,
-        activeContentColor: HexColor(appSecondaryColour),
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(
-          CupertinoIcons.checkmark_alt_circle,
-          color: HexColor(appSecondaryColour),
-        ),
-        title: ("Admin"),
-        activeColor: Colors.white,
-        inactiveColor: CupertinoColors.systemGrey,
-        activeContentColor: HexColor(appSecondaryColour),
+        activeContentColor: Colors.black54,
       ),
     ];
   }

@@ -24,7 +24,7 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-
+//change this 
     if (user != null) {
       FirebaseFirestore.instance
           .collection('users')

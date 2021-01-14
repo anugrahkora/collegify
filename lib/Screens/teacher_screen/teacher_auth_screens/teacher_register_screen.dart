@@ -42,7 +42,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 30.0,
+                  height: 40.0,
                 ),
                 AlertWidget(
                   color: Colors.amber,
@@ -53,21 +53,18 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     });
                   },
                 ),
-                SizedBox(
-                  height: 15.0,
-                ),
+                
                 Container(
                   child: Center(
-                    child: Image.asset(
-                      'assets/images/teacher_register_cropped.jpg',
-                      width: size.width * 0.8,
-                      height: 200,
-                      fit: BoxFit.contain,
+                    child: ImageIcon(
+                      AssetImage('assets/icons/iconTeacherLarge.png'),
+                      color: Colors.black54,
+                      size: 70,
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 30.0,
                 ),
 
                 DropDownListForUniversityNames(
@@ -122,7 +119,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     setState(() {
                       courseName = val;
                     });
-                    
                   },
                 ),
                 SizedBox(
@@ -136,9 +132,8 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   selectedYear: semester,
                   onpressed: (val) {
                     setState(() {
-                     semester = val;
+                      semester = val;
                     });
-                   
                   },
                 ),
                 RoundedInputField(
@@ -181,6 +176,21 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       confirmPassword = val;
                     }),
                 Container(
+                   decoration: BoxDecoration(
+                     boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.1),
+                          offset: Offset(6, 2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                      BoxShadow(
+                          color: Color.fromRGBO(255, 255, 255, 1.0),
+                          offset: Offset(-6, -2),
+                          blurRadius: 6.0,
+                          spreadRadius: 3.0),
+                    ],
+                     borderRadius: BorderRadius.circular(29),
+                  ),
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
@@ -231,11 +241,12 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       },
                       child: loading
                           ? Loader(
+                            spinnerColor: Colors.black54,
                               color: HexColor(appSecondaryColour),
                               size: 20,
                             )
                           : HeadingText(
-                              color: Colors.white,
+                              color: Colors.black54,
                               text: 'Register',
                               size: 16.0,
                             ),

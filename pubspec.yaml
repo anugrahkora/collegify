@@ -65,8 +65,11 @@ flutter:
   #To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/iconParent.png
+    - assets/icons/iconParentLarge.png
     - assets/icons/iconStudent.png
+    - assets/icons/iconStudentLarge.png
     - assets/icons/iconTeacher.png
+    - assets/icons/iconTeacherLarge.png
     - assets/icons/iconLogin.png
     - assets/images/collegify_cropped.jpg
     - assets/images/student_register_cropped.jpg

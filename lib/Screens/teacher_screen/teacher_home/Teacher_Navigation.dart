@@ -18,35 +18,35 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.book, color: Colors.black),
+      icon: Icon(CupertinoIcons.book, color: Colors.black54),
       title: ("Classes"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
+      activeContentColor: Colors.black54,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.check_mark, color: Colors.black),
+      icon: Icon(CupertinoIcons.check_mark, color: Colors.black54),
       title: ("Attendance"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
+      activeContentColor:  Colors.black54,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.graph_circle, color: Colors.black),
+      icon: Icon(CupertinoIcons.graph_circle, color: Colors.black54),
       title: ("Marks"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
+      activeContentColor:  Colors.black54,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(
         CupertinoIcons.person,
-        color: Colors.black,
+        color:  Colors.black54,
       ),
       title: ("Profile"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
+      activeContentColor: Colors.black54,
     ),
   ];
 }
