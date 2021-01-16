@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_notes.dart';
+import 'package:collegify/authentication/auth_service.dart';
 
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _TeacherNamesState extends State<TeacherNames> {
   String selectedTeacher;
   String teacherUid;
   String teacherClassName;
+  final AuthService _authService = new AuthService();
 
   // DocumentReference documentReference;
 
@@ -60,6 +62,7 @@ class _TeacherNamesState extends State<TeacherNames> {
         .where('Department', isEqualTo: departmentName)
         .where('Course', isEqualTo: courseName)
         .where('Semester', isEqualTo: semester)
+        .where('Name',isEqualTo: 'teacher')
         .get()
         .then((query) {
       query.docs.forEach((docs) {
@@ -109,14 +112,115 @@ class _TeacherNamesState extends State<TeacherNames> {
             ),
           )
         : Scaffold(
-          //  appBar: AppBar(
-          //     backgroundColor: HexColor(appPrimaryColour),
-          //     title: HeadingText(
-          //       alignment: Alignment.topLeft,
-          //       text: "Teachers",
-          //       color: Colors.black,
-          //     ),
-          //   ),
+            drawer: Drawer(
+              // Add a ListView to the drawer. This ensures the user can scroll
+              // through the options in the drawer if there isn't enough vertical
+              // space to fit everything.
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: ImageIcon(
+                      AssetImage('assets/icons/iconStudentLarge.png'),
+                      color: Colors.black54,
+                      size: 30,
+                    ),
+                    decoration: BoxDecoration(
+                      color: HexColor(appPrimaryColour),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(widget.documentSnapshot.data()['Name']),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Registration_Number']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['University']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['College']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Department']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Course']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Semester']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        Text(
+                          teacherUid??'null' ,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60.0,
+                  ),
+                  ListTile(
+                    title: Text('Sign Out'),
+                    onTap: () async {
+                      await _authService.signOut();
+                    },
+                  ),
+                ],
+              ),
+            ),
+            appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.black54, //change your color here
+              ),
+              centerTitle: true,
+              backgroundColor: HexColor(appPrimaryColour),
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
+                child: ImageIcon(
+                  AssetImage('assets/icons/iconTeacher.png'),
+                  color: Colors.black54,
+                ),
+              ),
+            ),
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
               child: buildListView(size),
@@ -136,37 +240,30 @@ class _TeacherNamesState extends State<TeacherNames> {
             Container(
               alignment: Alignment.topCenter,
               margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
               width: size.width * 0.8,
-              height: 100.0,
               decoration: BoxDecoration(
-                color: HexColor(appSecondaryColour),
-                borderRadius: BorderRadius.circular(55),
-                 boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            offset: Offset(6,2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-           BoxShadow(
-            color: Color.fromRGBO(255,255,255,1.0),
-            offset: Offset(-6,-2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-        ],
+                boxShadow: [
+                  BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(6, 2),
+                      blurRadius: 6.0,
+                      spreadRadius: 0.0),
+                  BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(-6, -2),
+                      blurRadius: 6.0,
+                      spreadRadius: 0.0),
+                ],
+                color: HexColor(appPrimaryColourLight),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                child: 
-                    HeadingText(
-                      color: Colors.black87,
-                      text: teacherNames[index],
-                      size: 23,
-                    ),
-                    
-                 
-                
+                child: HeadingText(
+                  color: Colors.black87,
+                  text: teacherNames[index],
+                  size: 23,
+                ),
                 onTap: () {
                   // setState(() async{
                   //   selectedTeacher = teacherNames[index];

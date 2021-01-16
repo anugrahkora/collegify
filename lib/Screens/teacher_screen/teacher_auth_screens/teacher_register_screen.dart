@@ -176,25 +176,11 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       confirmPassword = val;
                     }),
                 Container(
-                   decoration: BoxDecoration(
-                     boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
-                     borderRadius: BorderRadius.circular(29),
-                  ),
+                  
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
+                  
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -246,7 +232,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                               size: 20,
                             )
                           : HeadingText(
-                              color: Colors.black54,
+                              color: Colors.white,
                               text: 'Register',
                               size: 16.0,
                             ),

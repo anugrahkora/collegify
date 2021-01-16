@@ -5,9 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-const appPrimaryColour = '#FFFFFF';
-const appSecondaryColour = '#FFFFFF';
-const appPrimaryColourDark = '#37DBC2';
+const appPrimaryColour = '#F0F1F2';
+const appSecondaryColour = '#225c73';
+const appPrimaryColourDark = '#99b4bf';
+const appPrimaryColourLight = '#ffffff';
 
 
 class HeadingText extends StatelessWidget {
@@ -118,7 +119,7 @@ class _RoundedButtonState extends State<RoundedButton> {
             spreadRadius: 3.0
           ),
            BoxShadow(
-            color: Color.fromRGBO(255,255,255,1.0),
+            color: Color.fromRGBO(0,0,0,0.1),
             offset: Offset(-6,-2),
             blurRadius: 6.0,
             spreadRadius: 3.0
@@ -128,7 +129,7 @@ class _RoundedButtonState extends State<RoundedButton> {
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
+        borderRadius: BorderRadius.circular(8),
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: widget.color,
@@ -213,22 +214,22 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            offset: Offset(6,2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-           BoxShadow(
-            color: Color.fromRGBO(255,255,255,1.0),
-            offset: Offset(-6,-2),
-            blurRadius: 6.0,
-            spreadRadius: 3.0
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Color.fromRGBO(0, 0, 0, 0.1),
+        //     offset: Offset(6,2),
+        //     blurRadius: 4.0,
+        //     // spreadRadius: 3.0
+        //   ),
+        //    BoxShadow(
+        //     color: Color.fromRGBO(0,0,0,0.1),
+        //     offset: Offset(-6,-2),
+        //     blurRadius: 4.0,
+        //     // spreadRadius: 3.0
+        //   ),
+        // ],
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+        borderRadius: BorderRadius.circular(0.0),
       ),
       child: widget.child,
     );
@@ -327,7 +328,7 @@ class AlertWidget extends StatelessWidget {
         width: size.width * 0.8,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(29),
+          
         ),
 
         padding: EdgeInsets.all(8.0),

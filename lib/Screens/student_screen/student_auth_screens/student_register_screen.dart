@@ -28,7 +28,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   String password = '';
   String confirmPassword = '';
 
-  String year;
+ String year;
   String _message;
   bool loading = false;
   bool universityLoading = true;
@@ -50,12 +50,14 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 SizedBox(
                   height: 40.0,
                 ),
-          
-                 Container(
-              child: Center(
+
+                Container(
+                  child: Center(
                     child: ImageIcon(
-          AssetImage('assets/icons/iconStudentLarge.png'),
-          color:Colors.black54,size: 70,),
+                      AssetImage('assets/icons/iconStudentLarge.png'),
+                      color: Colors.black54,
+                      size: 70,
+                    ),
                     // HeadingText(
                     //   text: "student",
                     //   size: 50.0,
@@ -126,7 +128,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   onpressed: (val) {
                     setState(() {
                       courseName = val;
-                      year = null;
+                      
                     });
                   },
                 ),
@@ -157,9 +159,6 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   height: 5.0,
                 ),
 
-                SizedBox(
-                  height: 5.0,
-                ),
                 DropDownListForYearData(
                     universityName: university,
                     collegeName: collegeName,
@@ -206,7 +205,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     onChanged: (val) {
                       confirmPassword = val;
                     }),
-                     AlertWidget(
+                AlertWidget(
                   color: Colors.amber,
                   message: _message,
                   onpressed: () {
@@ -215,29 +214,13 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     });
                   },
                 ),
-                  SizedBox(
+                SizedBox(
                   height: 15.0,
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                     boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
-                     borderRadius: BorderRadius.circular(29),
-                  ),
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -293,12 +276,12 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       },
                       child: loading
                           ? Loader(
-                            spinnerColor: Colors.black54,
+                              spinnerColor: Colors.white,
                               color: HexColor(appSecondaryColour),
                               size: 20,
                             )
                           : HeadingText(
-                              color: Colors.black54,
+                              color: Colors.white,
                               text: 'Register',
                               size: 16.0,
                             ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
@@ -19,7 +20,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.book, color: Colors.black54),
-      title: ("Classes"),
+      title: ("Notes"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: Colors.black54,
@@ -56,8 +57,10 @@ PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 class TeacherNavigationScreen extends StatefulWidget {
  
   final DocumentSnapshot documentSnapshot;
+   final String className;
+  final String semester;
 
-  const TeacherNavigationScreen({Key key, this.documentSnapshot}) : super(key: key);
+  const TeacherNavigationScreen({Key key, this.documentSnapshot, this.className, this.semester}) : super(key: key);
   @override
   _TeacherNavigationScreenState createState() =>
       _TeacherNavigationScreenState();
@@ -71,7 +74,7 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: HexColor(appPrimaryColour),
+      backgroundColor: Colors.white,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears.
@@ -101,7 +104,7 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
   }
   List<Widget> _buildScreens() {
   return [
-    TeacherHome(),
+    CreateNoteScreen(snapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
 
     StudentAttendance(documentSnapshot: widget.documentSnapshot,),
     StudentMarkScreen(),

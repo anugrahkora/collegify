@@ -195,25 +195,11 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                 ),
 
                     Container(
-                       decoration: BoxDecoration(
-                     boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
-                     borderRadius: BorderRadius.circular(29),
-                  ),
+                     
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
+                  
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 40),
@@ -263,7 +249,7 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                           : Text(
                               'Register',
                               style: GoogleFonts.montserrat(
-                                  color: Colors.black54, fontSize: 18),
+                                  color: Colors.white, fontSize: 18),
                             ),
                     ),
                   ),

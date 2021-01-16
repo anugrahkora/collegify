@@ -17,8 +17,8 @@ class _AdminHomeState extends State<AdminHome> {
   String university;
   String college;
   String department, newDepartment;
-  String course, newCourse;
-  String year, newYear;
+  String course, newCourse,newYear;
+  String year; 
   String _message;
   @override
   Widget build(BuildContext context) {

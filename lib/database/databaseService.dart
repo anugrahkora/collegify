@@ -36,7 +36,7 @@ class DatabaseService {
   //setting teacher data
 
   Future updateTeacherData(String university, String college, String department,
-      String course, String name, String role) async {
+      String course, String semester,String name, String role) async {
     try {
       return await userCollectionReference.doc(uid).set({
         'Uid': uid,
@@ -44,7 +44,7 @@ class DatabaseService {
         'College': college,
         'Department': department,
         'Course': course,
-        'Semester': 0,
+        'Semester': semester,
         'Name': name,
         'Role': role,
       });

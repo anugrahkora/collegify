@@ -47,18 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 10.0,
                 ),
-                // Container(
-                //   child: Center(child: Text(
-                //   'Collegify',
-                //   style:TextStyle(
-                //     fontFamily: 'Qibtiyah',
-                //     fontSize: 100,
-                //     color: Colors.black,
-
-                //   ),
-                //    ),
-                // ),
-                // ),
+               
                 Container(
                   
                 
@@ -69,11 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       size: 70.0,
                       color: Colors.black54,
                     ),
-                    //       Image.asset('assets/images/collegify_cropped.jpg',
-                    //        width: size.width*0.8,
-                    // height: 150,
-                    // fit: BoxFit.contain,
-                    //       ),
+                  
                   ),
                 ),
                 SizedBox(
@@ -104,24 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   decoration: BoxDecoration(
                     color: HexColor(appPrimaryColour),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
-                    borderRadius: BorderRadius.circular(29),
+                  
                   ),
                   //margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(29),
+                    // borderRadius: BorderRadius.circular(29),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 40),
@@ -134,8 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                             dynamic result = await _authService
                                 .loginWithEmailpasswd(email, password);
-                            print(email);
-                            print(password);
+                            
                             if (result != null) {
                               print('user Logged in');
 
@@ -155,14 +127,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: loading
                           ? Loader(
-                            spinnerColor: Colors.black54,
+                            spinnerColor: Colors.white,
                               color: HexColor(appSecondaryColour),
                               size: 20.0,
                             )
                           : Text(
                               'login',
                               style: GoogleFonts.montserrat(
-                                  color: Colors.black54, fontSize: 18),
+                                  color: Colors.white, fontSize: 18),
                             ),
                     ),
                   ),

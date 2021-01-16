@@ -31,20 +31,9 @@ class _DropDownListForUniversityNamesState
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-         boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
+        
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+       
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('college').snapshots(),
@@ -120,20 +109,9 @@ class _DropdownListForCollegeNameState
       width: size.width * 0.8,
       height: 58,
       decoration: BoxDecoration(
-         boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
+        
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+        
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -222,20 +200,9 @@ class _DropDownListForDepartmentNameState
       width: size.width * 0.8,
       height: 58.0,
       decoration: BoxDecoration(
-         boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
+        
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+       
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -330,20 +297,9 @@ class _DropDownListForCourseNamesState
       width: size.width * 0.8,
       height: 58.0,
       decoration: BoxDecoration(
-         boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
+        
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+       
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -488,20 +444,9 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
       width: size.width * 0.8,
       height: 58,
       decoration: BoxDecoration(
-         boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(6, 2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                      BoxShadow(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
-                          offset: Offset(-6, -2),
-                          blurRadius: 6.0,
-                          spreadRadius: 3.0),
-                    ],
+        
         color: Colors.white,
-        borderRadius: BorderRadius.circular(29),
+       
       ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

@@ -47,11 +47,11 @@ class _RoleCheckState extends State<RoleCheck> {
       if (role == 'student') {
         return StudentNavigationScreen(documentSnapshot: documentSnapshot,);
       } else if (role == 'teacher') {
-        return TeacherNavigationScreen(documentSnapshot: documentSnapshot,);
+        return TeacherHome(documentSnapshot: documentSnapshot,);
       } else if (role == 'admin') {
         return AdminNavigationScreen();
       } else if (role == 'notVerified') {
-        return TeacherNavigationScreen(documentSnapshot: documentSnapshot,);
+        return TeacherHome(documentSnapshot: documentSnapshot,);
       } else if (role == 'parent') {
         return ParentNavigationScreen();
       }

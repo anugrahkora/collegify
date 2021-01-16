@@ -14,6 +14,7 @@
     "README.md": true,
     "pubspec.lock": true,
     ".gitignore": true,
-    "android": true
+    "android": true,
+    "lib\\Screens\\email_verification_screen": true
   }
 }
