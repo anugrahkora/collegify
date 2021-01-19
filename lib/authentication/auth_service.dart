@@ -71,10 +71,12 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
 
-      await DatabaseService(uid: user.uid).updateStudentData(
-          university, college, department, course, name, regNumber, semester, role);
-          await DatabaseService(uid: user.uid).assignStudents(
-          university, college, department, course, semester, name);
+      await DatabaseService(uid: user.uid).updateStudentData(university,
+          college, department, course, name, regNumber, semester, role);
+      await DatabaseService(uid: user.uid)
+          .assignStudents(university, college, department, course, semester, {'Name':name,'Uid':user.uid},
+       
+      );
 
       return _userFromFirebaseUser(user);
 
@@ -105,7 +107,7 @@ class AuthService {
       User user = userCredential.user;
 
       await DatabaseService(uid: user.uid).updateTeacherData(
-          university, college, department, course, semester,name, role);
+          university, college, department, course, semester, name, role);
       await DatabaseService(uid: user.uid).assignTeachers(
           university, college, department, course, semester, name);
       return _userFromFirebaseUser(user);

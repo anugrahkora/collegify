@@ -26,8 +26,10 @@ class _SelectFileScreenState extends State<SelectFileScreen> {
 
   Future<void> _pickImage(ImageSource source) async {
     final PickedFile pickedFile = await picker.getImage(source: source);
-
-    _imageFile = File(pickedFile.path);
+setState(() {
+   _imageFile = File(pickedFile.path);
+});
+   
   }
 
   /// Remove image
@@ -42,11 +44,14 @@ class _SelectFileScreenState extends State<SelectFileScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black54
+        ),
         backgroundColor: HexColor(appPrimaryColour),
         title: HeadingText(
           alignment: Alignment.topLeft,
           text: "Upload Image",
-          color: Colors.black,
+          color: Colors.black54,
         ),
         actions: [
           if (_imageFile != null)
@@ -64,19 +69,20 @@ class _SelectFileScreenState extends State<SelectFileScreen> {
       bottomNavigationBar: BottomAppBar(
         color: HexColor(appPrimaryColour),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.photo_camera,
+                color: Colors.black54,
               ),
-              onPressed: () => _pickImage(ImageSource.camera),
+              onPressed: () => _pickImage(ImageSource.camera,),
             ),
             SizedBox(
               width: 40.0,
             ),
             IconButton(
-              icon: Icon(Icons.photo_library),
+              icon: Icon(Icons.photo_library,color: Colors.black54,),
               onPressed: () => _pickImage(ImageSource.gallery),
             ),
           ],

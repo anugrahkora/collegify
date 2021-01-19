@@ -4,7 +4,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_scree
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_profile.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_announcement.dart';
 import 'package:collegify/shared/components/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -99,17 +99,17 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style5, // Choose the nav bar style with this property.
     );
   }
   List<Widget> _buildScreens() {
   return [
     CreateNoteScreen(snapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
 
-    StudentAttendance(documentSnapshot: widget.documentSnapshot,),
+    StudentAttendance(documentSnapshot: widget.documentSnapshot,className: widget.className,),
     StudentMarkScreen(),
     // from student screen
-    TeacherProfileScreen(),
+    TeacherProfileScreen(documentSnapshot: widget.documentSnapshot,),
   ];
 }
 }

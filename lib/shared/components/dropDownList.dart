@@ -123,12 +123,11 @@ class _DropdownListForCollegeNameState
           List<DropdownMenuItem> collegeName = [];
 
           if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                'Loading',
-                style:
-                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-              ),
+            return  Loader(
+                
+                size:20.0,
+                spinnerColor: Colors.black54,
+              
             );
           }
             for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -152,7 +151,9 @@ class _DropdownListForCollegeNameState
            
           }
 
-          return DropdownButtonHideUnderline(
+          return 
+         
+          DropdownButtonHideUnderline(
             child: DropdownButton(
               elevation: 16,
               hint: Text(
@@ -216,12 +217,11 @@ class _DropDownListForDepartmentNameState
           List<DropdownMenuItem> departmentName = [];
 
           if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                'Loading',
-                style:
-                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-              ),
+            return Loader(
+                
+                size:20.0,
+                spinnerColor: Colors.black54,
+              
             );
           }
 
@@ -315,15 +315,14 @@ class _DropDownListForCourseNamesState
           List<DropdownMenuItem> courseName = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(
-              child: Center(
-                child: Text(
-                  'Loading',
-                  style: GoogleFonts.montserrat(
-                      color: Colors.black54, fontSize: 14),
-                ),
-              ),
+            return
+                Loader(
+                
+                size:20.0,
+                spinnerColor: Colors.black54,
+              
             );
+            
           }
 
           for (int i = 0; i < snapshot.data.docs.length; i++) {
@@ -464,13 +463,11 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
           List<DropdownMenuItem> yearData = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(
-              width: size.width * 0.5,
-              child: Text(
-                'Please select a University,College, Department and course',
-                style:
-                    GoogleFonts.montserrat(color: Colors.black54, fontSize: 14),
-              ),
+            return  Loader(
+                
+                size:20.0,
+                spinnerColor: Colors.black54,
+              
             );
           }
 

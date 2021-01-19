@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
@@ -7,21 +8,23 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class StudentAttendance extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
+  final String className;
 
-  const StudentAttendance({Key key, this.documentSnapshot}) : super(key: key);
+  const StudentAttendance({Key key, this.documentSnapshot, this.className})
+      : super(key: key);
   @override
   _StudentAttendanceState createState() => _StudentAttendanceState();
 }
 
 class _StudentAttendanceState extends State<StudentAttendance> {
-  List<String> studentNames = [];
+  List<StudentModel> studentNames = [];
   DocumentSnapshot documentSnapshot;
-
   IconData radioButton = Icons.radio_button_off_rounded;
-
+  DateTime dateTime = DateTime.now();
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   String studentUid;
   bool _loading = false;
+  bool _present;
 
   Future getStudentNames() async {
     await firebaseFirestore
@@ -39,9 +42,58 @@ class _StudentAttendanceState extends State<StudentAttendance> {
         .then((docs) {
       documentSnapshot = docs;
       setState(() {
-        studentNames = List.from(docs.data()['Student_Names']);
+        studentNames = List<StudentModel>.from(
+          docs.data()['Students'].map(
+            (item) {
+              return new StudentModel(
+                name: item['Name'],
+                uid: item['Uid'],
+              );
+            },
+          ),
+        );
       });
     });
+  }
+
+// to select the date
+  Future<Null> selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: dateTime,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030));
+    if (picked != null && picked != dateTime) {
+      setState(() {
+        dateTime = picked;
+      });
+    }
+  }
+
+  Future _checkPresent(String _uid) async {
+    try {
+      return await firebaseFirestore
+          .collection('users')
+          .doc(_uid)
+          .collection('Attendance')
+          .where('Course', isEqualTo: widget.documentSnapshot.data()['Course'])
+          .where(
+            'Semester',
+            isEqualTo: widget.documentSnapshot.data()['Semester'],
+          )
+          .get()
+          .then((query) {
+        query.docs.forEach((docs) {
+          setState(() {
+            _present = docs.data()['Present'];
+          });
+        });
+
+        return _present ? true : null;
+      });
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -73,12 +125,30 @@ class _StudentAttendanceState extends State<StudentAttendance> {
           )
         : Scaffold(
             appBar: AppBar(
+              leading: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ImageIcon(
+                  AssetImage('assets/icons/iconStudent.png'),
+                  color: Colors.black54,
+                ),
+              ),
               centerTitle: true,
               backgroundColor: HexColor(appPrimaryColour),
-              title: ImageIcon(
-                AssetImage('assets/icons/iconStudent.png'),
+              title: HeadingText(
+                text: dateTime.toString().substring(0, 11),
+                size: 20.0,
                 color: Colors.black54,
               ),
+              actions: [
+                IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.black54,
+                    ),
+                    onPressed: () {
+                      selectDate(context);
+                    })
+              ],
             ),
             backgroundColor: HexColor(appPrimaryColour),
             body: SafeArea(
@@ -119,46 +189,29 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HeadingText(
-                      alignment: Alignment.centerLeft,
-                      color: Colors.black54,
-                      text: studentNames[index],
-                      size: 20,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      HeadingText(
+                        alignment: Alignment.centerLeft,
+                        color: Colors.black54,
+                        text: '${studentNames[index].name}',
+                        size: 20,
+                      ),
+                      // HeadingText(
+                      //   alignment: Alignment.centerLeft,
+                      //   color: Colors.black54,
+                      //   text:
+                      //       '${_checkPresent(studentNames[index].uid) != null ? 'hello' : 'hey'}',
+                      //   size: 20,
+                      // ),
+                    ],
+                  ),
                 ),
-
-                // studentNamesMap[index].present
-                //       ? Icon(Icons.radio_button_on_rounded)
-                //       : Icon(Icons.radio_button_off_outlined),
                 onTap: () async {
-                  await firebaseFirestore
-                      .collection('users')
-                      .where('University',
-                          isEqualTo:
-                              widget.documentSnapshot.data()['University'])
-                      .where('College',
-                          isEqualTo: widget.documentSnapshot.data()['College'])
-                      .where('Department',
-                          isEqualTo:
-                              widget.documentSnapshot.data()['Department'])
-                      .where('Course',
-                          isEqualTo: widget.documentSnapshot.data()['Course'])
-                      .where('Semester',
-                          isEqualTo: widget.documentSnapshot.data()['Semester'])
-                      .where('Name', isEqualTo: studentNames[index])
-                      .get()
-                      .then((query) {
-                    query.docs.forEach((docs) {
-                      setState(() {
-                        studentUid = docs.data()['Uid'];
-                      });
-                    });
-                    _openPopup(context, studentUid);
-                  });
+                  _openPopup(context, studentNames[index].uid);
                 },
               ),
             ),
@@ -172,7 +225,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
     bool loading = false;
     Alert(
         context: context,
-        title: '',
+        title: 'Attendance',
         style: AlertStyle(
           backgroundColor: HexColor(appPrimaryColour),
           isOverlayTapDismiss: false,
@@ -180,11 +233,11 @@ class _StudentAttendanceState extends State<StudentAttendance> {
               // borderRadius: BorderRadius.circular(8.0),
               ),
         ),
-        content: HeadingText(
-          text: "Attendance Status",
-          color: Colors.black87,
-          size: 15.0,
-        ),
+        // content: HeadingText(
+        //   text: "Attendance Status",
+        //   color: Colors.black87,
+        //   size: 15.0,
+        // ),
         buttons: [
           DialogButton(
             child: loading
@@ -199,9 +252,13 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                   .collection('users')
                   .doc(_uid)
                   .collection('Attendance')
-                  .doc('${DateTime.now()}')
+                  .doc(
+                      '${dateTime.toString().substring(0, 11).replaceAll('-', '_')}')
                   .set({
-                'Present': 1,
+                'Course': widget.documentSnapshot.data()['Course'],
+                'Semester': widget.documentSnapshot.data()['Semester'],
+                'ClassName': widget.className,
+                'Present': true,
               });
               Navigator.of(context, rootNavigator: true).pop();
             },
@@ -215,9 +272,12 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                   .collection('users')
                   .doc(_uid)
                   .collection('Attendance')
-                  .doc('${DateTime.now()}')
+                  .doc('${dateTime.toString().substring(0, 11)}')
                   .set({
-                'Present': 0,
+                'Course': widget.documentSnapshot.data()['Course'],
+                'Semester': widget.documentSnapshot.data()['Semester'],
+                'ClassName': widget.className,
+                'Present': false,
               });
               Navigator.of(context, rootNavigator: true).pop();
             },

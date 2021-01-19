@@ -158,7 +158,7 @@ class DatabaseService {
       String departmentName,
       String courseName,
       String semester,
-      String name) async {
+      Map<String,String> name) async {
     try {
       final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
           .collection('college')
@@ -172,7 +172,7 @@ class DatabaseService {
           .collection('Semester')
           .doc('$semester');
       return await assignTeacherDocument.update({
-        'Student_Names': FieldValue.arrayUnion([name]),
+        'Students': FieldValue.arrayUnion([name]),
       });
     } catch (e) {
       rethrow;

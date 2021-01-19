@@ -3,7 +3,7 @@ import 'package:collegify/Screens/teacher_screen/teacher_home/select_file_screen
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_profile.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_announcement.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -21,12 +21,11 @@ class CreateNoteScreen extends StatefulWidget {
 }
 
 class _CreateNoteScreenState extends State<CreateNoteScreen> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor(appPrimaryColour),
         title: HeadingText(
           alignment: Alignment.center,
           text: widget.className,
@@ -35,16 +34,12 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
       ),
       backgroundColor: HexColor(appPrimaryColour),
       body: SafeArea(
-        child:Column(
-         
-          children:[
-            Container(),
-          ],
-        )
-         
-        ),
-     
-      floatingActionButton: FloatingActionButton.extended(
+          child: Column(
+        children: [
+          Container(),
+        ],
+      )),
+      floatingActionButton: FloatingActionButton(
         splashColor: HexColor('#99b4bf'),
         hoverElevation: 20,
         elevation: 3.0,
@@ -64,12 +59,8 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
             );
           } catch (e) {}
         },
-        label: Text('+'),
+        child: Icon(Icons.add),
       ),
-     
     );
   }
-
-  
-  
 }
