@@ -41,8 +41,11 @@ class _DropDownListForUniversityNamesState
           List<DropdownMenuItem> university = [];
 
           if (!snapshot.hasData) {
-            return SizedBox(
-              child: Center(child: Text('Loading..')),
+            return  Loader(
+                
+                size:20.0,
+                spinnerColor: Colors.black54,
+              
             );
           }
 

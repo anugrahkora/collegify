@@ -17,12 +17,9 @@ class TeacherNames extends StatefulWidget {
 class _TeacherNamesState extends State<TeacherNames> {
   List classes = [];
   List<String> teacherNames = [];
-  String university;
-  String collegeName;
-  String departmentName;
-  String courseName;
+  
   String name;
-  String semester;
+  
   String selectedTeacher;
   String teacherUid;
   String teacherClassName;
@@ -31,59 +28,27 @@ class _TeacherNamesState extends State<TeacherNames> {
   // DocumentReference documentReference;
 
   Future getTeacherData() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    university = widget.documentSnapshot.data()['University'];
-    collegeName = widget.documentSnapshot.data()['College'];
-    departmentName = widget.documentSnapshot.data()['Department'];
-    courseName = widget.documentSnapshot.data()['Course'];
-    semester = widget.documentSnapshot.data()['Semester'];
-
-    await firebaseFirestore
-        .collection('college')
-        .doc('$university')
-        .collection('CollegeNames')
-        .doc('$collegeName')
-        .collection('DepartmentNames')
-        .doc('$departmentName')
-        .collection('CourseNames')
-        .doc('$courseName')
-        .collection('Semester')
-        .doc('$semester')
-        .get()
-        .then((docs) {
-      setState(() {
-        teacherNames = List.from(docs.data()['Teacher_Names']);
-      });
-    });
-    await firebaseFirestore
-        .collection('users')
-        .where('University', isEqualTo: university)
-        .where('College', isEqualTo: collegeName)
-        .where('Department', isEqualTo: departmentName)
-        .where('Course', isEqualTo: courseName)
-        .where('Semester', isEqualTo: semester)
-        .where('Name',isEqualTo: 'teacher')
-        .get()
-        .then((query) {
-      query.docs.forEach((docs) {
+    try {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+     
+      await firebaseFirestore
+          .collection('college')
+          .doc('${widget.documentSnapshot.data()['University']}')
+          .collection('CollegeNames')
+          .doc('${widget.documentSnapshot.data()['College']}')
+          .collection('DepartmentNames')
+          .doc('${widget.documentSnapshot.data()['Department']}')
+          .collection('CourseNames')
+          .doc('${widget.documentSnapshot.data()['Course']}')
+          .collection('Semester')
+          .doc('${widget.documentSnapshot.data()['Semester']}')
+          .get()
+          .then((docs) {
         setState(() {
-          teacherUid = docs.data()['Uid'];
+          teacherNames = List.from(docs.data()['Teacher_Names']);
         });
       });
-    });
-    await firebaseFirestore
-        .collection('users')
-        .doc(teacherUid)
-        .collection('Classes')
-        .where('Semester', isEqualTo: semester)
-        .get()
-        .then((query) {
-      query.docs.forEach((docs) {
-        setState(() {
-          teacherClassName = docs.data()['ClassName'];
-        });
-      });
-    });
+    } catch (e) {}
   }
 
   @override
@@ -190,7 +155,7 @@ class _TeacherNamesState extends State<TeacherNames> {
                               .replaceAll('_', ' '),
                         ),
                         Text(
-                          teacherUid??'null' ,
+                          teacherUid ?? 'null',
                         ),
                       ],
                     ),
@@ -199,9 +164,10 @@ class _TeacherNamesState extends State<TeacherNames> {
                     height: 60.0,
                   ),
                   ListTile(
-                    title: Text('Sign Out'),
-                    onTap: () async {
+                    title: Text('Signout'),
+                    onTap: ()  async{
                       await _authService.signOut();
+                     
                     },
                   ),
                 ],
@@ -265,11 +231,6 @@ class _TeacherNamesState extends State<TeacherNames> {
                   size: 23,
                 ),
                 onTap: () {
-                  // setState(() async{
-                  //   selectedTeacher = teacherNames[index];
-                  // });
-                  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-                  // await firebaseFirestore.collection('users').where('')
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -284,6 +245,41 @@ class _TeacherNamesState extends State<TeacherNames> {
             ),
           ],
         );
+      },
+    );
+  }
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel",style: TextStyle(color: Colors.black54),),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue",style: TextStyle(color: Colors.black54),),
+      onPressed: () async {
+        await _authService.signOut();
+         Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      // backgroundColor: HexColor(appPrimaryColour),
+      title: Text("Sign out?",style: TextStyle(color: Colors.black),),
+      // content: Text(
+      //     ""),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }

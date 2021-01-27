@@ -1,10 +1,10 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/admin_screen/admin_navigation.dart';
 import 'package:collegify/Screens/parent_screen/parent_home/parent_navigation_screen.dart';
 
 import 'package:collegify/Screens/student_screen/student_home/student_navigation.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/Teacher_Navigation.dart';
+
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 
 import 'package:collegify/Screens/welcome_screen/body.dart';
@@ -24,13 +24,12 @@ class RoleCheck extends StatefulWidget {
 class _RoleCheckState extends State<RoleCheck> {
   String role;
   DocumentSnapshot documentSnapshot;
-//  dynamic docs;
+
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    // docs = DatabaseService(uid: user.uid).getDocument();
-    //User _verifiedUser = _auth.currentUser;
+    
     if (user != null) {
       FirebaseFirestore.instance
           .collection('users')
@@ -53,7 +52,7 @@ class _RoleCheckState extends State<RoleCheck> {
       } else if (role == 'notVerified') {
         return TeacherHome(documentSnapshot: documentSnapshot,);
       } else if (role == 'parent') {
-        return ParentNavigationScreen();
+        return ParentNavigationScreen(documetSnapshot: documentSnapshot,);
       }
     }
     return Body();

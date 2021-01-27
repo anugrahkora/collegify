@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/openImageScreen.dart';
 import 'package:collegify/shared/components/constants.dart';
-import 'package:collegify/shared/components/dropDownList.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -23,10 +22,14 @@ class _StudentNotesState extends State<StudentNotes> {
   String _imageUrl;
   List<Image> imageList = [];
   FullMetadata fullMetadata;
+  String _filePath;
 
   _getNotes() async {
-    String _filePath =
+    setState(() {
+      _filePath =
         '${widget.docs.data()['University']}/${widget.docs.data()['College']}/$_notes/${widget.docs.data()['Department']}/${widget.docs.data()['Course']}/${widget.docs.data()['Semester']}/${widget.teacherName}';
+    });
+   
     try {
       final _storage = FirebaseStorage.instance.ref().child(_filePath);
       classList = await _storage.listAll();
@@ -34,15 +37,10 @@ class _StudentNotesState extends State<StudentNotes> {
   }
 
   _getUrl(int index) async {
-    // for (int i = 0; i <=classList.items.length;++i) {
+   
     _downloadUrl = await classList.items[index].getDownloadURL();
     return _downloadUrl;
-    //   imageList.add(Image.network(_downloadUrl));
-    // }
-
-    // setState(() {
-    //   _imageUrl = _downloadUrl;
-    // });
+   
   }
 
   @override
@@ -67,20 +65,14 @@ class _StudentNotesState extends State<StudentNotes> {
 
   ListView buildListView(Size size) {
     _getNotes();
-    // _getUrl();
-
-    //  ListView(
-    //   children: imageList,
-    // );
+   
     return ListView.builder(
         itemCount: classList != null ? classList.items.length : 0,
         itemBuilder: (BuildContext context, index) {
           _getUrl(index);
           return Column(
             children: [
-              // SizedBox(
-              //   height: 20,
-              // ),
+            
               Container(
                 alignment: Alignment.topCenter,
                 margin: EdgeInsets.symmetric(vertical: 10),
@@ -88,30 +80,40 @@ class _StudentNotesState extends State<StudentNotes> {
                 width: size.width * 0.8,
                 // height: 100.0,
                 decoration: BoxDecoration(
-                  color: HexColor(appSecondaryColour),
-                  borderRadius: BorderRadius.circular(55),
+                  color: HexColor(appPrimaryColourLight),
+                   boxShadow: [
+                  BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(6, 2),
+                      blurRadius: 6.0,
+                      spreadRadius: 0.0),
+                  BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(-6, -2),
+                      blurRadius: 6.0,
+                      spreadRadius: 0.0),
+                ],
+                 borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.image,
-                      color: Colors.white,
+                      color: Colors.black54,
                     ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
+                   
                     HeadingText(
                       text: classList.items[index].name.substring(0, 16),
                       size: 15.0,
-                      color: Colors.white,
+                      color: Colors.black54,
                     ),
-                    SizedBox(
-                      width: 18.0,
-                    ),
+                    
                     IconButton(
                         icon: Icon(
                           Icons.open_in_full_rounded,
-                          color: Colors.white,
+                          color: Colors.black87
+                          ,
                         ),
                         onPressed: () async {
                           String imageUrl =
@@ -119,16 +121,10 @@ class _StudentNotesState extends State<StudentNotes> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => OpenImage(imageUrl: imageUrl,imageName:classList.items[index].name.substring(0, 16) ,)),
+                                builder: (context) => OpenImage(imageUrl: imageUrl,imageName:classList.items[index].name.substring(0, 16),imagePath:classList.items[index].name  ,documentSnapshot: widget.docs,path:_filePath,)),
                           );
                         }),
                     //  SizedBox(width: 2.0,),
-                    IconButton(
-                        icon: Icon(
-                          Icons.download_outlined,
-                          color: Colors.white,
-                        ),
-                        onPressed: null)
                   ],
                 ),
                 //  InkWell(

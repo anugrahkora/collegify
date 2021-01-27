@@ -15,8 +15,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TeacherHome extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
+  final String semester;
 
-  const TeacherHome({Key key, this.documentSnapshot}) : super(key: key);
+  const TeacherHome({Key key, this.documentSnapshot, this.semester})
+      : super(key: key);
   @override
   _TeacherHomeState createState() => _TeacherHomeState();
 }
@@ -48,94 +50,94 @@ class _TeacherHomeState extends State<TeacherHome> {
     Size size = MediaQuery.of(context).size;
     final user = Provider.of<UserModel>(context);
     getClass(user.uid);
-    return classList.isEmpty
-        ? Scaffold(
-            floatingActionButton: FloatingActionButton(
-              splashColor: HexColor(appSecondaryColour),
-              hoverElevation: 20,
-              elevation: 3.0,
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              onPressed: () async {
-                try {
-                  _openPopup(context, user.uid);
-                } catch (e) {}
-              },
-              child: Icon(Icons.add),
-            ),
-            backgroundColor: HexColor(appPrimaryColour),
-            body: Container(
-              child: HeadingText(
-                color: Colors.black87,
-                text: 'No classes have been added',
-                size: 20,
-              ),
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              iconTheme: IconThemeData(
-                color: Colors.black54, //change your color here
-              ),
-              backgroundColor: Colors.white,
-              title: HeadingText(
-                alignment: Alignment.topLeft,
-                text: "Classes",
-                color: Colors.black54,
-              ),
-            ),
-            drawer: Drawer(
-              // Add a ListView to the drawer. This ensures the user can scroll
-              // through the options in the drawer if there isn't enough vertical
-              // space to fit everything.
-              child: ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  DrawerHeader(
-                    child: ImageIcon(
-                      AssetImage('assets/icons/iconTeacherLarge.png'),
-                      color: Colors.black54,
-                      size: 50,
-                    ),
-                    decoration: BoxDecoration(
-                      color: HexColor(appPrimaryColour),
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black54, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        title: HeadingText(
+          alignment: Alignment.topLeft,
+          text: "Classes",
+          color: Colors.black54,
+        ),
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Column(
+                children: [
+                  ImageIcon(
+                    AssetImage('assets/icons/iconTeacherLarge.png'),
+                    color: Colors.black54,
+                    size: 90,
                   ),
-                  ListTile(
-                    title: Text(widget.documentSnapshot.data()['Name']),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
+                  SizedBox(
+                    height: 20.0,
                   ),
-                  ListTile(
-                    title: Text('Signout'),
-                    onTap: () async{
-                     await _authService.signOut();
-                    },
+                  Container(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: HeadingText(
+                        text: user.email,
+                        size: 15.0,
+                        color: Colors.black54,
+                      ),
+                    ),
                   ),
                 ],
               ),
+              decoration: BoxDecoration(
+                color: HexColor(appPrimaryColour),
+              ),
             ),
-            floatingActionButton: FloatingActionButton(
-              splashColor: HexColor('#99b4bf'),
-              hoverElevation: 20,
-              elevation: 3.0,
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              onPressed: () async {
-                try {
-                  _openPopup(context, user.uid);
-                } catch (e) {}
+            ListTile(
+              title: Text(widget.documentSnapshot.data()['Name']),
+              onTap: () {
+                // Update the state of the app.
+                // ...
               },
-              child: Icon(Icons.add),
             ),
-            backgroundColor: HexColor(appPrimaryColour),
-            body: SafeArea(
-              child: buildListView(size),
+            ListTile(
+              title: Text('Signout'),
+              onTap: ()  {
+                showAlertDialog(context);
+                // await _authService.signOut();
+              },
             ),
-          );
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        splashColor: HexColor('#99b4bf'),
+        hoverElevation: 20,
+        elevation: 3.0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        onPressed: () async {
+          try {
+            _openPopup(context, user.uid);
+          } catch (e) {}
+        },
+        child: Icon(Icons.add),
+      ),
+      backgroundColor: HexColor(appPrimaryColour),
+      body: SafeArea(
+        child: classList.isNotEmpty
+            ? buildListView(size)
+            : HeadingText(
+                text: 'No classes have been added',
+                size: 25.0,
+                color: Colors.black54,
+              ),
+      ),
+    );
   }
 
   ListView buildListView(Size size) {
@@ -220,8 +222,8 @@ class _TeacherHomeState extends State<TeacherHome> {
           backgroundColor: HexColor(appPrimaryColour),
           isOverlayTapDismiss: false,
           alertBorder: RoundedRectangleBorder(
-            // borderRadius: BorderRadius.circular(8.0),
-          ),
+              // borderRadius: BorderRadius.circular(8.0),
+              ),
         ),
         context: context,
         title: "",
@@ -250,7 +252,7 @@ class _TeacherHomeState extends State<TeacherHome> {
           DialogButton(
             height: 50.0,
             width: 100.0,
-             radius: BorderRadius.circular(0.0),
+            radius: BorderRadius.circular(0.0),
             color: HexColor(appPrimaryColourDark),
             onPressed: () async {
               if (_formkey.currentState.validate()) {
@@ -281,5 +283,41 @@ class _TeacherHomeState extends State<TeacherHome> {
                   ),
           )
         ]).show();
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel",style: TextStyle(color: Colors.black54),),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue",style: TextStyle(color: Colors.black54),),
+      onPressed: () async {
+        await _authService.signOut();
+         Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      // backgroundColor: HexColor(appPrimaryColour),
+      title: Text("Sign out?",style: TextStyle(color: Colors.black),),
+      // content: Text(
+      //     ""),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

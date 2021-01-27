@@ -5,7 +5,7 @@ import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:collegify/shared/components/dropDownList.dart';
 

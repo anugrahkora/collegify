@@ -247,10 +247,10 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                 departmentName,
                                 courseName,
                                 year,
-                                name,
-                                registrationNumber,
+                                name.trim(),
+                                registrationNumber.trim(),
                                 'student',
-                                email,
+                                email.trim().trim(),
                                 password,
                               );
                               if (result != null) {

@@ -8,7 +8,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserModel _userFromFirebaseUser(User user) {
-    return user != null ? UserModel(uid: user.uid) : null;
+    return user != null ? UserModel(uid: user.uid,email: user.email) : null;
   }
 
   // Stream of user containing the uid
@@ -21,7 +21,7 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+     
       return null;
     }
   }
@@ -46,7 +46,7 @@ class AuthService {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+     
       rethrow;
     }
   }
@@ -83,7 +83,7 @@ class AuthService {
       //adds the new user data to the database
 
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+    
 
       rethrow;
     }
@@ -112,7 +112,7 @@ class AuthService {
           university, college, department, course, semester, name);
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+     
 
       rethrow;
     }
@@ -134,9 +134,9 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
       await DatabaseService(uid: user.uid).updateParentData(university, college,
-          department, course, parentName, wardName, registrationNumber, role);
+          department, parentName, wardName, registrationNumber, role);
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+     
       rethrow;
     }
   }

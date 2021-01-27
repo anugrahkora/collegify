@@ -106,10 +106,10 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
   return [
     CreateNoteScreen(snapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
 
-    StudentAttendance(documentSnapshot: widget.documentSnapshot,className: widget.className,),
+    StudentAttendance(documentSnapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
     StudentMarkScreen(),
     // from student screen
-    TeacherProfileScreen(documentSnapshot: widget.documentSnapshot,),
+    TeacherProfileScreen(documentSnapshot: widget.documentSnapshot,semester: widget.semester,),
   ];
 }
 }

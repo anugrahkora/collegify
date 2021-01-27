@@ -1,19 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/shared/components/constants.dart';
+import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class CreateAnnouncementParent extends StatefulWidget {
+class CreateAnnouncement extends StatefulWidget {
+  final String role;
   final DocumentSnapshot documentSnapshot;
+  final String semester;
 
-  const CreateAnnouncementParent({Key key, this.documentSnapshot}) : super(key: key);
+  const CreateAnnouncement(
+      {Key key, this.documentSnapshot, this.role, this.semester})
+      : super(key: key);
   @override
   _CreateAnnouncementParentState createState() =>
       _CreateAnnouncementParentState();
 }
 
-class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
+class _CreateAnnouncementParentState extends State<CreateAnnouncement> {
   String _subject;
 
   String _announcement;
@@ -27,13 +32,14 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black54),
         centerTitle: true,
         backgroundColor: HexColor(appPrimaryColour),
         title: Padding(
           padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
           child: ImageIcon(
             AssetImage('assets/icons/iconStudent.png'),
-            color: HexColor(appSecondaryColour),
+            color: Colors.black54,
           ),
         ),
       ),
@@ -42,7 +48,7 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 0),
@@ -111,8 +117,8 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
                   ),
                 ),
                 RoundedButton(
-                  text: _loading ? '....' : 'Post',
-                  color: HexColor(appPrimaryColourDark),
+                  text: _loading ? '...' : 'Post',
+                  color: HexColor(appSecondaryColour),
                   loading: false,
                   onPressed: () async {
                     if (_formkey.currentState.validate()) {
@@ -120,12 +126,25 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
                         setState(() {
                           _loading = true;
                         });
-                        await _post(
-                          {'Subject': _subject, 'Announcement': _announcement},
-                        );
+                        if (widget.role == 'Student') {
+                          await _postStudent(
+                            {
+                              'Subject': _subject,
+                              'Announcement': _announcement
+                            },
+                          );
+                        } else if (widget.role == 'Parent') {
+                          await _postParent(
+                            {
+                              'Subject': _subject,
+                              'Announcement': _announcement
+                            },
+                          );
+                        }
                         setState(() {
                           _loading = false;
                         });
+                        Navigator.pop(context);
                       } catch (e) {}
                     }
                   },
@@ -138,7 +157,7 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
     );
   }
 
-  _post(Map<String, String> announcement) async {
+  _postStudent(Map<String, String> announcement) async {
     try {
       final DocumentReference addStudentAnnouncement = FirebaseFirestore
           .instance
@@ -151,7 +170,29 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncementParent> {
           .collection('CourseNames')
           .doc('${widget.documentSnapshot.data()['Course']}')
           .collection('Semester')
-          .doc('${widget.documentSnapshot.data()['Semester']}');
+          .doc('${widget.semester}');
+      return await addStudentAnnouncement.update({
+        'Student_Announcements': FieldValue.arrayUnion([announcement]),
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  _postParent(Map<String, String> announcement) async {
+    try {
+      final DocumentReference addStudentAnnouncement = FirebaseFirestore
+          .instance
+          .collection('college')
+          .doc('${widget.documentSnapshot.data()['University']}')
+          .collection('CollegeNames')
+          .doc('${widget.documentSnapshot.data()['College']}')
+          .collection('DepartmentNames')
+          .doc('${widget.documentSnapshot.data()['Department']}')
+          .collection('CourseNames')
+          .doc('${widget.documentSnapshot.data()['Course']}')
+          .collection('Semester')
+          .doc('${widget.semester}');
       return await addStudentAnnouncement.update({
         'Parent_Announcements': FieldValue.arrayUnion([announcement]),
       });

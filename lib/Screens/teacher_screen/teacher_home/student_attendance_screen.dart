@@ -9,8 +9,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class StudentAttendance extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
   final String className;
+  final String semester;
 
-  const StudentAttendance({Key key, this.documentSnapshot, this.className})
+  const StudentAttendance(
+      {Key key, this.documentSnapshot, this.className, this.semester})
       : super(key: key);
   @override
   _StudentAttendanceState createState() => _StudentAttendanceState();
@@ -27,7 +29,8 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   bool _present;
 
   Future getStudentNames() async {
-    await firebaseFirestore
+    try{
+await firebaseFirestore
         .collection('college')
         .doc('${widget.documentSnapshot.data()['University']}')
         .collection('CollegeNames')
@@ -37,23 +40,35 @@ class _StudentAttendanceState extends State<StudentAttendance> {
         .collection('CourseNames')
         .doc('${widget.documentSnapshot.data()['Course']}')
         .collection('Semester')
-        .doc('${widget.documentSnapshot.data()['Semester']}')
+        .doc('${widget.semester}')
         .get()
         .then((docs) {
-      documentSnapshot = docs;
-      setState(() {
-        studentNames = List<StudentModel>.from(
-          docs.data()['Students'].map(
-            (item) {
-              return new StudentModel(
-                name: item['Name'],
-                uid: item['Uid'],
-              );
-            },
-          ),
-        );
-      });
+      if (docs.exists) {
+        documentSnapshot = docs;
+        setState(() {
+          studentNames = List<StudentModel>.from(
+            docs.data()['Students'].map(
+              (item) {
+                return new StudentModel(
+                  name: item['Name'],
+                  uid: item['Uid'],
+                );
+              },
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          studentNames = [];
+        });
+      }
     });
+
+    }catch(e){
+
+
+    }
+    
   }
 
 // to select the date
@@ -104,6 +119,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
     return studentNames.isEmpty
         ? Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               backgroundColor: HexColor(appPrimaryColour),
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
@@ -115,11 +131,14 @@ class _StudentAttendanceState extends State<StudentAttendance> {
             ),
             backgroundColor: HexColor(appPrimaryColour),
             body: Container(
-              child: HeadingText(
-                color: Colors.black87,
-                text:
-                    'No Students have been registererd yet or an unknown error has occured',
-                size: 20,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: HeadingText(
+                  color: Colors.black87,
+                  text:
+                      'No Students have been registererd yet or an unknown error has occured',
+                  size: 20,
+                ),
               ),
             ),
           )

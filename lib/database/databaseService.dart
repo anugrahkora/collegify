@@ -36,7 +36,7 @@ class DatabaseService {
   //setting teacher data
 
   Future updateTeacherData(String university, String college, String department,
-      String course, String semester,String name, String role) async {
+      String course, String semester, String name, String role) async {
     try {
       return await userCollectionReference.doc(uid).set({
         'Uid': uid,
@@ -48,7 +48,9 @@ class DatabaseService {
         'Name': name,
         'Role': role,
       });
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
   }
 
   //setting parent data
@@ -57,22 +59,24 @@ class DatabaseService {
       String university,
       String college,
       String department,
-      String course,
       String parentName,
       String wardName,
       String registrationNumber,
       String role) async {
-    return await userCollectionReference.doc(uid).set({
-      'Uid': uid,
-      'University': university,
-      'College': college,
-      'Department': department,
-      'Course': course,
-      'Name': parentName,
-      'Ward_Name': wardName,
-      'Registration_Number': registrationNumber,
-      'Role': role,
-    });
+    try {
+      return await userCollectionReference.doc(uid).set({
+        'Uid': uid,
+        'University': university,
+        'College': college,
+        'Department': department,
+        'Name': parentName,
+        'Ward_Name': wardName,
+        'Registration_Number': registrationNumber,
+        'Role': role,
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // adding new university
@@ -158,7 +162,7 @@ class DatabaseService {
       String departmentName,
       String courseName,
       String semester,
-      Map<String,String> name) async {
+      Map<String, String> name) async {
     try {
       final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
           .collection('college')
