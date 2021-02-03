@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/admin_screen/admin_home.dart';
 import 'package:collegify/Screens/admin_screen/admin_user_screen.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_analytics.dart';
-import 'package:collegify/Screens/student_screen/student_home/teachers_names.dart';
+import 'package:collegify/Screens/student_screen/student_home/classes.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_Profile.dart';
 import 'package:collegify/database/databaseService.dart';

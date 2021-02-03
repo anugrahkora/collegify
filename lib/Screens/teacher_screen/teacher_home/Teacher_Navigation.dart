@@ -14,8 +14,6 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-
-
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
@@ -30,19 +28,19 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       title: ("Attendance"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor:  Colors.black54,
+      activeContentColor: Colors.black54,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.graph_circle, color: Colors.black54),
       title: ("Marks"),
       activeColor: Colors.white,
       inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor:  Colors.black54,
+      activeContentColor: Colors.black54,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(
         CupertinoIcons.person,
-        color:  Colors.black54,
+        color: Colors.black54,
       ),
       title: ("Profile"),
       activeColor: Colors.white,
@@ -55,12 +53,13 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
 class TeacherNavigationScreen extends StatefulWidget {
- 
   final DocumentSnapshot documentSnapshot;
-   final String className;
+  final String className;
   final String semester;
 
-  const TeacherNavigationScreen({Key key, this.documentSnapshot, this.className, this.semester}) : super(key: key);
+  const TeacherNavigationScreen(
+      {Key key, this.documentSnapshot, this.className, this.semester})
+      : super(key: key);
   @override
   _TeacherNavigationScreenState createState() =>
       _TeacherNavigationScreenState();
@@ -102,14 +101,26 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
           NavBarStyle.style5, // Choose the nav bar style with this property.
     );
   }
-  List<Widget> _buildScreens() {
-  return [
-    CreateNoteScreen(snapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
 
-    StudentAttendance(documentSnapshot: widget.documentSnapshot,className: widget.className,semester: widget.semester,),
-    StudentMarkScreen(),
-    // from student screen
-    TeacherProfileScreen(documentSnapshot: widget.documentSnapshot,semester: widget.semester,),
-  ];
-}
+  List<Widget> _buildScreens() {
+    return [
+      CreateNoteScreen(
+        snapshot: widget.documentSnapshot,
+        className: widget.className,
+        semester: widget.semester,
+      ),
+
+      StudentAttendance(
+        documentSnapshot: widget.documentSnapshot,
+        className: widget.className,
+        semester: widget.semester,
+      ),
+      StudentMarkScreen(),
+      // from student screen
+      TeacherProfileScreen(
+        documentSnapshot: widget.documentSnapshot,
+        semester: widget.semester,
+      ),
+    ];
+  }
 }

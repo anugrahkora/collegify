@@ -36,15 +36,13 @@ class DatabaseService {
   //setting teacher data
 
   Future updateTeacherData(String university, String college, String department,
-      String course, String semester, String name, String role) async {
+      String name, String role) async {
     try {
       return await userCollectionReference.doc(uid).set({
         'Uid': uid,
         'University': university,
         'College': college,
         'Department': department,
-        'Course': course,
-        'Semester': semester,
         'Name': name,
         'Role': role,
       });
@@ -137,18 +135,46 @@ class DatabaseService {
       rethrow;
     }
   }
+  // assign new class names to teacher
+  Future assignClassNames(String course,String className,String semester) async {
 
-//add new class for teachers
-  Future addNewClass(String className, String semester) async {
-    try {
+ try {
       final DocumentReference newClassDocument = FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
           .collection('Classes')
           .doc(className);
       return await newClassDocument.set({
+        'Course':course,
         'ClassName': className,
         'Semester': semester,
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+//add new class in courses
+  Future addNewClass(
+      String universityName,
+      String collegeName,
+      String departmentName,
+      String courseName,
+      String className,
+      String semester) async {
+    try {
+      final DocumentReference newClassDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('Semester')
+          .doc('$semester');
+      return await newClassDocument.set({
+        'Classes': FieldValue.arrayUnion([className]),
       });
     } catch (e) {
       rethrow;

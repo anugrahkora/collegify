@@ -120,7 +120,7 @@ await firebaseFirestore
         ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              backgroundColor: HexColor(appPrimaryColour),
+              backgroundColor: Colors.white,
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
                 child: ImageIcon(
@@ -130,14 +130,16 @@ await firebaseFirestore
               ),
             ),
             backgroundColor: HexColor(appPrimaryColour),
-            body: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: HeadingText(
-                  color: Colors.black87,
-                  text:
-                      'No Students have been registererd yet or an unknown error has occured',
-                  size: 20,
+            body: Center(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: HeadingText(
+                    color: Colors.black87,
+                    text:
+                        'No Students have been registererd',
+                    size: 20,
+                  ),
                 ),
               ),
             ),
@@ -152,7 +154,7 @@ await firebaseFirestore
                 ),
               ),
               centerTitle: true,
-              backgroundColor: HexColor(appPrimaryColour),
+              backgroundColor:Colors.white,
               title: HeadingText(
                 text: dateTime.toString().substring(0, 11),
                 size: 20.0,

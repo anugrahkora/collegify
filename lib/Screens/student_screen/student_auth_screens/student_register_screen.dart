@@ -140,7 +140,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   validator: (val) =>
                       val.isEmpty ? 'This field is mandatory' : null,
                   onChanged: (val) {
-                    name = val;
+                    name = val.trim();
                   },
                 ),
                 SizedBox(
@@ -148,11 +148,11 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 ),
                 RoundedInputField(
                   hintText: 'Registration number',
-                  validator: (val) => val.length == 10
+                  validator: (val) => val.trim().length == 10
                       ? null
                       : 'enter a valid registration number',
                   onChanged: (val) {
-                    registrationNumber = val;
+                    registrationNumber = val.trim();
                   },
                 ),
                 SizedBox(
@@ -178,7 +178,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   validator: (val) =>
                       val.isEmpty ? 'Please enter a valid email' : null,
                   onChanged: (val) {
-                    email = val;
+                    email = val.trim();
                   },
                 ),
                 SizedBox(
@@ -191,19 +191,19 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                         : null,
                     boolean: true,
                     onChanged: (val) {
-                      password = val;
+                      password = val.trim();
                     }),
                 SizedBox(
                   height: 5.0,
                 ),
                 RoundedInputField(
                     hintText: 'Confirm Password',
-                    validator: (val) => confirmPassword != password
+                    validator: (val) => confirmPassword.trim() != password
                         ? "passwords does'nt match"
                         : null,
                     boolean: true,
                     onChanged: (val) {
-                      confirmPassword = val;
+                      confirmPassword = val.trim();
                     }),
                 AlertWidget(
                   color: Colors.amber,
@@ -247,10 +247,10 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                 departmentName,
                                 courseName,
                                 year,
-                                name.trim(),
-                                registrationNumber.trim(),
+                                name,
+                                registrationNumber,
                                 'student',
-                                email.trim().trim(),
+                                email,
                                 password,
                               );
                               if (result != null) {

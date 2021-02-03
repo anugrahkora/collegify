@@ -34,7 +34,7 @@ class _CreateAnnouncementParentState extends State<CreateAnnouncement> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black54),
         centerTitle: true,
-        backgroundColor: HexColor(appPrimaryColour),
+        backgroundColor:Colors.white,
         title: Padding(
           padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
           child: ImageIcon(

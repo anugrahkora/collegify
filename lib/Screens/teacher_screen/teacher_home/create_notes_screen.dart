@@ -25,11 +25,11 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: HexColor(appPrimaryColour),
+        backgroundColor: Colors.white,
         title: HeadingText(
           alignment: Alignment.center,
           text: widget.className,
-          color: Colors.black,
+          color: Colors.black54,
         ),
       ),
       backgroundColor: HexColor(appPrimaryColour),

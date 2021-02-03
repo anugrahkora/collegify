@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-
 import 'package:collegify/shared/components/dropDownList.dart';
 
 class TeacherRegisterScreen extends StatefulWidget {
@@ -53,7 +52,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     });
                   },
                 ),
-                
+
                 Container(
                   child: Center(
                     child: ImageIcon(
@@ -110,37 +109,37 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 SizedBox(
                   height: 5.0,
                 ),
-                DropDownListForCourseNames(
-                  universityName: university,
-                  collegeName: collegeName,
-                  departmentName: departmentName,
-                  selectedCourseName: courseName,
-                  onpressed: (val) {
-                    setState(() {
-                      courseName = val;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                DropDownListForYearData(
-                  universityName: university,
-                  collegeName: collegeName,
-                  departmentName: departmentName,
-                  courseName: courseName,
-                  selectedYear: semester,
-                  onpressed: (val) {
-                    setState(() {
-                      semester = val;
-                    });
-                  },
-                ),
+                // DropDownListForCourseNames(
+                //   universityName: university,
+                //   collegeName: collegeName,
+                //   departmentName: departmentName,
+                //   selectedCourseName: courseName,
+                //   onpressed: (val) {
+                //     setState(() {
+                //       courseName = val;
+                //     });
+                //   },
+                // ),
+                // SizedBox(
+                //   height: 5.0,
+                // ),
+                // DropDownListForYearData(
+                //   universityName: university,
+                //   collegeName: collegeName,
+                //   departmentName: departmentName,
+                //   courseName: courseName,
+                //   selectedYear: semester,
+                //   onpressed: (val) {
+                //     setState(() {
+                //       semester = val;
+                //     });
+                //   },
+                // ),
                 RoundedInputField(
                   hintText: 'Name',
                   validator: (val) => val.isEmpty ? 'Field mandatory' : null,
                   onChanged: (val) {
-                    name = val;
+                    name = val.trim();
                   },
                 ),
                 SizedBox(
@@ -150,7 +149,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   hintText: 'Email',
                   validator: (val) => val.isEmpty ? 'Field mandatory' : null,
                   onChanged: (val) {
-                    email = val;
+                    email = val.trim();
                   },
                 ),
                 SizedBox(
@@ -161,7 +160,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   validator: (val) => val.isEmpty ? 'Field mandatory' : null,
                   boolean: true,
                   onChanged: (val) {
-                    password = val;
+                    password = val.trim();
                   },
                 ),
                 SizedBox(
@@ -176,11 +175,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       confirmPassword = val;
                     }),
                 Container(
-                  
                   margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                  
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -189,8 +186,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                         if (_formkey.currentState.validate()) {
                           if (university != null &&
                               collegeName != null &&
-                              departmentName != null &&
-                              courseName != null) {
+                              departmentName != null) {
                             setState(() {
                               loading = true;
                             });
@@ -200,8 +196,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                       university,
                                       collegeName,
                                       departmentName,
-                                      courseName,
-                                      semester,
                                       name,
                                       email,
                                       password,
@@ -218,7 +212,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                               }
                             } on FirebaseAuthException catch (e) {
                               setState(() {
-                                _message = e.toString();
+                                _message = e.message;
                                 loading = false;
                               });
                             }
@@ -227,7 +221,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       },
                       child: loading
                           ? Loader(
-                            spinnerColor: Colors.black54,
+                              spinnerColor: Colors.white,
                               color: HexColor(appSecondaryColour),
                               size: 20,
                             )

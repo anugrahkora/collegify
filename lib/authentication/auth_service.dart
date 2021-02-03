@@ -8,7 +8,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserModel _userFromFirebaseUser(User user) {
-    return user != null ? UserModel(uid: user.uid,email: user.email) : null;
+    return user != null ? UserModel(uid: user.uid, email: user.email) : null;
   }
 
   // Stream of user containing the uid
@@ -21,7 +21,6 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-     
       return null;
     }
   }
@@ -46,7 +45,6 @@ class AuthService {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
-     
       rethrow;
     }
   }
@@ -73,9 +71,16 @@ class AuthService {
 
       await DatabaseService(uid: user.uid).updateStudentData(university,
           college, department, course, name, regNumber, semester, role);
-      await DatabaseService(uid: user.uid)
-          .assignStudents(university, college, department, course, semester, {'Name':name,'Uid':user.uid},
-       
+      await DatabaseService(uid: user.uid).assignStudents(
+        university,
+        college,
+        department,
+        course,
+        semester,
+        {
+          'Name': name,
+          'Uid': user.uid,
+        },
       );
 
       return _userFromFirebaseUser(user);
@@ -83,7 +88,7 @@ class AuthService {
       //adds the new user data to the database
 
     } on FirebaseAuthException catch (e) {
-    
+      print(e.message);
 
       rethrow;
     }
@@ -94,8 +99,6 @@ class AuthService {
     String university,
     String college,
     String department,
-    String course,
-    String semester,
     String name,
     String email,
     String password,
@@ -107,13 +110,12 @@ class AuthService {
       User user = userCredential.user;
 
       await DatabaseService(uid: user.uid).updateTeacherData(
-          university, college, department, course, semester, name, role);
-      await DatabaseService(uid: user.uid).assignTeachers(
-          university, college, department, course, semester, name);
+          university, college, department, name, role);
+      // await DatabaseService(uid: user.uid).assignTeachers(
+      //     university, college, department, name);
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
-     
-
+      print(e.code);
       rethrow;
     }
   }
@@ -136,7 +138,7 @@ class AuthService {
       await DatabaseService(uid: user.uid).updateParentData(university, college,
           department, parentName, wardName, registrationNumber, role);
     } on FirebaseAuthException catch (e) {
-     
+      print(e.code);
       rethrow;
     }
   }

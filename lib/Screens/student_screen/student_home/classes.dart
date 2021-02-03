@@ -15,8 +15,8 @@ class TeacherNames extends StatefulWidget {
 }
 
 class _TeacherNamesState extends State<TeacherNames> {
-  List classes = [];
-  List<String> teacherNames = [];
+ 
+  List<String> classes = [];
   
   String name;
   
@@ -45,7 +45,7 @@ class _TeacherNamesState extends State<TeacherNames> {
           .get()
           .then((docs) {
         setState(() {
-          teacherNames = List.from(docs.data()['Teacher_Names']);
+          classes = List.from(docs.data()['Classes']);
         });
       });
     } catch (e) {}
@@ -57,7 +57,7 @@ class _TeacherNamesState extends State<TeacherNames> {
     // final user = Provider.of<UserModel>(context);
     getTeacherData();
 
-    return teacherNames.isEmpty
+    return classes.isEmpty
         ? Scaffold(
             appBar: AppBar(
               backgroundColor: HexColor(appPrimaryColour),
@@ -196,7 +196,7 @@ class _TeacherNamesState extends State<TeacherNames> {
 
   ListView buildListView(Size size) {
     return ListView.builder(
-      itemCount: teacherNames.length,
+      itemCount: classes.length,
       itemBuilder: (BuildContext context, index) {
         return Column(
           children: [
@@ -227,7 +227,7 @@ class _TeacherNamesState extends State<TeacherNames> {
               child: InkWell(
                 child: HeadingText(
                   color: Colors.black87,
-                  text: teacherNames[index],
+                  text: classes[index],
                   size: 23,
                 ),
                 onTap: () {
@@ -235,7 +235,7 @@ class _TeacherNamesState extends State<TeacherNames> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => StudentNotes(
-                        teacherName: teacherNames[index],
+                        teacherName: classes[index],
                         docs: widget.documentSnapshot,
                       ),
                     ),

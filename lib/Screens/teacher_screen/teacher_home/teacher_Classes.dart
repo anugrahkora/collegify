@@ -5,6 +5,7 @@ import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
+import 'package:collegify/shared/components/dropDownList.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,9 @@ class _TeacherHomeState extends State<TeacherHome> {
   List<QueryDocumentSnapshot> classList = new List<QueryDocumentSnapshot>();
   DocumentSnapshot snapshot;
   String _className;
+  String _course;
   final AuthService _authService = AuthService();
+
   //getting the list of classes
   Future getClass(String uid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -56,10 +59,16 @@ class _TeacherHomeState extends State<TeacherHome> {
           color: Colors.black54, //change your color here
         ),
         backgroundColor: Colors.white,
-        title: HeadingText(
-          alignment: Alignment.topLeft,
-          text: "Classes",
-          color: Colors.black54,
+        title: DropDownListForCourseNames(
+          universityName: widget.documentSnapshot.data()['University'],
+          collegeName: widget.documentSnapshot.data()['College'],
+          departmentName: widget.documentSnapshot.data()['Department'],
+          selectedCourseName: _course,
+          onpressed: (val) {
+            setState(() {
+              _course = val;
+            });
+          },
         ),
       ),
       drawer: Drawer(
@@ -106,7 +115,7 @@ class _TeacherHomeState extends State<TeacherHome> {
             ),
             ListTile(
               title: Text('Signout'),
-              onTap: ()  {
+              onTap: () {
                 showAlertDialog(context);
                 // await _authService.signOut();
               },
@@ -174,13 +183,22 @@ class _TeacherHomeState extends State<TeacherHome> {
               child: InkWell(
                 child: Column(
                   children: [
+                    HeadingText(
+                          alignment: Alignment.topLeft,
+                          color: Colors.black54,
+                          text: classList[index].data()['Course'].replaceAll('_',' '),
+                          size: 23,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         HeadingText(
                           alignment: Alignment.topLeft,
                           color: Colors.black54,
-                          text: classList[index].data()['ClassName'],
+                          text: classList[index].data()['ClassName'].replaceAll('_',' '),
                           size: 23,
                         ),
                         // SizedBox(width: 25.0,),
@@ -222,11 +240,11 @@ class _TeacherHomeState extends State<TeacherHome> {
           backgroundColor: HexColor(appPrimaryColour),
           isOverlayTapDismiss: false,
           alertBorder: RoundedRectangleBorder(
-              // borderRadius: BorderRadius.circular(8.0),
-              ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
         ),
         context: context,
-        title: "",
+        title: _course.replaceAll('_', ' '),
         content: Form(
           key: _formkey,
           child: Column(
@@ -253,57 +271,63 @@ class _TeacherHomeState extends State<TeacherHome> {
             height: 50.0,
             width: 100.0,
             radius: BorderRadius.circular(0.0),
-            color: HexColor(appPrimaryColourDark),
+            color: HexColor(appSecondaryColour),
             onPressed: () async {
-              if (_formkey.currentState.validate()) {
+              if (_formkey.currentState.validate() && _course != null) {
                 try {
-                  setState(() {
-                    loading = true;
-                  });
                   await DatabaseService(uid: _uid)
-                      .addNewClass(_className, semester);
-                  setState(() {
-                    loading = false;
-                  });
+                      .assignClassNames(_course,_className, semester);
+                  await DatabaseService(uid: _uid).addNewClass(
+                      widget.documentSnapshot.data()['University'],
+                      widget.documentSnapshot.data()['College'],
+                      widget.documentSnapshot.data()['Department'],
+                      _course,
+                      _className,
+                      semester);
+
                   Navigator.of(context, rootNavigator: true).pop();
                 } catch (e) {
                   print(e);
                 }
               }
             },
-            child: loading
-                ? Loader(
-                    color: HexColor(appSecondaryColour),
-                    size: 18,
-                  )
-                : HeadingText(
-                    text: 'Add',
-                    color: Colors.black54,
-                    size: 18,
-                  ),
+            child: HeadingText(
+              text: 'Add',
+              color: Colors.white,
+              size: 18,
+            ),
           )
         ]).show();
   }
 
   showAlertDialog(BuildContext context) {
     Widget cancelButton = FlatButton(
-      child: Text("Cancel",style: TextStyle(color: Colors.black54),),
+      child: Text(
+        "Cancel",
+        style: TextStyle(color: Colors.black54),
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Continue",style: TextStyle(color: Colors.black54),),
+      child: Text(
+        "Continue",
+        style: TextStyle(color: Colors.black54),
+      ),
       onPressed: () async {
         await _authService.signOut();
-         Navigator.pop(context);
+        Navigator.pop(context);
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       // backgroundColor: HexColor(appPrimaryColour),
-      title: Text("Sign out?",style: TextStyle(color: Colors.black),),
+      title: Text(
+        "Sign out?",
+        style: TextStyle(color: Colors.black),
+      ),
       // content: Text(
       //     ""),
       actions: [
