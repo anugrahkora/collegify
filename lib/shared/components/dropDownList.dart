@@ -32,7 +32,9 @@ class _DropDownListForUniversityNamesState
       width: size.width * 0.8,
       decoration: BoxDecoration(
         
+        border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
        
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -113,7 +115,9 @@ class _DropdownListForCollegeNameState
       height: 58,
       decoration: BoxDecoration(
         
+        border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
         
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -205,7 +209,9 @@ class _DropDownListForDepartmentNameState
       height: 58.0,
       decoration: BoxDecoration(
         
+     border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
        
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -301,7 +307,9 @@ class _DropDownListForCourseNamesState
       height: 58.0,
       decoration: BoxDecoration(
         
+         border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
        
       ),
       child: StreamBuilder<QuerySnapshot>(
@@ -447,7 +455,9 @@ class _DropDownListForYearDataState extends State<DropDownListForYearData> {
       height: 58,
       decoration: BoxDecoration(
         
+        border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
        
       ),
       child: StreamBuilder<QuerySnapshot>(

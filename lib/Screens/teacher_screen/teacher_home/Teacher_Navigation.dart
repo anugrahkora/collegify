@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/student_marks.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/teacher_announcement.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/student_attendance_screen.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Attendance_screens/student_attendance_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_announcement.dart';
+
 import 'package:collegify/shared/components/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
   List<Widget> _buildScreens() {
     return [
       CreateNoteScreen(
-        snapshot: widget.documentSnapshot,
+        docs: widget.documentSnapshot,
         className: widget.className,
         semester: widget.semester,
       ),

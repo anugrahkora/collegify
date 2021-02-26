@@ -109,32 +109,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 SizedBox(
                   height: 5.0,
                 ),
-                // DropDownListForCourseNames(
-                //   universityName: university,
-                //   collegeName: collegeName,
-                //   departmentName: departmentName,
-                //   selectedCourseName: courseName,
-                //   onpressed: (val) {
-                //     setState(() {
-                //       courseName = val;
-                //     });
-                //   },
-                // ),
-                // SizedBox(
-                //   height: 5.0,
-                // ),
-                // DropDownListForYearData(
-                //   universityName: university,
-                //   collegeName: collegeName,
-                //   departmentName: departmentName,
-                //   courseName: courseName,
-                //   selectedYear: semester,
-                //   onpressed: (val) {
-                //     setState(() {
-                //       semester = val;
-                //     });
-                //   },
-                // ),
+               
                 RoundedInputField(
                   hintText: 'Name',
                   validator: (val) => val.isEmpty ? 'Field mandatory' : null,
@@ -174,10 +149,14 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                     onChanged: (val) {
                       confirmPassword = val;
                     }),
+                    SizedBox(
+                  height: 15.0,
+                ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  // margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -232,6 +211,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                             ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 30.0,
                 ),
               ],
             ),

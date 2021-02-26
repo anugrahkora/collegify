@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/view_parent_announcement.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/view_student_announcement.dart';
 
 
-import 'package:collegify/Screens/teacher_screen/teacher_home/view_parent_announcement.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/view_student_announcement.dart';
+
 
 import 'package:collegify/models/user_model.dart';
 

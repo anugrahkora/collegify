@@ -135,6 +135,20 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 SizedBox(
                   height: 5.0,
                 ),
+                  DropDownListForYearData(
+                    universityName: university,
+                    collegeName: collegeName,
+                    departmentName: departmentName,
+                    courseName: courseName,
+                    selectedYear: year,
+                    onpressed: (val) {
+                      setState(() {
+                        year = val;
+                      });
+                    }),
+                SizedBox(
+                  height: 5.0,
+                ),
                 RoundedInputField(
                   hintText: 'Name',
                   validator: (val) =>
@@ -159,20 +173,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   height: 5.0,
                 ),
 
-                DropDownListForYearData(
-                    universityName: university,
-                    collegeName: collegeName,
-                    departmentName: departmentName,
-                    courseName: courseName,
-                    selectedYear: year,
-                    onpressed: (val) {
-                      setState(() {
-                        year = val;
-                      });
-                    }),
-                SizedBox(
-                  height: 5.0,
-                ),
+              
                 RoundedInputField(
                   hintText: 'Email',
                   validator: (val) =>
@@ -218,9 +219,10 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   height: 15.0,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  // margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
+                     borderRadius: BorderRadius.circular(8.0),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -287,6 +289,9 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                             ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 30.0,
                 ),
               ],
             ),

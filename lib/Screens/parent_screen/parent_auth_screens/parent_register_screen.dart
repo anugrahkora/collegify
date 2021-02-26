@@ -190,16 +190,16 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                     onChanged: (val) {
                       _confirmPassword = val;
                     }),
-  SizedBox(
+                     SizedBox(
                   height: 15.0,
                 ),
 
                     Container(
                      
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  // margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                  
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 40),

@@ -59,17 +59,6 @@ class _TeacherHomeState extends State<TeacherHome> {
           color: Colors.black54, //change your color here
         ),
         backgroundColor: Colors.white,
-        title: DropDownListForCourseNames(
-          universityName: widget.documentSnapshot.data()['University'],
-          collegeName: widget.documentSnapshot.data()['College'],
-          departmentName: widget.documentSnapshot.data()['Department'],
-          selectedCourseName: _course,
-          onpressed: (val) {
-            setState(() {
-              _course = val;
-            });
-          },
-        ),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -131,7 +120,14 @@ class _TeacherHomeState extends State<TeacherHome> {
         foregroundColor: Colors.black,
         onPressed: () async {
           try {
-            _openPopup(context, user.uid);
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return OpenPopupDialogue(
+                    documentSnapshot: widget.documentSnapshot,
+                    uid: user.uid,
+                  );
+                });
           } catch (e) {}
         },
         child: Icon(Icons.add),
@@ -184,24 +180,30 @@ class _TeacherHomeState extends State<TeacherHome> {
                 child: Column(
                   children: [
                     HeadingText(
-                          alignment: Alignment.topLeft,
-                          color: Colors.black54,
-                          text: classList[index].data()['Course'].replaceAll('_',' '),
-                          size: 23,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
+                      alignment: Alignment.topLeft,
+                      color: Colors.black54,
+                      text: classList[index]
+                              .data()['Course']
+                              .replaceAll('_', ' ') ??
+                          '---',
+                      size: 23,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         HeadingText(
                           alignment: Alignment.topLeft,
                           color: Colors.black54,
-                          text: classList[index].data()['ClassName'].replaceAll('_',' '),
+                          text: classList[index]
+                                  .data()['ClassName']
+                                  .replaceAll('_', ' ') ??
+                              '---',
                           size: 23,
                         ),
-                        // SizedBox(width: 25.0,),
+                        SizedBox(width: 25.0,),
                         HeadingText(
                           color: Colors.black54,
                           text: classList[index].data()['Semester'],
@@ -244,7 +246,7 @@ class _TeacherHomeState extends State<TeacherHome> {
           ),
         ),
         context: context,
-        title: _course.replaceAll('_', ' '),
+        title: _course.replaceAll('_', ' ') ?? '---',
         content: Form(
           key: _formkey,
           child: Column(
@@ -276,7 +278,7 @@ class _TeacherHomeState extends State<TeacherHome> {
               if (_formkey.currentState.validate() && _course != null) {
                 try {
                   await DatabaseService(uid: _uid)
-                      .assignClassNames(_course,_className, semester);
+                      .assignClassNames(_course, _className, semester);
                   await DatabaseService(uid: _uid).addNewClass(
                       widget.documentSnapshot.data()['University'],
                       widget.documentSnapshot.data()['College'],
@@ -342,6 +344,120 @@ class _TeacherHomeState extends State<TeacherHome> {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+}
+
+class OpenPopupDialogue extends StatefulWidget {
+  final String uid;
+  final DocumentSnapshot documentSnapshot;
+
+  const OpenPopupDialogue({Key key, this.uid, this.documentSnapshot})
+      : super(key: key);
+  @override
+  _OpenPopupDialogueState createState() => _OpenPopupDialogueState();
+}
+
+class _OpenPopupDialogueState extends State<OpenPopupDialogue> {
+  String _semester;
+  String _className;
+  String _course;
+  String _selectedSemester;
+  bool _loading = false;
+  final _formkey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      title: HeadingText(
+        text: 'New class',
+        size: 20.0,
+        color: Colors.black54,
+      ),
+      backgroundColor: HexColor(appPrimaryColour),
+      content: Container(
+        height: size.height * 0.35,
+        // color: HexColor(appPrimaryColour),
+        child: Form(
+          key: _formkey,
+          child: Column(
+            children: <Widget>[
+              DropDownListForCourseNames(
+                universityName: widget.documentSnapshot.data()['University'],
+                collegeName: widget.documentSnapshot.data()['College'],
+                departmentName: widget.documentSnapshot.data()['Department'],
+                selectedCourseName: _course,
+                onpressed: (val) {
+                  setState(() {
+                    _course = val;
+                    _selectedSemester = null;
+                  });
+                },
+              ),
+              DropDownListForYearData(
+                universityName: widget.documentSnapshot.data()['University'],
+                collegeName: widget.documentSnapshot.data()['College'],
+                departmentName: widget.documentSnapshot.data()['Department'],
+                courseName: _course,
+                selectedYear: _selectedSemester,
+                onpressed: (val) {
+                  setState(() {
+                    _selectedSemester = val;
+                  });
+                },
+              ),
+              RoundedInputField(
+                hintText: 'Class Name',
+                validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
+                onChanged: (val) {
+                  _className = val;
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        _loading
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Loader(
+                  spinnerColor: Colors.black54,
+                  color: HexColor(appPrimaryColour),
+                  size: 24.0,
+                ),
+              )
+            : IconButton(
+                icon: Icon(
+                  Icons.done,
+                ),
+                onPressed: () async{
+                 
+                  if (_formkey.currentState.validate() && _course != null&&_selectedSemester!=null) {
+                     setState(() {
+                    _loading = !_loading;
+                  });
+                try {
+                  await DatabaseService(uid: widget.uid)
+                      .assignClassNames(_course, _className, _selectedSemester);
+                  await DatabaseService(uid: widget.uid).addNewClass(
+                      widget.documentSnapshot.data()['University'],
+                      widget.documentSnapshot.data()['College'],
+                      widget.documentSnapshot.data()['Department'],
+                      _course,
+                      _className,
+                      _selectedSemester);
+                       setState(() {
+                    _loading = !_loading;
+                  });
+
+                  Navigator.of(context, rootNavigator: true).pop();
+                } catch (e) {
+                  print(e);
+                }
+              }
+                })
+      ],
     );
   }
 }

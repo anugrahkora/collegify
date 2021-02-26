@@ -1,68 +1,68 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/create_announcement.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/create_announcement.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class ViewStudentAnnouncements extends StatefulWidget {
+class ViewParentAnnouncement extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
   final String semester;
 
-  const ViewStudentAnnouncements(
-      {Key key, this.documentSnapshot, this.semester})
+  const ViewParentAnnouncement({Key key, this.documentSnapshot, this.semester})
       : super(key: key);
   @override
-  _ViewStudentAnnouncementsState createState() =>
-      _ViewStudentAnnouncementsState();
+  _ViewParentAnnouncementState createState() => _ViewParentAnnouncementState();
 }
 
-class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
+class _ViewParentAnnouncementState extends State<ViewParentAnnouncement> {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  List<AnnouncementModel> studentAnnouncements = [];
+  List<AnnouncementModel> parentAnnouncements = [];
   DocumentSnapshot snapshot;
-  Future _getStudentAnnouncements() async {
-    try {
+  Future _getParentAnnouncements() async {
+    try{
       await firebaseFirestore
-          .collection('college')
-          .doc('${widget.documentSnapshot.data()['University']}')
-          .collection('CollegeNames')
-          .doc('${widget.documentSnapshot.data()['College']}')
-          .collection('DepartmentNames')
-          .doc('${widget.documentSnapshot.data()['Department']}')
-          .collection('CourseNames')
-          .doc('${widget.documentSnapshot.data()['Course']}')
-          .collection('Semester')
-          .doc('${widget.semester}')
-          .get()
-          .then((docs) {
-        if (docs.exists) {
-          snapshot = docs;
+        .collection('college')
+        .doc('${widget.documentSnapshot.data()['University']}')
+        .collection('CollegeNames')
+        .doc('${widget.documentSnapshot.data()['College']}')
+        .collection('DepartmentNames')
+        .doc('${widget.documentSnapshot.data()['Department']}')
+        .collection('CourseNames')
+        .doc('${widget.documentSnapshot.data()['Course']}')
+        .collection('Semester')
+        .doc('${widget.semester}')
+        .get()
+        .then((docs) {
+      if (docs.exists) {
+        snapshot = docs;
+        setState(() {
+          parentAnnouncements = List<AnnouncementModel>.from(
+            docs.data()['Parent_Announcements'].map(
+              (item) {
+                return new AnnouncementModel(
+                  subject: item['Subject'],
+                  announcement: item['Announcement'],
+                );
+              },
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          parentAnnouncements = [];
+        });
+      }
+    });
+    }catch(e){
 
-          setState(() {
-            studentAnnouncements = List<AnnouncementModel>.from(
-              docs.data()['Student_Announcements'].map(
-                (item) {
-                  return new AnnouncementModel(
-                    subject: item['Subject'],
-                    announcement: item['Announcement'],
-                  );
-                },
-              ),
-            );
-          });
-        } else {
-          setState(() {
-            studentAnnouncements = [];
-          });
-        }
-      });
-    } catch (e) {}
+    }
+    
   }
 
-  ListView buildListViewStudentAnnouncement(Size size) {
+  ListView buildListViewParentAnnouncement(Size size) {
     return ListView.builder(
-      itemCount: studentAnnouncements.length,
+      itemCount: parentAnnouncements.length,
       itemBuilder: (BuildContext context, index) {
         return Column(
           children: [
@@ -92,15 +92,13 @@ class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                // child: SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     HeadingText(
                       alignment: Alignment.center,
                       color: Colors.black54,
-                      text: '${studentAnnouncements[index].subject}',
+                      text: '${parentAnnouncements[index].subject}',
                       size: 20,
                     ),
                     SizedBox(
@@ -109,7 +107,7 @@ class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
                     HeadingText(
                       alignment: Alignment.centerLeft,
                       color: Colors.black54,
-                      text: '${studentAnnouncements[index].announcement}',
+                      text: '${parentAnnouncements[index].announcement}',
                       size: 15,
                     ),
                   ],
@@ -118,7 +116,6 @@ class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
               // onTap: () async {
               //   _openPopup(context, studentNames[index].uid);
               // },
-              // ),
             ),
           ],
         );
@@ -129,10 +126,10 @@ class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    _getStudentAnnouncements();
+    _getParentAnnouncements();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        heroTag: 'floatingActionButtonStudent',
+        heroTag: 'floatingActionButtonParent',
         splashColor: HexColor(appSecondaryColour),
         hoverElevation: 20,
         elevation: 3.0,
@@ -146,17 +143,16 @@ class _ViewStudentAnnouncementsState extends State<ViewStudentAnnouncements> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreateAnnouncement(
-                documentSnapshot: widget.documentSnapshot,
-                role: 'Student',
-                semester: widget.semester,
-              ),
-            ),
+                builder: (context) => CreateAnnouncement(
+                      documentSnapshot: widget.documentSnapshot,
+                      role: 'Parent',
+                      semester: widget.semester,
+                    )),
           );
         },
       ),
       backgroundColor: HexColor(appPrimaryColour),
-      body: buildListViewStudentAnnouncement(size),
+      body: buildListViewParentAnnouncement(size),
     );
   }
 }

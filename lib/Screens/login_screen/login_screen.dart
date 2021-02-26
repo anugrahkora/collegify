@@ -1,3 +1,4 @@
+import 'package:collegify/Screens/Forgot_password/forgot_password_screen.dart';
 import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
@@ -43,22 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     });
                   },
                 ),
-
                 SizedBox(
                   height: 10.0,
                 ),
-               
                 Container(
-                  
-                
-                 
                   child: Center(
                     child: HeadingText(
                       text: "Collegify",
                       size: 70.0,
                       color: Colors.black54,
                     ),
-                  
                   ),
                 ),
                 SizedBox(
@@ -89,12 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   decoration: BoxDecoration(
                     color: HexColor(appPrimaryColour),
-                  
                   ),
                   //margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                    // borderRadius: BorderRadius.circular(29),
+                    borderRadius: BorderRadius.circular(8.0),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 40),
@@ -107,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                             dynamic result = await _authService
                                 .loginWithEmailpasswd(email, password);
-                            
+
                             if (result != null) {
                               print('user Logged in');
 
@@ -127,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: loading
                           ? Loader(
-                            spinnerColor: Colors.white,
+                              spinnerColor: Colors.white,
                               color: HexColor(appSecondaryColour),
                               size: 20.0,
                             )
@@ -148,6 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: GoogleFonts.montserrat(
                         color: Colors.black54, fontSize: 15),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen(),
+                      ),
+                    );
+                  },
                 )
               ],
             ),

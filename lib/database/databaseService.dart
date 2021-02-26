@@ -130,7 +130,7 @@ class DatabaseService {
           .doc('$courseName')
           .collection('Semester')
           .doc('$semester');
-      return await newYearDocument.set({"Semester": semester});
+      return await newYearDocument.update({"Semester": semester});
     } catch (e) {
       rethrow;
     }
@@ -144,7 +144,7 @@ class DatabaseService {
           .doc(uid)
           .collection('Classes')
           .doc(className);
-      return await newClassDocument.set({
+      return await newClassDocument.update({
         'Course':course,
         'ClassName': className,
         'Semester': semester,
@@ -173,7 +173,7 @@ class DatabaseService {
           .doc('$courseName')
           .collection('Semester')
           .doc('$semester');
-      return await newClassDocument.set({
+      return await newClassDocument.update({
         'Classes': FieldValue.arrayUnion([className]),
       });
     } catch (e) {

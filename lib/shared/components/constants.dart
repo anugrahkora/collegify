@@ -54,15 +54,15 @@ class _RoundedFieldState extends State<RoundedField> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //     color: HexColor(appSecondaryColour),
-      //     width: 1.5,
-      //   ),
-      //   color: HexColor(appPrimaryColour),
-      //   shape: BoxShape.rectangle,
-      //   borderRadius: BorderRadius.all(Radius.circular(29.0)),
-      // ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: HexColor(appSecondaryColour),
+          width: 1.5,
+        ),
+        color: HexColor(appPrimaryColour),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(29.0)),
+      ),
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: Padding(
@@ -213,9 +213,9 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        // border: Border.all(color: Colors.black54),
+        border: Border.all(color: Colors.black54,width: 1.5),
         color: Colors.white,
-        borderRadius: BorderRadius.circular(0.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: widget.child,
     );
