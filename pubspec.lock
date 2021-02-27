@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  eventify:
+    dependency: transitive
+    description:
+      name: eventify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   fake_async:
     dependency: transitive
     description:
@@ -219,6 +226,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.1.8"
   form_field_validator:
     dependency: "direct main"
     description:
@@ -415,6 +429,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.3"
+  razorpay_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "563ec01946cc8e9075929677fdf96629b69f5945"
+      url: "git://github.com/razorpay/razorpay-flutter.git"
+    source: git
+    version: "1.2.3"
   rflutter_alert:
     dependency: "direct main"
     description:

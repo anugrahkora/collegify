@@ -21,7 +21,7 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
   String _departmentName;
 
   String _courseName;
-
+  String _semester;
   String _parentName = '';
   String _wardName = '';
   String _registrationNumber = '';
@@ -43,22 +43,12 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                 SizedBox(
+                SizedBox(
                   height: 30.0,
-                ),
-                AlertWidget(
-                  color: Colors.amber,
-                  message: _message,
-                  onpressed: () {
-                    setState(() {
-                      _message = null;
-                    });
-                  },
                 ),
                 SizedBox(
                   height: 15.0,
                 ),
-                
                 Container(
                   child: Center(
                     child: ImageIcon(
@@ -106,6 +96,7 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                   onpressed: (val) {
                     setState(() {
                       _courseName = null;
+                      _semester = null;
                       _departmentName = val;
                     });
                   },
@@ -121,12 +112,24 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                   onpressed: (val) {
                     setState(() {
                       _courseName = val;
+                      _semester = null;
                     });
                   },
                 ),
                 SizedBox(
                   height: 5.0,
                 ),
+                DropDownListForYearData(
+                    universityName: _university,
+                    collegeName: _collegeName,
+                    departmentName: _departmentName,
+                    courseName: _courseName,
+                    selectedYear: _semester,
+                    onpressed: (val) {
+                      setState(() {
+                        _semester = val;
+                      });
+                    }),
                 RoundedInputField(
                   hintText: 'Parent name',
                   validator: (val) =>
@@ -190,16 +193,23 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                     onChanged: (val) {
                       _confirmPassword = val;
                     }),
-                     SizedBox(
+                SizedBox(
                   height: 15.0,
                 ),
-
-                    Container(
-                     
+                AlertWidget(
+                  color: Colors.amber,
+                  message: _message,
+                  onpressed: () {
+                    setState(() {
+                      _message = null;
+                    });
+                  },
+                ),
+                Container(
                   // margin: EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.8,
                   child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     child: FlatButton(
                       padding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 40),
@@ -210,13 +220,22 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                             setState(() {
                               _loading = true;
                             });
+                            // dynamic studentDataExists =
+                            //     await _authService.checkStudentDataExists(
+                            //         _university,
+                            //         _collegeName,
+                            //         _departmentName,
+                            //         _courseName,
+                            //         _semester,
+                            //         _wardName,
+                            //         _registrationNumber);
                             dynamic result = await _authService
                                 .parentRegisterWithEmailPassword(
                               _university,
                               _collegeName,
                               _departmentName,
                               _courseName,
-                            
+                              _semester,
                               _parentName,
                               _wardName,
                               _registrationNumber,
@@ -225,13 +244,16 @@ class _ParentRegisterScreenState extends State<ParentRegisterScreen> {
                               _password,
                             );
                             if (result != null) {
-                              print('parent registred  in');
+                             
+                               _loading = false;
+                            
 
-                              _loading = false;
+              
                             } else {
-                              
-                                _loading = false;
-                              
+                               setState(() {
+                               _loading = false;
+                              });
+
                             }
                           } on FirebaseAuthException catch (e) {
                             setState(() {

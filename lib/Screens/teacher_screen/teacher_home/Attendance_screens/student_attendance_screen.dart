@@ -5,15 +5,21 @@ import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:intl/intl.dart';
 
 class StudentAttendance extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
+  final String courseName;
   final String className;
   final String semester;
 
-  const StudentAttendance(
-      {Key key, this.documentSnapshot, this.className, this.semester})
-      : super(key: key);
+  const StudentAttendance({
+    Key key,
+    this.documentSnapshot,
+    this.className,
+    this.semester,
+    this.courseName,
+  }) : super(key: key);
   @override
   _StudentAttendanceState createState() => _StudentAttendanceState();
 }
@@ -29,46 +35,41 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   bool _present;
 
   Future getStudentNames() async {
-    try{
-await firebaseFirestore
-        .collection('college')
-        .doc('${widget.documentSnapshot.data()['University']}')
-        .collection('CollegeNames')
-        .doc('${widget.documentSnapshot.data()['College']}')
-        .collection('DepartmentNames')
-        .doc('${widget.documentSnapshot.data()['Department']}')
-        .collection('CourseNames')
-        .doc('${widget.documentSnapshot.data()['Course']}')
-        .collection('Semester')
-        .doc('${widget.semester}')
-        .get()
-        .then((docs) {
-      if (docs.exists) {
-        documentSnapshot = docs;
-        setState(() {
-          studentNames = List<StudentModel>.from(
-            docs.data()['Students'].map(
-              (item) {
-                return new StudentModel(
-                  name: item['Name'],
-                  uid: item['Uid'],
-                );
-              },
-            ),
-          );
-        });
-      } else {
-        setState(() {
-          studentNames = [];
-        });
-      }
-    });
-
-    }catch(e){
-
-
-    }
-    
+    try {
+      await firebaseFirestore
+          .collection('college')
+          .doc('${widget.documentSnapshot.data()['University']}')
+          .collection('CollegeNames')
+          .doc('${widget.documentSnapshot.data()['College']}')
+          .collection('DepartmentNames')
+          .doc('${widget.documentSnapshot.data()['Department']}')
+          .collection('CourseNames')
+          .doc('${widget.courseName}')
+          .collection('Semester')
+          .doc('${widget.semester}')
+          .get()
+          .then((docs) {
+        if (docs.exists) {
+          documentSnapshot = docs;
+          setState(() {
+            studentNames = List<StudentModel>.from(
+              docs.data()['Students'].map(
+                (item) {
+                  return new StudentModel(
+                    name: item['Name'],
+                    uid: item['Uid'],
+                  );
+                },
+              ),
+            );
+          });
+        } else {
+          setState(() {
+            studentNames = [];
+          });
+        }
+      });
+    } catch (e) {}
   }
 
 // to select the date
@@ -113,6 +114,7 @@ await firebaseFirestore
 
   @override
   Widget build(BuildContext context) {
+    
     Size size = MediaQuery.of(context).size;
     getStudentNames();
 
@@ -136,8 +138,7 @@ await firebaseFirestore
                   padding: const EdgeInsets.all(18.0),
                   child: HeadingText(
                     color: Colors.black87,
-                    text:
-                        'No Students have been registererd',
+                    text: 'No Students have been registererd',
                     size: 20,
                   ),
                 ),
@@ -154,9 +155,10 @@ await firebaseFirestore
                 ),
               ),
               centerTitle: true,
-              backgroundColor:Colors.white,
+              backgroundColor: Colors.white,
               title: HeadingText(
-                text: dateTime.toString().substring(0, 11),
+                text:    
+                dateTime.toString().substring(0, 11),
                 size: 20.0,
                 color: Colors.black54,
               ),

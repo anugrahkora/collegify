@@ -220,6 +220,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                       builder: (context) => TeacherNavigationScreen(
                         className: classList[index].data()['ClassName'],
                         semester: classList[index].data()['Semester'],
+                        courseName:classList[index].data()['Course'] ,
                         documentSnapshot: snapshot,
                       ),
                     ),
@@ -233,74 +234,7 @@ class _TeacherHomeState extends State<TeacherHome> {
     );
   }
 
-  // popup function
-  _openPopup(context, String _uid) {
-    String semester;
-    final _formkey = GlobalKey<FormState>();
-    Alert(
-        style: AlertStyle(
-          backgroundColor: HexColor(appPrimaryColour),
-          isOverlayTapDismiss: false,
-          alertBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        context: context,
-        title: _course.replaceAll('_', ' ') ?? '---',
-        content: Form(
-          key: _formkey,
-          child: Column(
-            children: <Widget>[
-              RoundedInputField(
-                hintText: 'Class Name',
-                validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
-                onChanged: (val) {
-                  _className = val;
-                },
-              ),
-              RoundedInputFieldNumbers(
-                hintText: 'Semester',
-                validator: (val) => val.isEmpty ? 'Field Mandatory' : null,
-                onChanged: (val) {
-                  semester = val;
-                },
-              ),
-            ],
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            height: 50.0,
-            width: 100.0,
-            radius: BorderRadius.circular(0.0),
-            color: HexColor(appSecondaryColour),
-            onPressed: () async {
-              if (_formkey.currentState.validate() && _course != null) {
-                try {
-                  await DatabaseService(uid: _uid)
-                      .assignClassNames(_course, _className, semester);
-                  await DatabaseService(uid: _uid).addNewClass(
-                      widget.documentSnapshot.data()['University'],
-                      widget.documentSnapshot.data()['College'],
-                      widget.documentSnapshot.data()['Department'],
-                      _course,
-                      _className,
-                      semester);
-
-                  Navigator.of(context, rootNavigator: true).pop();
-                } catch (e) {
-                  print(e);
-                }
-              }
-            },
-            child: HeadingText(
-              text: 'Add',
-              color: Colors.white,
-              size: 18,
-            ),
-          )
-        ]).show();
-  }
+  
 
   showAlertDialog(BuildContext context) {
     Widget cancelButton = FlatButton(

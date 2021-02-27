@@ -213,7 +213,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black54,width: 1.5),
+        border: Border.all(color: Colors.black54,width: 1.0),
         color: Colors.white,
         borderRadius: BorderRadius.circular(8.0),
       ),

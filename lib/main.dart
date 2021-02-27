@@ -15,10 +15,11 @@ import 'package:provider/provider.dart';
 
 
 void main() async {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   //systemNavigationBarColor: Colors.blue, // navigation bar color
-  //   statusBarColor: HexColor(appPrimaryColour), // status bar color
-  // ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+     statusBarIconBrightness: Brightness.dark,
+    //systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: HexColor(appPrimaryColour), // status bar color
+  ));
   
   WidgetsFlutterBinding.ensureInitialized();
 

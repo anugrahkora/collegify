@@ -109,8 +109,8 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
 
-      await DatabaseService(uid: user.uid).updateTeacherData(
-          university, college, department, name, role);
+      await DatabaseService(uid: user.uid)
+          .updateTeacherData(university, college, department, name, role);
       // await DatabaseService(uid: user.uid).assignTeachers(
       //     university, college, department, name);
       return _userFromFirebaseUser(user);
@@ -125,6 +125,7 @@ class AuthService {
       String college,
       String department,
       String course,
+      String semester,
       String parentName,
       String wardName,
       String registrationNumber,
@@ -137,9 +138,25 @@ class AuthService {
       User user = userCredential.user;
       await DatabaseService(uid: user.uid).updateParentData(university, college,
           department, parentName, wardName, registrationNumber, role);
+     
     } on FirebaseAuthException catch (e) {
       print(e.code);
       rethrow;
+    } catch (e) {
+      rethrow;
     }
+  }
+
+  Future checkStudentDataExists(
+    String university,
+    String college,
+    String department,
+    String course,
+    String semester,
+    String wardName,
+    String registrationNumber,
+  ) async {
+     await DatabaseService().checkStudentExists(university,
+          college, department, course, semester, registrationNumber, wardName);
   }
 }

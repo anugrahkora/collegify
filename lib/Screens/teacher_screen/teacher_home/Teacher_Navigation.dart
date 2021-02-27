@@ -55,11 +55,12 @@ PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
 class TeacherNavigationScreen extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
+  final String courseName;
   final String className;
   final String semester;
 
   const TeacherNavigationScreen(
-      {Key key, this.documentSnapshot, this.className, this.semester})
+      {Key key, this.documentSnapshot, this.className, this.semester, this.courseName,})
       : super(key: key);
   @override
   _TeacherNavigationScreenState createState() =>
@@ -113,6 +114,7 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
 
       StudentAttendance(
         documentSnapshot: widget.documentSnapshot,
+        courseName: widget.courseName,
         className: widget.className,
         semester: widget.semester,
       ),

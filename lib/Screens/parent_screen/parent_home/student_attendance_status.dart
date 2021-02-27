@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/authentication/auth_service.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -15,6 +16,7 @@ class StudentAttendanceStatus extends StatefulWidget {
 
 class _StudentAttendanceStatusState extends State<StudentAttendanceStatus> {
   List<String> teacherNames = [];
+  final AuthService _authService = new AuthService();
   Future getTeacherData() async {
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -43,8 +45,100 @@ class _StudentAttendanceStatusState extends State<StudentAttendanceStatus> {
   Widget build(BuildContext context) {
     getTeacherData();
     Size size = MediaQuery.of(context).size;
-   return teacherNames.isEmpty
+    return teacherNames.isEmpty
         ? Scaffold(
+            drawer: Drawer(
+              // Add a ListView to the drawer. This ensures the user can scroll
+              // through the options in the drawer if there isn't enough vertical
+              // space to fit everything.
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: ImageIcon(
+                      AssetImage('assets/icons/iconStudentLarge.png'),
+                      color: Colors.black54,
+                      size: 30,
+                    ),
+                    decoration: BoxDecoration(
+                      color: HexColor(appPrimaryColour),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(widget.documentSnapshot.data()['Name']),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Registration_Number']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['University']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['College']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Department']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Course']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          widget.documentSnapshot
+                              .data()['Semester']
+                              .toString()
+                              .replaceAll('_', ' '),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60.0,
+                  ),
+                  ListTile(
+                    title: Text('Signout'),
+                    onTap: () async {
+                      await _authService.signOut();
+                    },
+                  ),
+                ],
+              ),
+            ),
             appBar: AppBar(
               backgroundColor: HexColor(appPrimaryColour),
               title: HeadingText(
@@ -178,8 +272,6 @@ class _StudentAttendanceStatusState extends State<StudentAttendanceStatus> {
             ),
           );
   }
-
-  
 
   ListView buildListView(Size size) {
     return ListView.builder(

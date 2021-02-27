@@ -27,7 +27,7 @@ class _TeacherNamesState extends State<TeacherNames> {
 
   // DocumentReference documentReference;
 
-  Future getTeacherData() async {
+  Future getClassData() async {
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
      
@@ -55,7 +55,7 @@ class _TeacherNamesState extends State<TeacherNames> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // final user = Provider.of<UserModel>(context);
-    getTeacherData();
+    getClassData();
 
     return classes.isEmpty
         ? Scaffold(
@@ -71,7 +71,7 @@ class _TeacherNamesState extends State<TeacherNames> {
             body: Container(
               child: HeadingText(
                 color: Colors.black87,
-                text: 'No Teachers have been assigned',
+                text: 'No classes have been added',
                 size: 20,
               ),
             ),
@@ -154,9 +154,7 @@ class _TeacherNamesState extends State<TeacherNames> {
                               .toString()
                               .replaceAll('_', ' '),
                         ),
-                        Text(
-                          teacherUid ?? 'null',
-                        ),
+                        
                       ],
                     ),
                   ),

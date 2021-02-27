@@ -77,6 +77,30 @@ class DatabaseService {
     }
   }
 
+  Future checkStudentExists(
+    String university,
+    String college,
+    String department,
+    String course,
+    String semester,
+    String registrationNumber,
+    String wardName,
+  ) async {
+    try {
+       await userCollectionReference
+          .where('University', isEqualTo: university)
+          .where('College', isEqualTo: college)
+          .where('Department', isEqualTo: department)
+          .where('Course', isEqualTo: course)
+          .where('Semester', isEqualTo: semester)
+          .where('Registration_Number', isEqualTo: registrationNumber)
+          .where('Name', isEqualTo: wardName)
+          .get();
+    } catch (e) {
+      return null;
+    }
+  }
+
   // adding new university
 
   Future addNewDepartment(
@@ -135,17 +159,18 @@ class DatabaseService {
       rethrow;
     }
   }
-  // assign new class names to teacher
-  Future assignClassNames(String course,String className,String semester) async {
 
- try {
+  // assign new class names to teacher
+  Future assignClassNames(
+      String course, String className, String semester) async {
+    try {
       final DocumentReference newClassDocument = FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
           .collection('Classes')
           .doc(className);
-      return await newClassDocument.update({
-        'Course':course,
+      return await newClassDocument.set({
+        'Course': course,
         'ClassName': className,
         'Semester': semester,
       });
@@ -153,6 +178,7 @@ class DatabaseService {
       rethrow;
     }
   }
+
 //add new class in courses
   Future addNewClass(
       String universityName,

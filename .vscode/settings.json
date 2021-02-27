@@ -14,7 +14,10 @@
     "README.md": true,
     "pubspec.lock": true,
     ".gitignore": true,
-    "android": true,
-    "lib\\Screens\\email_verification_screen": true
+    "lib\\Screens\\email_verification_screen": true,
+    "lib\\Screens\\not_verified.dart": true,
+    "lib\\Screens\\login_screen": true,
+    "lib\\Screens\\Forgot_password": true,
+    "lib\\Screens\\admin_screen": true
   }
 }

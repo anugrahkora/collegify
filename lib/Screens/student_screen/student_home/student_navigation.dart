@@ -46,16 +46,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: HexColor(appSecondaryColour),
     ),
-    PersistentBottomNavBarItem(
-      icon: Icon(
-        CupertinoIcons.person,
-        color: Colors.black,
-      ),
-      title: ("Profile"),
-      activeColor: Colors.white,
-      inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
-    ),
+    
   ];
 }
 
@@ -102,7 +93,7 @@ class _StudNavigationScreenState extends State<StudentNavigationScreen> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style13, // Choose the nav bar style with this property.
     );
   }
   List<Widget> _buildScreens() {
@@ -110,7 +101,7 @@ class _StudNavigationScreenState extends State<StudentNavigationScreen> {
     TeacherNames(documentSnapshot: widget.documentSnapshot,),
     StudentAnalytics(),
     StudentMarks(),
-    StudentUserDetails(),
+    
   ];
 }
 }

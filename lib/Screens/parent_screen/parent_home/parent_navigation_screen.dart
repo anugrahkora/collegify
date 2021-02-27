@@ -28,7 +28,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     ),
     PersistentBottomNavBarItem(
       icon: Icon(
-        CupertinoIcons.graph_circle,
+        CupertinoIcons.bell,
         color: Colors.black,
       ),
       title: ("Analytics"),
@@ -46,16 +46,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       inactiveColor: CupertinoColors.systemGrey,
       activeContentColor: HexColor(appSecondaryColour),
     ),
-    PersistentBottomNavBarItem(
-      icon: Icon(
-        CupertinoIcons.person,
-        color: Colors.black,
-      ),
-      title: ("Profile"),
-      activeColor: Colors.white,
-      inactiveColor: CupertinoColors.systemGrey,
-      activeContentColor: HexColor(appSecondaryColour),
-    ),
+   
   ];
 }
 
@@ -102,15 +93,15 @@ class _ParentNavigationScreenState extends State<ParentNavigationScreen> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style13, // Choose the nav bar style with this property.
     );
   }
   List<Widget> _buildScreens() {
   return [
     StudentAttendanceStatus(documentSnapshot:widget.documetSnapshot,),
-    FeePaymentScreen(),
+   
     AnnouncementFromTeacher(),
-    ParentHome(),
+    FeePaymentScreen(documentSnapshot: widget.documetSnapshot,),
   ];
 }
 }
