@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DatabaseService {
   final String uid;
@@ -57,6 +58,8 @@ class DatabaseService {
       String university,
       String college,
       String department,
+      String course,
+      String semester,
       String parentName,
       String wardName,
       String registrationNumber,
@@ -67,6 +70,8 @@ class DatabaseService {
         'University': university,
         'College': college,
         'Department': department,
+        'Course': course,
+        'Semester': semester,
         'Name': parentName,
         'Ward_Name': wardName,
         'Registration_Number': registrationNumber,
@@ -87,7 +92,7 @@ class DatabaseService {
     String wardName,
   ) async {
     try {
-       await userCollectionReference
+      await userCollectionReference
           .where('University', isEqualTo: university)
           .where('College', isEqualTo: college)
           .where('Department', isEqualTo: department)
@@ -207,6 +212,34 @@ class DatabaseService {
     }
   }
 
+  //create an array of the teacher names in the semester document of each courses
+  Future assignTeachers(
+      String universityName,
+      String collegeName,
+      String departmentName,
+      String courseName,
+      String semester,
+      String name) async {
+    try {
+      final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('Semester')
+          .doc('$semester');
+      return await assignTeacherDocument.update({
+        'Teacher_Names': FieldValue.arrayUnion([name]),
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   //create an array of the student names in the semester document of each courses
   Future assignStudents(
       String universityName,
@@ -235,16 +268,18 @@ class DatabaseService {
     }
   }
 
-  //create an array of the teacher names in the semester document of each courses
-  Future assignTeachers(
+  Future markAttendancePresent(
       String universityName,
       String collegeName,
       String departmentName,
       String courseName,
+      String className,
       String semester,
-      String name) async {
+      String date,
+      Map<String, String> name) async {
     try {
-      final DocumentReference assignTeacherDocument = FirebaseFirestore.instance
+      final DocumentReference markAttendancePresentDocument = FirebaseFirestore
+          .instance
           .collection('college')
           .doc('$universityName')
           .collection('CollegeNames')
@@ -254,12 +289,52 @@ class DatabaseService {
           .collection('CourseNames')
           .doc('$courseName')
           .collection('Semester')
-          .doc('$semester');
-      return await assignTeacherDocument.update({
-        'Teacher_Names': FieldValue.arrayUnion([name]),
+          .doc('$semester')
+          .collection('Attendance')
+          .doc(className)
+          .collection('Dates')
+          .doc(date);
+      return await markAttendancePresentDocument.update({
+        'Students': FieldValue.arrayUnion([name]),
       });
-    } catch (e) {
-      rethrow;
+    } on FirebaseException catch (e) {
+      return e.code;
     }
   }
+
+  Future createNewAttendanceDocument(
+    String universityName,
+    String collegeName,
+    String departmentName,
+    String courseName,
+    String className,
+    String semester,
+    String date,
+     Map<String, String> name,
+  ) async {
+    try {
+      final DocumentReference createNewAttendanceDocument = FirebaseFirestore
+          .instance
+          .collection('college')
+          .doc('$universityName')
+          .collection('CollegeNames')
+          .doc('$collegeName')
+          .collection('DepartmentNames')
+          .doc('$departmentName')
+          .collection('CourseNames')
+          .doc('$courseName')
+          .collection('Semester')
+          .doc('$semester')
+          .collection('Attendance')
+          .doc(className)
+          .collection('Dates')
+          .doc(date);
+           return await createNewAttendanceDocument.set({
+        // 'Students': FieldValue.arrayUnion([name]),
+      });
+    } on FirebaseException catch (e) {
+      return e.code;
+    }
+  }
+
 }

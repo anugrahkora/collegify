@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegify/database/databaseService.dart';
 import 'package:collegify/models/user_model.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:collegify/shared/components/loadingWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:intl/intl.dart';
 
 class StudentAttendance extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
@@ -31,8 +32,10 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   DateTime dateTime = DateTime.now();
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   String studentUid;
+
   bool _loading = false;
-  bool _present;
+  bool _present = false;
+  bool _flutter = false;
 
   Future getStudentNames() async {
     try {
@@ -83,6 +86,22 @@ class _StudentAttendanceState extends State<StudentAttendance> {
       setState(() {
         dateTime = picked;
       });
+      dynamic result = await DatabaseService().createNewAttendanceDocument(
+        widget.documentSnapshot.data()['University'],
+        widget.documentSnapshot.data()['College'],
+        widget.documentSnapshot.data()['Department'],
+        widget.courseName,
+        widget.className,
+        widget.semester,
+        dateTime.toString().substring(0, 10).replaceAll('-', '_'),
+        {
+          'Name': null,
+          'Status': null,
+        },
+      );
+      if (result == null) {
+        Fluttertoast.showToast(msg: 'Added');
+      }
     }
   }
 
@@ -114,7 +133,6 @@ class _StudentAttendanceState extends State<StudentAttendance> {
 
   @override
   Widget build(BuildContext context) {
-    
     Size size = MediaQuery.of(context).size;
     getStudentNames();
 
@@ -135,13 +153,12 @@ class _StudentAttendanceState extends State<StudentAttendance> {
             body: Center(
               child: Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: HeadingText(
-                    color: Colors.black87,
-                    text: 'No Students have been registererd',
-                    size: 20,
-                  ),
-                ),
+                    padding: const EdgeInsets.all(18.0),
+                    child: Loader(
+                      color: HexColor(appPrimaryColour),
+                      size: 34.0,
+                      spinnerColor: Colors.black54,
+                    )),
               ),
             ),
           )
@@ -157,8 +174,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
               centerTitle: true,
               backgroundColor: Colors.white,
               title: HeadingText(
-                text:    
-                dateTime.toString().substring(0, 11),
+                text: dateTime.toString().substring(0, 11),
                 size: 20.0,
                 color: Colors.black54,
               ),
@@ -189,55 +205,15 @@ class _StudentAttendanceState extends State<StudentAttendance> {
             SizedBox(
               height: 20,
             ),
-            Container(
-              alignment: Alignment.topCenter,
-              margin: EdgeInsets.symmetric(vertical: 2),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              width: size.width * 0.8,
-              height: size.height * 0.08,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(6, 2),
-                      blurRadius: 6.0,
-                      spreadRadius: 3.0),
-                  BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                      offset: Offset(-6, -2),
-                      blurRadius: 6.0,
-                      spreadRadius: 3.0),
-                ],
-                color: HexColor(appPrimaryColourLight),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: InkWell(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HeadingText(
-                        alignment: Alignment.centerLeft,
-                        color: Colors.black54,
-                        text: '${studentNames[index].name}',
-                        size: 20,
-                      ),
-                      // HeadingText(
-                      //   alignment: Alignment.centerLeft,
-                      //   color: Colors.black54,
-                      //   text:
-                      //       '${_checkPresent(studentNames[index].uid) != null ? 'hello' : 'hey'}',
-                      //   size: 20,
-                      // ),
-                    ],
-                  ),
-                ),
-                onTap: () async {
-                  _openPopup(context, studentNames[index].uid);
-                },
-              ),
-            ),
+            ListSwitchTileSelect(
+              name: studentNames[index].name,
+              documentSnapshot: widget.documentSnapshot,
+              courseName: widget.courseName,
+              className: widget.className,
+              semester: widget.semester,
+              dateTime:
+                  dateTime.toString().substring(0, 10).replaceAll('-', '_'),
+            )
           ],
         );
       },
@@ -276,7 +252,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                   .doc(_uid)
                   .collection('Attendance')
                   .doc(
-                      '${dateTime.toString().substring(0, 11).replaceAll('-', '_')}')
+                      '${dateTime.toString().substring(0, 10).replaceAll('-', '_')}')
                   .set({
                 'Course': widget.documentSnapshot.data()['Course'],
                 'Semester': widget.documentSnapshot.data()['Semester'],
@@ -295,7 +271,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                   .collection('users')
                   .doc(_uid)
                   .collection('Attendance')
-                  .doc('${dateTime.toString().substring(0, 11)}')
+                  .doc('${dateTime.toString().substring(0, 10)}')
                   .set({
                 'Course': widget.documentSnapshot.data()['Course'],
                 'Semester': widget.documentSnapshot.data()['Semester'],
@@ -308,5 +284,97 @@ class _StudentAttendanceState extends State<StudentAttendance> {
             radius: BorderRadius.circular(0.0),
           ),
         ]).show();
+  }
+}
+
+class ListSwitchTileSelect extends StatefulWidget {
+  final String name;
+  final String dateTime;
+  final DocumentSnapshot documentSnapshot;
+  final String courseName;
+  final String className;
+  final String semester;
+
+  const ListSwitchTileSelect({
+    Key key,
+    this.name,
+    this.dateTime,
+    this.documentSnapshot,
+    this.courseName,
+    this.className,
+    this.semester,
+  }) : super(key: key);
+  @override
+  _ListSwitchTileSelectState createState() => _ListSwitchTileSelectState();
+}
+
+class _ListSwitchTileSelectState extends State<ListSwitchTileSelect> {
+  bool _value = false;
+  DatabaseService _databaseService = new DatabaseService();
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      alignment: Alignment.topCenter,
+      // margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              offset: Offset(6, 2),
+              blurRadius: 6.0,
+              spreadRadius: 0.0),
+          BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              offset: Offset(-6, -2),
+              blurRadius: 6.0,
+              spreadRadius: 0.0),
+        ],
+        color: HexColor(appPrimaryColourLight),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: SwitchListTile(
+        activeColor: Colors.greenAccent,
+        activeTrackColor: Colors.green,
+        inactiveThumbColor: Colors.redAccent,
+        inactiveTrackColor: Colors.red,
+        title: HeadingText(
+          alignment: Alignment.centerLeft,
+          color: Colors.black54,
+          text: widget.name,
+          size: 20,
+        ),
+        value: _value,
+        onChanged: (val) async {
+          setState(() {
+            _value = val;
+          });
+          if (_value) {
+            dynamic result = await _databaseService.markAttendancePresent(
+              widget.documentSnapshot.data()['University'],
+              widget.documentSnapshot.data()['College'],
+              widget.documentSnapshot.data()['Department'],
+              widget.courseName,
+              widget.className,
+              widget.semester,
+              widget.dateTime,
+              {
+                'Name': widget.name,
+                'Status': 'Present',
+              },
+            );
+            if (result != null) {
+              Fluttertoast.showToast(msg: result);
+            } else {
+              Fluttertoast.showToast(msg: '${widget.name} is present ');
+            }
+          } else if (!_value) {
+            Fluttertoast.showToast(msg: '${widget.name}  is absent');
+          }
+        },
+      ),
+    );
   }
 }

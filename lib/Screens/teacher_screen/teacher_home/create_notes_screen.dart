@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/Screens/student_screen/student_home/openImageScreen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/select_file_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/Attendance_screens/student_attendance_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Attendance_screens/student_attendance_view_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/teacher_announcement.dart';
 import 'package:collegify/shared/components/constants.dart';

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collegify/shared/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 
@@ -26,15 +27,13 @@ class _SelectFileScreenState extends State<SelectFileScreen> {
 
   Future<void> _pickImage(ImageSource source) async {
     final PickedFile pickedFile = await picker.getImage(source: source);
-setState(() {
-   _imageFile = File(pickedFile.path);
-});
-   
+    setState(() {
+      _imageFile = File(pickedFile.path);
+    });
   }
 
   /// Remove image
-  void _clear() 
-  {
+  void _clear() {
     setState(() => _imageFile = null);
   }
 
@@ -44,9 +43,7 @@ setState(() {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black54
-        ),
+        iconTheme: IconThemeData(color: Colors.black54),
         backgroundColor: HexColor(appPrimaryColour),
         title: HeadingText(
           alignment: Alignment.topLeft,
@@ -76,13 +73,18 @@ setState(() {
                 Icons.photo_camera,
                 color: Colors.black54,
               ),
-              onPressed: () => _pickImage(ImageSource.camera,),
+              onPressed: () => _pickImage(
+                ImageSource.camera,
+              ),
             ),
             SizedBox(
               width: 40.0,
             ),
             IconButton(
-              icon: Icon(Icons.photo_library,color: Colors.black54,),
+              icon: Icon(
+                Icons.photo_library,
+                color: Colors.black54,
+              ),
               onPressed: () => _pickImage(ImageSource.gallery),
             ),
           ],
@@ -182,10 +184,13 @@ class _UploaderState extends State<Uploader> {
                       child: Icon(Icons.pause, size: 50),
                       onPressed: _uploadTask.pause,
                     ),
-                    LinearProgressIndicator(
-                      value: progressPercent,
-                      backgroundColor: HexColor(appSecondaryColour),
-                      semanticsValue: '${(progressPercent * 100)} % ',
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearProgressIndicator(
+                        value: progressPercent,
+                        backgroundColor: HexColor(appSecondaryColour),
+                        semanticsValue: '${(progressPercent * 100)} % ',
+                      ),
                     ),
                   ],
                   if (_uploadTask.snapshot.state == TaskState.success) ...[
@@ -204,11 +209,13 @@ class _UploaderState extends State<Uploader> {
                       },
                     ),
                   ],
-
-                 
                 ]);
           });
-    } else {
+    }
+    // else if (_uploadTask.snapshot.state == TaskState.success) {
+    //   Fluttertoast.showToast(msg: 'Done');
+    // }
+    else {
       return RoundedButton(
         text: 'Upload',
         color: HexColor(appSecondaryColour),

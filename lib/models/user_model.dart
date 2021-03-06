@@ -17,3 +17,9 @@ class AnnouncementModel {
 
   AnnouncementModel({this.subject, this.announcement});
 }
+
+class AttendanceStatusModel {
+  final String name;
+  final String status;
+  AttendanceStatusModel({this.name,this.status});
+}

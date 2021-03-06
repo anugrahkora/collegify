@@ -3,7 +3,7 @@ import 'package:collegify/Screens/student_screen/student_home/student_marks.dart
 import 'package:collegify/Screens/teacher_screen/teacher_home/Announcements_screens/teacher_announcement.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/create_notes_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/Attendance_screens/student_attendance_screen.dart';
-import 'package:collegify/Screens/teacher_screen/teacher_home/student_mark_screen.dart';
+import 'package:collegify/Screens/teacher_screen/teacher_home/Attendance_screens/student_attendance_view_screen.dart';
 import 'package:collegify/Screens/teacher_screen/teacher_home/teacher_Classes.dart';
 
 import 'package:collegify/shared/components/constants.dart';
@@ -118,7 +118,12 @@ class _TeacherNavigationScreenState extends State<TeacherNavigationScreen> {
         className: widget.className,
         semester: widget.semester,
       ),
-      StudentMarkScreen(),
+      StudentAttendanceViewScreen(
+          documentSnapshot: widget.documentSnapshot,
+        courseName: widget.courseName,
+        className: widget.className,
+        semester: widget.semester,
+      ),
       // from student screen
       TeacherProfileScreen(
         documentSnapshot: widget.documentSnapshot,

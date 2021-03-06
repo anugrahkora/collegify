@@ -181,7 +181,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                                       'notVerified');
 
                               if (result != null) {
-                                print('teacher registered');
+                               
 
                                 loading = false;
                               } else {

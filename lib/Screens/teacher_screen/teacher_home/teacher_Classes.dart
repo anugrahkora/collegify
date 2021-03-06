@@ -29,7 +29,7 @@ class _TeacherHomeState extends State<TeacherHome> {
   List<QueryDocumentSnapshot> classList = new List<QueryDocumentSnapshot>();
   DocumentSnapshot snapshot;
   String _className;
-  String _course;
+  String _courseName;
   final AuthService _authService = AuthService();
 
   //getting the list of classes
@@ -136,11 +136,7 @@ class _TeacherHomeState extends State<TeacherHome> {
       body: SafeArea(
         child: classList.isNotEmpty
             ? buildListView(size)
-            : HeadingText(
-                text: 'No classes have been added',
-                size: 25.0,
-                color: Colors.black54,
-              ),
+            :Loader(color: HexColor(appPrimaryColour) ,size: 34.0,spinnerColor:Colors.black54)
       ),
     );
   }
@@ -203,7 +199,9 @@ class _TeacherHomeState extends State<TeacherHome> {
                               '---',
                           size: 23,
                         ),
-                        SizedBox(width: 25.0,),
+                        SizedBox(
+                          width: 25.0,
+                        ),
                         HeadingText(
                           color: Colors.black54,
                           text: classList[index].data()['Semester'],
@@ -220,7 +218,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                       builder: (context) => TeacherNavigationScreen(
                         className: classList[index].data()['ClassName'],
                         semester: classList[index].data()['Semester'],
-                        courseName:classList[index].data()['Course'] ,
+                        courseName: classList[index].data()['Course'],
                         documentSnapshot: snapshot,
                       ),
                     ),
@@ -233,8 +231,6 @@ class _TeacherHomeState extends State<TeacherHome> {
       },
     );
   }
-
-  
 
   showAlertDialog(BuildContext context) {
     Widget cancelButton = FlatButton(
@@ -295,7 +291,7 @@ class OpenPopupDialogue extends StatefulWidget {
 class _OpenPopupDialogueState extends State<OpenPopupDialogue> {
   String _semester;
   String _className;
-  String _course;
+  String _courseName;
   String _selectedSemester;
   bool _loading = false;
   final _formkey = GlobalKey<FormState>();
@@ -320,10 +316,10 @@ class _OpenPopupDialogueState extends State<OpenPopupDialogue> {
                 universityName: widget.documentSnapshot.data()['University'],
                 collegeName: widget.documentSnapshot.data()['College'],
                 departmentName: widget.documentSnapshot.data()['Department'],
-                selectedCourseName: _course,
+                selectedCourseName: _courseName,
                 onpressed: (val) {
                   setState(() {
-                    _course = val;
+                    _courseName = val;
                     _selectedSemester = null;
                   });
                 },
@@ -332,7 +328,7 @@ class _OpenPopupDialogueState extends State<OpenPopupDialogue> {
                 universityName: widget.documentSnapshot.data()['University'],
                 collegeName: widget.documentSnapshot.data()['College'],
                 departmentName: widget.documentSnapshot.data()['Department'],
-                courseName: _course,
+                courseName: _courseName,
                 selectedYear: _selectedSemester,
                 onpressed: (val) {
                   setState(() {
@@ -365,31 +361,39 @@ class _OpenPopupDialogueState extends State<OpenPopupDialogue> {
                 icon: Icon(
                   Icons.done,
                 ),
-                onPressed: () async{
-                 
-                  if (_formkey.currentState.validate() && _course != null&&_selectedSemester!=null) {
-                     setState(() {
-                    _loading = !_loading;
-                  });
-                try {
-                  await DatabaseService(uid: widget.uid)
-                      .assignClassNames(_course, _className, _selectedSemester);
-                  await DatabaseService(uid: widget.uid).addNewClass(
-                      widget.documentSnapshot.data()['University'],
-                      widget.documentSnapshot.data()['College'],
-                      widget.documentSnapshot.data()['Department'],
-                      _course,
-                      _className,
-                      _selectedSemester);
-                       setState(() {
-                    _loading = !_loading;
-                  });
+                onPressed: () async {
+                  if (_formkey.currentState.validate() &&
+                      _courseName != null &&
+                      _selectedSemester != null) {
+                    setState(() {
+                      _loading = !_loading;
+                    });
+                    try {
+                      await DatabaseService(uid: widget.uid).assignClassNames(
+                          _courseName, _className, _selectedSemester);
+                      await DatabaseService(uid: widget.uid).addNewClass(
+                          widget.documentSnapshot.data()['University'],
+                          widget.documentSnapshot.data()['College'],
+                          widget.documentSnapshot.data()['Department'],
+                          _courseName,
+                          _className,
+                          _selectedSemester);
+                      await DatabaseService(uid: widget.uid).assignTeachers(
+                          widget.documentSnapshot.data()['University'],
+                          widget.documentSnapshot.data()['College'],
+                          widget.documentSnapshot.data()['Department'],
+                          _courseName,
+                          _selectedSemester,
+                          widget.documentSnapshot.data()['Name']);
+                      setState(() {
+                        _loading = !_loading;
+                      });
 
-                  Navigator.of(context, rootNavigator: true).pop();
-                } catch (e) {
-                  print(e);
-                }
-              }
+                      Navigator.of(context, rootNavigator: true).pop();
+                    } catch (e) {
+                      print(e);
+                    }
+                  }
                 })
       ],
     );

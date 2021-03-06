@@ -247,6 +247,7 @@ class _StudentAttendanceStatusState extends State<StudentAttendanceStatus> {
                     title: Text('Sign Out'),
                     onTap: () async {
                       // showAlertDialog(context);
+                       await _authService.signOut();
                     },
                   ),
                 ],

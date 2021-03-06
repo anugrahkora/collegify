@@ -50,6 +50,7 @@ dependencies:
    git:
      url: git://github.com/razorpay/razorpay-flutter.git
      ref: master
+  json_string: ^2.0.1   
 
 dev_dependencies:
   flutter_test:

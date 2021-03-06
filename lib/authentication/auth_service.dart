@@ -137,7 +137,7 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
       await DatabaseService(uid: user.uid).updateParentData(university, college,
-          department, parentName, wardName, registrationNumber, role);
+          department,course,semester, parentName, wardName, registrationNumber, role);
      
     } on FirebaseAuthException catch (e) {
       print(e.code);
